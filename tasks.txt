@@ -1,0 +1,26 @@
+the tasks for minishell : 
+
+1- Syntax error in pipes and quotes and calculate num of commands the line of command - Suliman ✅
+    (
+        handle the the piping and qouting signs 
+        and count how many lines we need to malloc for struct (|, "", '').
+    )
+2- Syntax error in redirection and herdoc recognition   - Ahmed ⌛️
+    (
+        handle the operations for the redirection (<, >, >>, <<) 
+    )
+3- Tokenization for the commands - Suliman ⌛️
+    (
+        dive the command to structs depending on the pipes.
+    )
+4 - Handle environment variables Ahmed ⌛️
+(
+    ($ followed by a sequence of characters) which
+    should expand to their values. 
+)
+
+5 - Handle $? Suliman ⌛️
+(
+    which should expand to the exit status of the most recently executed
+    foreground pipeline.
+)
