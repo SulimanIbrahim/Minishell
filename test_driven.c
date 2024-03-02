@@ -29,7 +29,7 @@ int main(int ac, char **av, char **env){
     test_add(&input,6);
     input.cmds = "ls > c >\0";
     test_add(&input,7);
-    input.cmds = "ls\0";
+    input.cmds = "ls |\0";
     test_add(&input,8);
     input.cmds = ">\0";
     test_add(&input,9);
