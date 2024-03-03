@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:29:36 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/01 20:22:18 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/02 00:34:37 by aken             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 bool	pipe_parsing(t_input *input, t_var *var)
 {
@@ -49,7 +48,9 @@ bool	parsing(t_input *input)
 {
 	t_var	var;
 
-	if (!pipe_quote_pars(input, &var))
+	if (!pipe_quote_pars(input, &var)
+		|| ft_check_redirections(input, &var) != 0)
 		return (false);
+	ft_check_env(input, &var);
 	return (true);
 }
