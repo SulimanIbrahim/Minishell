@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/18 23:20:48 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/03 05:26:12 by suibrahi         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -18,8 +7,8 @@
 # include <string.h>
 # include <stdbool.h>
 # include <stdlib.h>
-#include <sys/types.h>
-#include "Libft-42/libft.h"
+# include <sys/types.h>
+# include "Libft-42/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 # define SINGLE_QUOTE 39
@@ -74,6 +63,7 @@ typedef struct redirection
 typedef struct input
 {
 	char		*cmds;
+	char		**env;
 	int			num_of_cmd;
 }	t_input;
 
@@ -87,5 +77,8 @@ typedef struct command
 char		*readline(const char*);
 bool		parsing(t_input *input);
 bool		quote_parsing(char *line, t_var *var);
+int			ft_check_redirections(t_input *input, t_var *vars);
+void		ft_check_env(t_input *input, t_var *vars);
+
 
 # endif

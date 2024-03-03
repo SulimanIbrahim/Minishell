@@ -6,13 +6,18 @@ void     test_add(t_input *input, int result, int test_num){
         printf("%d\x1b[32m Test passed 😀\x1b[0m\n", test_num);
     else 
         printf("%d\x1b[31mTest failed 😱\x1b[0m\n", test_num);
+
 }
 
-int main(){
+int main(int ac, char **av, char **env){
 
     t_input input;
 
+    (void)av;
+	(void)ac;
+    input.env = env;
     input.cmds = "|\0";
+
    test_add(&input, false, 1);
     ////////////////////////////////////////////////////
    input.cmds = "ld | fdgd |\0";
@@ -76,3 +81,4 @@ int main(){
     test_add(&input, true,21);
     ////////////////////////////////////////////////////
 }
+
