@@ -6,7 +6,8 @@
 /*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:29:36 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/02 00:34:37 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/03 05:23:36 by suibrahi         ###   ########.fr       */
+/*                                                    ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +40,8 @@ bool	pipe_parsing(t_input *input, t_var *var)
 
 bool	pipe_quote_pars(t_input *input, t_var *var)
 {
+	if (!quote_parsing(input->cmds, var))
+		return (false);
 	if (!pipe_parsing(input, var))
 		return (false);
 	return (true);

@@ -1,11 +1,12 @@
 #include "minishell.h"
 
 
-void     test_add(t_input *input, int test_num){
-     if (parsing(input) == true)
-        printf("%d Test passed 😀 with \"%s\" \n", test_num, input->cmds);
+void     test_add(t_input *input, int result, int test_num){
+     if (parsing(input) == result)
+        printf("%d\x1b[32m Test passed 😀\x1b[0m\n", test_num);
     else 
-        printf("%d Test failed 😱 with \"%s\" \n", test_num, input->cmds);
+        printf("%d\x1b[31mTest failed 😱\x1b[0m\n", test_num);
+
 }
 
 int main(int ac, char **av, char **env){
@@ -16,27 +17,68 @@ int main(int ac, char **av, char **env){
 	(void)ac;
     input.env = env;
     input.cmds = "|\0";
-    test_add(&input, 1);
-    input.cmds = "ld | fdgd |\0";
-    test_add(&input,2);
-    input.cmds = "ls | ls\0";
-    test_add(&input,3);
-    input.cmds = "ls || ls\0";
-    test_add(&input,4);
-    input.cmds = "ls >> l\0";
-    test_add(&input,5);
+
+   test_add(&input, false, 1);
+    ////////////////////////////////////////////////////
+   input.cmds = "ld | fdgd |\0";
+   test_add(&input, false, 2);
+   ////////////////////////////////////////////////////
+   input.cmds = "ls | ls\0";
+   test_add(&input, true, 3);
+   ////////////////////////////////////////////////////
+   input.cmds = "ls || ls\0";
+   test_add(&input, false, 4);
+   ////////////////////////////////////////////////////
+   input.cmds = "\'\'\0";
+   test_add(&input, true, 5);
+   ////////////////////////////////////////////////////
+   input.cmds = "\"\"\0";
+   test_add(&input, true, 6);
+   ////////////////////////////////////////////////////
+   input.cmds = "\'ls\"\0";
+   test_add(&input, false, 7);
+   ////////////////////////////////////////////////////
+   input.cmds = "\"ls\"\0";
+   test_add(&input, true, 8);
+   ////////////////////////////////////////////////////
+   input.cmds = "\"\"\"\'\0";
+   test_add(&input, false, 9);
+   ////////////////////////////////////////////////////
+   input.cmds = "\"\'\"\'\0";
+   test_add(&input, false, 10);
+   ////////////////////////////////////////////////////
+   input.cmds = "\"\'\"\'\0";
+   test_add(&input, false, 11);
+   ////////////////////////////////////////////////////
+   input.cmds = "ls >> k >> k>\0";
+    test_add(&input, false,12);
+   ////////////////////////////////////////////////////
+   input.cmds = "$PATH\0";
+    test_add(&input, true,13);
+   ////////////////////////////////////////////////////
+   input.cmds = "ls >> l\0";
+    test_add(&input, true , 14);
+    ////////////////////////////////////////////////////
     input.cmds = "ls <l\0";
-    test_add(&input,6);
+    test_add(&input, true ,15);
+    ////////////////////////////////////////////////////
     input.cmds = "ls > c >\0";
-    test_add(&input,7);
+    test_add(&input,false , 16);
+    ////////////////////////////////////////////////////
     input.cmds = "ls |\0";
-    test_add(&input,8);
+    test_add(&input, false, 17);
+    ////////////////////////////////////////////////////
     input.cmds = ">\0";
-    test_add(&input,9);
+    test_add(&input,false ,18);
+    ////////////////////////////////////////////////////
     input.cmds = "$\0";
-    test_add(&input,10);
+    test_add(&input, true,19);
+    ////////////////////////////////////////////////////
     input.cmds = "$PWD\0";
-    test_add(&input,11);
+    test_add(&input, true,20);
+    ////////////////////////////////////////////////////
     input.cmds = "\0";
-    test_add(&input,12);
+    test_add(&input, true,21);
+    ////////////////////////////////////////////////////
 }
+

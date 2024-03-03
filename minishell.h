@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/18 23:20:48 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/01 23:49:12 by aken             ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -62,6 +51,7 @@ typedef struct vars
 	int		j;
 	int		n;
 	int		c;
+	int		closed;
 }		t_var;
 
 typedef struct redirection
@@ -81,12 +71,14 @@ typedef struct input
 typedef struct command
 {
 	char	*cmd_name;
-	t_red   *redricts;
+	t_red	*redricts;
 }		t_cmd;
 
 char		*readline(const char*);
 bool		parsing(t_input *input);
+bool		quote_parsing(char *line, t_var *var);
 int			ft_check_redirections(t_input *input, t_var *vars);
 void		ft_check_env(t_input *input, t_var *vars);
+
 
 # endif

@@ -3,15 +3,18 @@ NAME_TEST = result
 CFLAGS = -Wall -Wextra -Werror
 READLINE = -L/users/$(USER)/.brew/opt/readline/lib -lreadline
 LIBFT = ./Libft-42/libft.a
-SRC =	main.c\
-		parsing.c\
-		check_redirections.c\
-		replace_env_vars.c
 
-SRC_TEST =	test_driven.c\
-			check_redirections.c\
-			replace_env_vars.c\
+SRC = main.c\
+	parsing.c\
+	parsing_quotes.c\
+  check_redirections.c\
+	replace_env_vars.c
+
+SRC_TEST = test_driven.c\
+			parsing_quotes.c\
 			parsing.c\
+      check_redirections.c\
+			replace_env_vars.c
 
 OBJ = $(SRC:%.c=%.o)
 
