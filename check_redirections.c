@@ -6,7 +6,7 @@
 /*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 23:42:46 by aken              #+#    #+#             */
-/*   Updated: 2024/03/02 00:34:06 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/03 04:48:13 by aken             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ int	ft_check_redirections_2(char *s, int j, char c)
 	}
 	while (s[i] == ' ')
 		i++;
-	if (s[i] && (s[i] == '<' || s[i] == '>'))
+	if (s[i] == '<' || s[i] == '>')
 		return (0);
-	return (j);
+	return (i);
 }
 
 int	ft_check_redirections(t_input *input, t_var *var)
@@ -60,25 +60,25 @@ int	ft_check_redirections(t_input *input, t_var *var)
 	var->i = -1;
 	var->j = 1;
 	if (!input->cmds[0]
-		|| (!(ft_strchr(input->cmds, '>') && !ft_strchr(input->cmds, '<'))))
+		|| ((!ft_strchr(input->cmds, '>') && !ft_strchr(input->cmds, '<'))))
 		return (0);
 	while (input->cmds[++var->i])
 	{
-		if (input->cmds[var->i] && input->cmds[var->i] == '>')
+		if (input->cmds[var->i] == '>')
 		{
 			var->j = ft_check_redirections_2(input->cmds + var->i, var->j, '>');
 			if (var->j == 0
 				|| !ft_check_char_after_direction(input->cmds + var->i))
 				return (printf("bash: syntax error near unexpected token\n"));
-			var->i += var->j - 1;
+			var->i += (var->j - 1);
 		}
-		else if (input->cmds[var->i] && input->cmds[var->i] == '<')
+		else if (input->cmds[var->i] == '<')
 		{
 			var->j = ft_check_redirections_2(input->cmds + var->i, var->j, '<');
 			if (var->j == 0
 				|| !ft_check_char_after_direction(input->cmds + var->i))
 				return (printf("bash: syntax error near unexpected token\n"));
-			var->i += var->j - 1;
+			var->i += (var->j - 1);
 		}
 	}
 	return (0);
