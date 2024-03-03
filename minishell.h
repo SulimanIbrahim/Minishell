@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:20:48 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/01 19:48:39 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/03 05:00:20 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct vars
 	int		j;
 	int		n;
 	int		c;
+	int		closed;
 }		t_var;
 
 typedef struct redirection
