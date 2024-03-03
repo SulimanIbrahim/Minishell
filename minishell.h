@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:20:48 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/03 05:00:20 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/03 05:26:12 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,11 @@ typedef struct input
 typedef struct command
 {
 	char	*cmd_name;
-	t_red   *redricts;
+	t_red	*redricts;
 }		t_cmd;
 
 char		*readline(const char*);
 bool		parsing(t_input *input);
+bool		quote_parsing(char *line, t_var *var);
 
 # endif

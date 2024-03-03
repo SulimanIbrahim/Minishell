@@ -4,9 +4,11 @@ CFLAGS = -Wall -Wextra -Werror
 READLINE = -L/users/$(USER)/.brew/opt/readline/lib -lreadline
 LIBFT = ./Libft-42/libft.a
 SRC = main.c\
-	parsing.c
+	parsing.c\
+	parsing_quotes.c
 
 SRC_TEST = test_driven.c\
+			parsing_quotes.c\
 			parsing.c
 OBJ = $(SRC:%.c=%.o)
 
