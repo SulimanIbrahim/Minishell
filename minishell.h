@@ -37,7 +37,7 @@
 # define ANSI_COLOR_BG_CYAN       "\x1b[46m"
 # define ANSI_COLOR_BG_WHITE      "\x1b[47m"
 
-typedef enum
+typedef	enum
 {
 	INPUT,
 	OUTPUT,
@@ -51,13 +51,15 @@ typedef struct vars
 	int		j;
 	int		n;
 	int		c;
+	int		len;
 	int		closed;
+	char	*temp;
 }		t_var;
 
 typedef struct redirection
 {
-	int		input;
-	int		output;
+	int			o_type;
+	char		*file_name;
 }		t_red;
 
 typedef struct input
@@ -66,7 +68,6 @@ typedef struct input
 	char		**env;
 	int			num_of_cmd;
 }	t_input;
-
 
 typedef struct command
 {
@@ -79,6 +80,6 @@ bool		parsing(t_input *input);
 bool		quote_parsing(char *line, t_var *var);
 int			ft_check_redirections(t_input *input, t_var *vars);
 void		ft_check_env(t_input *input, t_var *vars);
-
+bool		clean_quotes(t_input *input, t_var *var);
 
 # endif

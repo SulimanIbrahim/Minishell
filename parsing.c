@@ -3,11 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:29:36 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/03 05:23:36 by suibrahi         ###   ########.fr       */
-/*                                                    ###   ########.fr       */
+/*   Updated: 2024/03/06 04:56:33 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +42,8 @@ bool	pipe_quote_pars(t_input *input, t_var *var)
 	if (!quote_parsing(input->cmds, var))
 		return (false);
 	if (!pipe_parsing(input, var))
+		return (false);
+	if (!clean_quotes(input, var))
 		return (false);
 	return (true);
 }
