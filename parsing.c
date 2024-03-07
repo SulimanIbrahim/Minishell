@@ -6,11 +6,19 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:29:36 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/06 04:56:33 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/06 06:58:28 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	skip_quotes(t_input *input, int *i, int q_type)
+{
+	if (input->cmds[*i] == q_type)
+		(*i)++;
+	while (input->cmds[*i] != q_type && input->cmds[*i])
+		(*i)++;
+}
 
 bool	pipe_parsing(t_input *input, t_var *var)
 {
@@ -20,15 +28,19 @@ bool	pipe_parsing(t_input *input, t_var *var)
 		while (input->cmds[var->i] == ' ')
 			var->i++;
 		if (input->cmds[var->i] == PIPE)
-			return (printf("Syntax error : unexpected pipe \n"), false);
+			return (printf("Syntax error : unexpected pipe 1\n"), false);
 		while (input->cmds[var->i])
 		{
+			if (input->cmds[var->i] == DOUBLE_QUOTE)
+				skip_quotes(input, &var->i, DOUBLE_QUOTE);
+			if (input->cmds[var->i] == SINGLE_QUOTE)
+				skip_quotes(input, &var->i, SINGLE_QUOTE);
 			if (input->cmds[var->i++] == PIPE)
 			{
 				input->num_of_cmd++;
 				while (input->cmds[var->i] == ' ')
 					var->i++;
-				if (input->cmds[var->i + 1] == '\0'
+				if (input->cmds[var->i] == '\0'
 					|| input->cmds[var->i] == PIPE)
 					return (printf("Syntax error : unexpected pipe \n"), false);
 			}
@@ -42,8 +54,6 @@ bool	pipe_quote_pars(t_input *input, t_var *var)
 	if (!quote_parsing(input->cmds, var))
 		return (false);
 	if (!pipe_parsing(input, var))
-		return (false);
-	if (!clean_quotes(input, var))
 		return (false);
 	return (true);
 }

@@ -3,10 +3,9 @@
 
 void     test_add(t_input *input, int result, int test_num){
      if (parsing(input) == result)
-        printf("%d\x1b[32m Test passed 😀     line == %s\x1b[0m\n", test_num, input->cmds);
+        printf("\x1b[33m%d\x1b[32m -- Test passed ✅  \x1b[36mtest case --> (%s)\x1b[0m\n", test_num, input->cmds);
     else 
-        printf("%d\x1b[31mTest failed 😱     line == %s\x1b[0m\n", test_num, input->cmds);
-
+        printf("\x1b[33m%d\x1b[31m -- Test failed 💔  \x1b[31mtest case --> (%s)\x1b[0m\n", test_num, input->cmds);
 }
 
 int main(int ac, char **av, char **env){
@@ -80,17 +79,52 @@ int main(int ac, char **av, char **env){
     input.cmds = "\0";
     test_add(&input, true,21);
     ////////////////////////////////////////////////////
-   input.cmds = "ls \">>\" k >> k\">\"\0";
+    input.cmds = "ls\'ls\'\0";
     test_add(&input, true,22);
+    ////////////////////////////////////////////////////
+    input.cmds = "ls | \"|\" | k\0";
+    test_add(&input, true,23);
+    ////////////////////////////////////////////////////
+    input.cmds = "ls | \"|\" | k |\0";
+    test_add(&input, false,24);
+    ////////////////////////////////////////////////////
+    input.cmds = "ls | \"|\" | k \"\"|\0";
+    test_add(&input, false,25);
+    ////////////////////////////////////////////////////
+    input.cmds = "ls | \"|\" kk\0";
+    test_add(&input, true,26);
+    ////////////////////////////////////////////////////
+    input.cmds = "ls \">\"\0";
+    test_add(&input, true,27);
+    ////////////////////////////////////////////////////
+    input.cmds = "ls \">\" >\0";
+    test_add(&input, false,28);
+    ////////////////////////////////////////////////////
+    input.cmds = "ls >\0";
+    test_add(&input, false,29);
+    ////////////////////////////////////////////////////
+    input.cmds = "ls > \"\'\"\0";
+    test_add(&input, true,30);
+    ////////////////////////////////////////////////////
+    input.cmds = "ls > \"\"\0";
+    test_add(&input, true,31);
+    ////////////////////////////////////////////////////
+    input.cmds = "ls > \"\" | > \"|\"\0";
+    test_add(&input, true,32);
+    ////////////////////////////////////////////////////
+    input.cmds = "ls > k | ls > | \0";
+    test_add(&input, false,33);
+   input.cmds = "ls \">>\" k >> k\">\"\0";
+    test_add(&input, true,33);
    ////////////////////////////////////////////////////
    input.cmds = "ls >> l\">\"\0";
-    test_add(&input, true, 23);
+    test_add(&input, true, 34);
     ////////////////////////////////////////////////////
     input.cmds = "ls <l\0";
-    test_add(&input, true ,24);
+    test_add(&input, true ,35);
     ////////////////////////////////////////////////////
     input.cmds = "ls > c \'>\'<\0";
-    test_add(&input, false, 25);
+    test_add(&input, false, 36);
     ////////////////////////////////////////////////////
 }
 

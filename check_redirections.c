@@ -19,7 +19,7 @@ bool	ft_check_char_after_direction(char	*s)
 	i = 0;
 	while (s[i] == ' ')
 		i++;
-	while (s[i])
+	while (s[i] && s[i] != PIPE)
 	{
 		if (s[i] == ' ' || s[i] == '<' || s[i] == '>')
 			i++;
