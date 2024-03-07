@@ -40,7 +40,7 @@ bool	pipe_parsing(t_input *input, t_var *var)
 				input->num_of_cmd++;
 				while (input->cmds[var->i] == ' ')
 					var->i++;
-				if (input->cmds[var->i + 1] == '\0'
+				if (input->cmds[var->i] == '\0'
 					|| input->cmds[var->i] == PIPE)
 					return (printf("Syntax error : unexpected pipe \n"), false);
 			}
