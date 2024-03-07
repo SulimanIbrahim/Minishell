@@ -6,7 +6,6 @@ void     test_add(t_input *input, int result, int test_num){
         printf("\x1b[33m%d\x1b[32m -- Test passed ✅  \x1b[36mtest case --> (%s)\x1b[0m\n", test_num, input->cmds);
     else 
         printf("\x1b[33m%d\x1b[31m -- Test failed 💔  \x1b[31mtest case --> (%s)\x1b[0m\n", test_num, input->cmds);
-
 }
 
 int main(int ac, char **av, char **env){
@@ -115,5 +114,17 @@ int main(int ac, char **av, char **env){
     ////////////////////////////////////////////////////
     input.cmds = "ls > k | ls > | \0";
     test_add(&input, false,33);
+   input.cmds = "ls \">>\" k >> k\">\"\0";
+    test_add(&input, true,33);
+   ////////////////////////////////////////////////////
+   input.cmds = "ls >> l\">\"\0";
+    test_add(&input, true, 34);
+    ////////////////////////////////////////////////////
+    input.cmds = "ls <l\0";
+    test_add(&input, true ,35);
+    ////////////////////////////////////////////////////
+    input.cmds = "ls > c \'>\'<\0";
+    test_add(&input, false, 36);
+    ////////////////////////////////////////////////////
 }
 
