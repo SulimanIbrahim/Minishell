@@ -38,5 +38,5 @@ bool	clean_quotes(t_input *input, t_var *var)
 	}
 	var->temp[var->j] = '\0';
 	input->cmds = var->temp;
-	return (free(var->temp), true);
+	return (true);
 }
