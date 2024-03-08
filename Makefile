@@ -9,7 +9,8 @@ SRC = main.c\
 	parsing_quotes.c\
   	check_redirections.c\
 	replace_env_vars.c\
-	cleaning_quotes.c
+	cleaning_quotes.c\
+	setting_redirections.c
 
 SRC_TEST = test_driven.c\
 			parsing_quotes.c\

@@ -43,6 +43,7 @@ typedef	enum
 	OUTPUT,
 	APPEND,
 	HERDOC,
+	HERSTR,
 } t_enm;
 
 typedef struct vars
@@ -58,7 +59,7 @@ typedef struct vars
 
 typedef struct redirection
 {
-	int			o_type;
+	int			type;
 	char		*file_name;
 }		t_red;
 
@@ -67,6 +68,7 @@ typedef struct input
 	char		*cmds;
 	char		**env;
 	int			num_of_cmd;
+	t_red		*redricts;
 }	t_input;
 
 typedef struct command
@@ -81,5 +83,6 @@ bool		quote_parsing(char *line, t_var *var);
 int			ft_check_redirections(t_input *input, t_var *vars);
 void		ft_check_env(t_input *input, t_var *vars);
 bool		clean_quotes(t_input *input, t_var *var);
+void		set_redirection(t_input *input);
 
 # endif
