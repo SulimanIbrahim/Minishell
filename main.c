@@ -6,7 +6,7 @@
 /*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/08 04:08:10 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/09 04:47:26 by aken             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,14 @@ int main (int ac, char **av, char **env)
 {
 	t_input	input;
 	t_cmd	*cmd;
+	t_var	var;
 
 	(void)av;
 	(void)ac;
 	while (1)
 	{
-		input.redricts = malloc(sizeof(t_red) + 1);
 		input.num_of_cmd = 1;
+		input.redricts = NULL;
 		input.cmds = readline("\x1b[94mMinishell >> \x1b[0m");
 		input.env = env;
 		add_history(input.cmds);
@@ -59,9 +60,12 @@ int main (int ac, char **av, char **env)
 			if (cmd)
 			{
 				printf("before --> \"%s\"\n", input.cmds);
-				set_redirection(&input);
-				printf("after --> \"%s\"  status == \"%i\"  file == \"%s\"\n", input.cmds, input.redricts->type, input.redricts->file_name);
-				// if (execute(cmd, &input, env))
+				set_redirection(&input, &var);
+				while (input.redricts)
+				{
+					printf("after --> \"%s\"  status == \"%i\"  file == \"%s\"\n", input.cmds, input.redricts->type, input.redricts->file_name);
+					input.redricts = input.redricts->next_redricts;
+				}// if (execute(cmd, &input, env))
 					continue ;
 			}
 			else

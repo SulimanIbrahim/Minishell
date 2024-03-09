@@ -6,11 +6,21 @@
 /*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 23:42:46 by aken              #+#    #+#             */
-/*   Updated: 2024/03/03 04:48:13 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/09 05:12:25 by aken             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	skip(char *cmds, char c)
+{
+	int	i;
+
+	i = 0;
+	while (cmds[i] && cmds[i] == c)
+		i++;
+	return (i);
+}
 
 bool	ft_check_char_after_direction(char	*s)
 {

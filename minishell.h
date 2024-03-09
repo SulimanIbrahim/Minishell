@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
+/*   Updated: 2024/03/09 05:24:19 by aken             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -44,7 +55,14 @@ typedef	enum
 	APPEND,
 	HERDOC,
 	HERSTR,
-} t_enm;
+}		t_enm;
+
+typedef struct redirection
+{
+	int			type;
+	char		*file_name;
+	void		*next_redricts;
+}		t_red;
 
 typedef struct vars
 {
@@ -55,13 +73,8 @@ typedef struct vars
 	int		len;
 	int		closed;
 	char	*temp;
+	t_red	*red;
 }		t_var;
-
-typedef struct redirection
-{
-	int			type;
-	char		*file_name;
-}		t_red;
 
 typedef struct input
 {
@@ -77,12 +90,13 @@ typedef struct command
 	t_red	*redricts;
 }		t_cmd;
 
-char		*readline(const char*);
+char		*readline(const char *cmds);
 bool		parsing(t_input *input);
 bool		quote_parsing(char *line, t_var *var);
 int			ft_check_redirections(t_input *input, t_var *vars);
 void		ft_check_env(t_input *input, t_var *vars);
 bool		clean_quotes(t_input *input, t_var *var);
-void		set_redirection(t_input *input);
+void		set_redirection(t_input *input, t_var *var);
+int			skip(char *cmds, char c);
 
-# endif
+#endif
