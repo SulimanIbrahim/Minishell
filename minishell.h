@@ -72,14 +72,17 @@ typedef struct input
 typedef struct command
 {
 	char	*cmd_name;
+	char	**cmd;
 	t_red	*redricts;
 }		t_cmd;
 
-char		*readline(const char*);
 bool		parsing(t_input *input);
 bool		quote_parsing(char *line, t_var *var);
-int			ft_check_redirections(t_input *input, t_var *vars);
-void		ft_check_env(t_input *input, t_var *vars);
+void		skip_quotes(t_input *input, int *i, int q_type);
+bool		tokenize_cmds(t_input *input, t_cmd *cmds, t_var *var);
 bool		clean_quotes(t_input *input, t_var *var);
+char		*readline(const char*);
+void		ft_check_env(t_input *input, t_var *vars);
+int			ft_check_redirections(t_input *input, t_var *vars);
 
 # endif
