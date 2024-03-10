@@ -6,7 +6,7 @@
 /*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/03/09 05:24:19 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/10 04:33:04 by aken             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdbool.h>
 # include <stdlib.h>
 # include <sys/types.h>
+# include <sys/wait.h>
 # include "Libft-42/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -81,22 +82,24 @@ typedef struct input
 	char		*cmds;
 	char		**env;
 	int			num_of_cmd;
-	t_red		*redricts;
 }	t_input;
 
 typedef struct command
 {
 	char	*cmd_name;
+	char	**cmd;
 	t_red	*redricts;
 }		t_cmd;
 
-char		*readline(const char *cmds);
 bool		parsing(t_input *input);
 bool		quote_parsing(char *line, t_var *var);
-int			ft_check_redirections(t_input *input, t_var *vars);
-void		ft_check_env(t_input *input, t_var *vars);
+void		skip_quotes(t_input *input, int *i, int q_type);
+bool		tokenize_cmds(t_input *input, t_cmd *cmds, t_var *var);
 bool		clean_quotes(t_input *input, t_var *var);
-void		set_redirection(t_input *input, t_var *var);
+char		*readline(const char *line);
+void		ft_check_env(t_input *input, t_var *vars);
+int			ft_check_redirections(t_input *input, t_var *vars);
+void		set_redirection(t_cmd *cmd, t_var *var);
 int			skip(char *cmds, char c);
 
 #endif

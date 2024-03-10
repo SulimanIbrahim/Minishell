@@ -6,29 +6,29 @@
 /*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 00:07:34 by aken              #+#    #+#             */
-/*   Updated: 2024/03/09 05:12:07 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/10 06:01:07 by aken             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_enm	set_redirection_2(char *input)
+t_enm	set_redirection_2(char *cmd)
 {
 	int	i;
 
 	i = 0;
-	if (input[i] == '>')
+	if (cmd[i] == '>')
 	{
-		if (input[++i] && input[i] == '>')
+		if (cmd[++i] && cmd[i] == '>')
 			return (APPEND);
 		else
 			return (OUTPUT);
 	}
-	else if (input[i] == '<')
+	else if (cmd[i] == '<')
 	{
-		if (input[++i] && input[i] == '<')
+		if (cmd[++i] && cmd[i] == '<')
 		{
-			if (input[++i] && input[i] == '>')
+			if (cmd[++i] && cmd[i] == '>')
 				return (HERSTR);
 			else
 				return (HERDOC);
@@ -37,15 +37,15 @@ t_enm	set_redirection_2(char *input)
 	return (INPUT);
 }
 
-char	*extracting_file_name(char *input, t_var *var)
+char	*extracting_file_name(char *cmd, t_var *var)
 {
 	char	*file;
 
 	var->n = 0;
-	while (input[var->n] && input[var->n] != ' ')
+	while (cmd[var->n] && cmd[var->n] != ' ')
 		var->n++;
 	file = malloc(var->n + 1);
-	ft_strlcpy(file, input, var->n + 1);
+	ft_strlcpy(file, cmd, var->n + 1);
 	return (file);
 }
 
@@ -73,30 +73,31 @@ void	add_redirection(t_red **redirection, t_red *var)
 	p->next_redricts = var;
 }
 
-void	set_redirection(t_input *input, t_var *var)
+void	set_redirection(t_cmd *cmd, t_var *var)
 {
-	if (!(ft_strchr(input->cmds, '<') || ft_strchr(input->cmds, '>')))
+	if (!(ft_strchr(cmd->cmd_name, '<') || ft_strchr(cmd->cmd_name, '>')))
 		return ;
 	var->i = 0;
-	while (input->cmds[var->i])
+	while (cmd->cmd_name[var->i])
 	{
-		if (input->cmds[var->i] == '\'' || input->cmds[var->i] == '"')
-			var->i += skip(input->cmds + var->i, input->cmds[var->i]);
-		if (input->cmds[var->i] == '>' || input->cmds[var->i] == '<')
+		if (cmd->cmd_name[var->i] == '\'' || cmd->cmd_name[var->i] == '"')
+			var->i += skip(cmd->cmd_name + var->i, cmd->cmd_name[var->i]);
+		if (cmd->cmd_name[var->i] == '>' || cmd->cmd_name[var->i] == '<')
 		{
 			var->j = var->i;
 			var->red = alloc_redirection();
-			add_redirection(&(input->redricts), var->red);
-			var->red->type = set_redirection_2(input->cmds + var->i);
-			var->i += skip(input->cmds + var->i, input->cmds[var->i]);
-			var->i += skip(input->cmds + var->i, ' ');
+			add_redirection(&(cmd->redricts), var->red);
+			var->red->type = set_redirection_2(cmd->cmd_name + var->i);
+			var->i += skip(cmd->cmd_name + var->i, cmd->cmd_name[var->i]);
+			var->i += skip(cmd->cmd_name + var->i, ' ');
 			var->red->file_name = extracting_file_name(
-					input->cmds + var->i, var);
-			var->temp = malloc(var->j + 1);
-			ft_strlcpy(var->temp, input->cmds, var->j + 1);
+					cmd->cmd_name + var->i, var);
+			var->temp = malloc(var->j + 2);
+			ft_strlcpy(var->temp, cmd->cmd_name, var->j + 1);
 			var->i += ft_strlen(var->red->file_name);
-			input->cmds = ft_strjoin(var->temp, input->cmds + var->i);
-			set_redirection(input, var);
+			cmd->cmd_name = ft_strjoin(var->temp, cmd->cmd_name + var->i);
+			// printf("%s\n", cmd->cmd_name);
+			set_redirection(cmd, var);
 		}
 		var->i++;
 	}

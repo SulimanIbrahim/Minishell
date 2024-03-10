@@ -6,7 +6,7 @@
 /*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/09 04:47:26 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/10 05:39:00 by aken             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ bool execute(t_cmd *cmd, t_input *input, char **env)
 {
 	int i = 0;
 	int id = 1;
-	// int status;
+	int status;
 	char *command;
 
 	env = NULL;
@@ -35,37 +35,31 @@ bool execute(t_cmd *cmd, t_input *input, char **env)
 			exit(0);
 		}
 	}
-	// wait(&status);
+	wait(&status);
 	return (true);
 }
 
 int main (int ac, char **av, char **env)
 {
 	t_input	input;
-	t_cmd	*cmd;
 	t_var	var;
+	t_cmd	*cmd;
 
 	(void)av;
 	(void)ac;
 	while (1)
 	{
 		input.num_of_cmd = 1;
-		input.redricts = NULL;
 		input.cmds = readline("\x1b[94mMinishell >> \x1b[0m");
 		input.env = env;
 		add_history(input.cmds);
 		if (parsing(&input))
 		{
 			cmd = (t_cmd *)ft_calloc(input.num_of_cmd, sizeof(t_cmd));
+			tokenize_cmds(&input, cmd, &var);
 			if (cmd)
 			{
-				printf("before --> \"%s\"\n", input.cmds);
-				set_redirection(&input, &var);
-				while (input.redricts)
-				{
-					printf("after --> \"%s\"  status == \"%i\"  file == \"%s\"\n", input.cmds, input.redricts->type, input.redricts->file_name);
-					input.redricts = input.redricts->next_redricts;
-				}// if (execute(cmd, &input, env))
+				// if (execute(cmd, &input, env))
 					continue ;
 			}
 			else
