@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 21:04:56 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/09 07:50:05 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/10 05:42:31 by aken             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,3 @@ char	**ft_split(char const *s, char c)
 	substr[j] = NULL;
 	return (substr);
 }
-

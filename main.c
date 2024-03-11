@@ -6,7 +6,7 @@
 /*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/07 03:33:04 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/11 07:16:07 by aken             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ bool execute(t_cmd *cmd, t_input *input, char **env)
 int main (int ac, char **av, char **env)
 {
 	t_input	input;
-	t_cmd	*cmd;
+	t_var	var;
+	t_cmd	**cmd;
 
 	(void)av;
 	(void)ac;
@@ -54,10 +55,12 @@ int main (int ac, char **av, char **env)
 		add_history(input.cmds);
 		if (parsing(&input))
 		{
-			cmd = (t_cmd *)ft_calloc(input.num_of_cmd, sizeof(t_cmd));
+			cmd = (t_cmd **)ft_calloc(input.num_of_cmd, sizeof(t_cmd));
+			cmd[input.num_of_cmd] = NULL;
+			tokenize_cmds(&input, cmd, &var);
 			if (cmd)
 			{
-				if (execute(cmd, &input, env))
+				// if (execute(cmd, &input, env))
 					continue ;
 			}
 			else
