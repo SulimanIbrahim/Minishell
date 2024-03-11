@@ -6,7 +6,7 @@
 /*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 23:43:11 by aken              #+#    #+#             */
-/*   Updated: 2024/03/02 00:39:28 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/11 07:02:09 by aken             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,16 @@ void	ft_replace_env(t_input *input, char *env, t_var *var)
 	int		len_after;
 	char	*n_s;
 
-	var->i = 0;
+	var->c = 0;
 	var->j = 0;
 	var_len = ft_strlen(ft_strchr(env, '=') + 1);
-	while (input->cmds[var->i] && input->cmds[var->i] != '$')
-		var->i++;
-	len_befor = var->i;
-	while (input->cmds[var->i] && input->cmds[var->i] != ' ')
-		var->i++;
-	var->n = var->i;
-	while (input->cmds[var->i++])
+	while (input->cmds[var->c] && input->cmds[var->c] != '$')
+		var->c++;
+	len_befor = var->c;
+	while (input->cmds[var->c] && input->cmds[var->c] != ' ')
+		var->c++;
+	var->n = var->c;
+	while (input->cmds[var->c++])
 		var->j++;
 	len_after = var->j;
 	n_s = malloc(len_befor + len_after + var_len + 1);

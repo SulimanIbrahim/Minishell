@@ -6,7 +6,7 @@
 /*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 00:07:34 by aken              #+#    #+#             */
-/*   Updated: 2024/03/10 06:01:07 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/11 07:13:54 by aken             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_enm	set_redirection_2(char *cmd)
 	return (INPUT);
 }
 
-char	*extracting_file_name(char *cmd, t_var *var)
+void	extracting_file_name(char *cmd, t_var *var)
 {
 	char	*file;
 
@@ -46,7 +46,7 @@ char	*extracting_file_name(char *cmd, t_var *var)
 		var->n++;
 	file = malloc(var->n + 1);
 	ft_strlcpy(file, cmd, var->n + 1);
-	return (file);
+	var->red->file_name = file;
 }
 
 t_red	*alloc_redirection(void)
@@ -73,32 +73,31 @@ void	add_redirection(t_red **redirection, t_red *var)
 	p->next_redricts = var;
 }
 
-void	set_redirection(t_cmd *cmd, t_var *var)
+void	set_redirection(t_cmd *cmd)
 {
+	t_var	var;
+
 	if (!(ft_strchr(cmd->cmd_name, '<') || ft_strchr(cmd->cmd_name, '>')))
 		return ;
-	var->i = 0;
-	while (cmd->cmd_name[var->i])
+	var.i = -1;
+	while (cmd->cmd_name[++var.i])
 	{
-		if (cmd->cmd_name[var->i] == '\'' || cmd->cmd_name[var->i] == '"')
-			var->i += skip(cmd->cmd_name + var->i, cmd->cmd_name[var->i]);
-		if (cmd->cmd_name[var->i] == '>' || cmd->cmd_name[var->i] == '<')
+		if (cmd->cmd_name[var.i] == '\'' || cmd->cmd_name[var.i] == '"')
+			var.i += skip(cmd->cmd_name + var.i, cmd->cmd_name[var.i]);
+		if (cmd->cmd_name[var.i] == '>' || cmd->cmd_name[var.i] == '<')
 		{
-			var->j = var->i;
-			var->red = alloc_redirection();
-			add_redirection(&(cmd->redricts), var->red);
-			var->red->type = set_redirection_2(cmd->cmd_name + var->i);
-			var->i += skip(cmd->cmd_name + var->i, cmd->cmd_name[var->i]);
-			var->i += skip(cmd->cmd_name + var->i, ' ');
-			var->red->file_name = extracting_file_name(
-					cmd->cmd_name + var->i, var);
-			var->temp = malloc(var->j + 2);
-			ft_strlcpy(var->temp, cmd->cmd_name, var->j + 1);
-			var->i += ft_strlen(var->red->file_name);
-			cmd->cmd_name = ft_strjoin(var->temp, cmd->cmd_name + var->i);
-			// printf("%s\n", cmd->cmd_name);
-			set_redirection(cmd, var);
+			var.closed = var.i;
+			var.red = alloc_redirection();
+			add_redirection(&(cmd->redricts), var.red);
+			var.red->type = set_redirection_2(cmd->cmd_name + var.i);
+			var.i += skip(cmd->cmd_name + var.i, cmd->cmd_name[var.i]);
+			var.i += skip(cmd->cmd_name + var.i, ' ');
+			extracting_file_name(cmd->cmd_name + var.i, &var);
+			var.temp = malloc(var.closed + 2);
+			ft_strlcpy(var.temp, cmd->cmd_name, var.closed + 1);
+			var.i += ft_strlen(var.red->file_name);
+			cmd->cmd_name = ft_strjoin(var.temp, cmd->cmd_name + var.i);
+			set_redirection(cmd);
 		}
-		var->i++;
 	}
 }

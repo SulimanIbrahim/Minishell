@@ -6,7 +6,7 @@
 /*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/10 05:39:00 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/11 07:16:07 by aken             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int main (int ac, char **av, char **env)
 {
 	t_input	input;
 	t_var	var;
-	t_cmd	*cmd;
+	t_cmd	**cmd;
 
 	(void)av;
 	(void)ac;
@@ -55,7 +55,8 @@ int main (int ac, char **av, char **env)
 		add_history(input.cmds);
 		if (parsing(&input))
 		{
-			cmd = (t_cmd *)ft_calloc(input.num_of_cmd, sizeof(t_cmd));
+			cmd = (t_cmd **)ft_calloc(input.num_of_cmd, sizeof(t_cmd));
+			cmd[input.num_of_cmd] = NULL;
 			tokenize_cmds(&input, cmd, &var);
 			if (cmd)
 			{
