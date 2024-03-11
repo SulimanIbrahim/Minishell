@@ -22,28 +22,25 @@ void	skip_quotes(t_input *input, int *i, int q_type)
 
 bool	pipe_parsing(t_input *input, t_var *var)
 {
-	var->i = -1;
-	while (input->cmds[++var->i])
+	var->i = 0;
+	while (input->cmds[var->i] == ' ')
+		var->i++;
+	if (input->cmds[var->i] == PIPE)
+		return (printf("Syntax error : unexpected pipe 1\n"), false);
+	while (input->cmds[var->i])
 	{
-		while (input->cmds[var->i] == ' ')
-			var->i++;
-		if (input->cmds[var->i] == PIPE)
-			return (printf("Syntax error : unexpected pipe 1\n"), false);
-		while (input->cmds[var->i])
+		if (input->cmds[var->i] == DOUBLE_QUOTE)
+			skip_quotes(input, &var->i, DOUBLE_QUOTE);
+		if (input->cmds[var->i] == SINGLE_QUOTE)
+			skip_quotes(input, &var->i, SINGLE_QUOTE);
+		if (input->cmds[var->i++] == PIPE)
 		{
-			if (input->cmds[var->i] == DOUBLE_QUOTE)
-				skip_quotes(input, &var->i, DOUBLE_QUOTE);
-			if (input->cmds[var->i] == SINGLE_QUOTE)
-				skip_quotes(input, &var->i, SINGLE_QUOTE);
-			if (input->cmds[var->i++] == PIPE)
-			{
-				input->num_of_cmd++;
-				while (input->cmds[var->i] == ' ')
-					var->i++;
-				if (input->cmds[var->i] == '\0'
-					|| input->cmds[var->i] == PIPE)
-					return (printf("Syntax error : unexpected pipe \n"), false);
-			}
+			input->num_of_cmd++;
+			while (input->cmds[var->i] == ' ')
+				var->i++;
+			if (input->cmds[var->i] == '\0'
+				|| input->cmds[var->i] == PIPE)
+				return (printf("Syntax error : unexpected pipe \n"), false);
 		}
 	}
 	return (true);

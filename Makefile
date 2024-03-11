@@ -1,6 +1,6 @@
 NAME = minishell
 NAME_TEST = result
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror #-g3 -fsanitize=address
 READLINE = -L/users/$(USER)/.brew/opt/readline/lib -lreadline
 LIBFT = ./Libft-42/libft.a
 
