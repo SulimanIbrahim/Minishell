@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 00:48:25 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/09 07:57:25 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/12 07:12:11 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ bool	tokenize_cmds(t_input *input, t_cmd **cmd, t_var *var)
 			var->i = -1;
 			cmd[++var->j] = (t_cmd *)ft_calloc(sizeof(t_cmd), 1);
 			cmd[var->j]->cmd_name = (char *)malloc(var->len + 1);
-			if (!cmd[var->j]->cmd_name)
+			if (!cmd[var->j] || !cmd[var->j]->cmd_name)
 				return (false);
 			while (var->n < var->len)
 				cmd[var->j]->cmd_name[++var->i] = input->cmds[++var->n];
@@ -48,20 +48,20 @@ bool	tokenize_cmds(t_input *input, t_cmd **cmd, t_var *var)
 			cmd[var->j]->cmd = ft_split(cmd[var->j]->cmd_name, ' ');
 		}
 	}
+	int i = 0;
+	while (cmd[i])
+	{
+		var->c = -1;
+		while (cmd[i]->cmd[++var->c])
+			printf("%s\n", cmd[i]->cmd[var->c]);
+		while (cmd[i]->redricts)
+		{
+			printf("status == \"%i\"  file == \"%s\"\n", cmd[i]->redricts->type, cmd[i]->redricts->file_name);
+			cmd[i]->redricts = cmd[i]->redricts->next_redricts;
+		}
+		printf("------- \n");
+		i++;
+	}
 	return (true);
 }
 	// try this to print each cmd and the redirections in it
-	// int i = 0;
-	// while (cmd[i])
-	// {
-	// 	var->c = -1;
-	// 	while (cmd[i]->cmd[++var->c])
-	// 		printf("%s\n", cmd[i]->cmd[var->c]);
-	// 	while (cmd[i]->redricts)
-	// 	{
-	// 		printf("status == \"%i\"  file == \"%s\"\n", cmd[i]->redricts->type, cmd[i]->redricts->file_name);
-	// 		cmd[i]->redricts = cmd[i]->redricts->next_redricts;
-	// 	}
-	// 	printf("------- \n");
-	// 	i++;
-	// }

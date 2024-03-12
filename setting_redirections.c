@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setting_redirections.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 00:07:34 by aken              #+#    #+#             */
-/*   Updated: 2024/03/11 07:13:54 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/12 07:10:42 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,25 @@ void	extracting_file_name(char *cmd, t_var *var)
 	char	*file;
 
 	var->n = 0;
+	var->j = 0;
 	while (cmd[var->n] && cmd[var->n] != ' ')
+	{
+		if (cmd[var->n] && cmd[var->n] != '\'' && cmd[var->n] != '"')
+			var->j++;
 		var->n++;
-	file = malloc(var->n + 1);
-	ft_strlcpy(file, cmd, var->n + 1);
+	}
+	file = malloc(var->j + 1);
+	var->n = 0;
+	var->j = 0;
+	while (cmd[var->n] && cmd[var->n] != ' ')
+	{
+		if (cmd[var->n] && cmd[var->n] != '\'' && cmd[var->n] != '"')
+			file[var->j++] = cmd[var->n];
+		var->n++;
+	}
+	file[var->j] = '\0';
 	var->red->file_name = file;
+	var->i += var->n;
 }
 
 t_red	*alloc_redirection(void)
@@ -95,9 +109,9 @@ void	set_redirection(t_cmd *cmd)
 			extracting_file_name(cmd->cmd_name + var.i, &var);
 			var.temp = malloc(var.closed + 2);
 			ft_strlcpy(var.temp, cmd->cmd_name, var.closed + 1);
-			var.i += ft_strlen(var.red->file_name);
 			cmd->cmd_name = ft_strjoin(var.temp, cmd->cmd_name + var.i);
 			set_redirection(cmd);
+			return ;
 		}
 	}
 }

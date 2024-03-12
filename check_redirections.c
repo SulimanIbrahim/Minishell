@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 23:42:46 by aken              #+#    #+#             */
-/*   Updated: 2024/03/09 05:12:25 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/12 05:52:32 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int	ft_check_redirections(t_input *input, t_var *var)
 		return (0);
 	while (input->cmds[++var->i])
 	{
+		if (input->cmds[var->i] == '\'' || input->cmds[var->i] == '"')
+			skip_quotes(input, &var->i, input->cmds[var->i]);
 		if (input->cmds[var->i] == '>')
 		{
 			var->j = ft_check_redirections_2(input->cmds + var->i, var->j, '>');
