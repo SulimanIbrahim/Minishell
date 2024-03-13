@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/13 10:43:03 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/14 00:59:06 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,12 @@ int main (int ac, char **av, char **env)
 	(void)ac;
 	while (1)
 	{
+		signal(SIGINT, signal_handler);
+		signal(SIGQUIT, SIG_IGN);
 		input.num_of_cmd = 1;
 		input.cmds = readline("\x1b[94mMinishell >> \x1b[0m");
+		if (!input.cmds)
+			exit(1);
 		input.env = env;
 		add_history(input.cmds);
 		if (parsing(&input))
