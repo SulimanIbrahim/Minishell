@@ -6,7 +6,7 @@
 /*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 00:07:34 by aken              #+#    #+#             */
-/*   Updated: 2024/03/13 05:55:23 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/13 07:19:38 by aken             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ void	add_redirection(t_red **redirection, t_red *var)
 
 void	set_redirection(t_cmd *cmd, t_var var)
 {
-	cmd->redricts = NULL;
 	if (!ft_check_red(cmd->cmd_name))
 		return ;
 	var.i = -1;
