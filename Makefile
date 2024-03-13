@@ -11,7 +11,8 @@ SRC = main.c\
 	replace_env_vars.c\
 	cleaning_quotes.c\
 	setting_redirections.c\
-	tokenize_cmds.c
+	tokenize_cmds.c\
+	free.c
 
 SRC_TEST = test_driven.c\
 			parsing_quotes.c\

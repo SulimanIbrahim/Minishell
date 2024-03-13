@@ -6,7 +6,7 @@
 /*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/03/13 05:51:42 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/13 10:42:39 by aken             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,6 @@ int			ft_check_redirections(t_input *input, t_var *vars);
 void		set_redirection(t_cmd *cmd, t_var var);
 int			skip(char *cmds, char c);
 char		*ft_check_red(char *cmd_name);
+void		free_all(t_cmd **cmd, t_input *input);
 
 #endif
