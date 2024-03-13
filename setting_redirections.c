@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setting_redirections.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 00:07:34 by aken              #+#    #+#             */
-/*   Updated: 2024/03/12 07:10:42 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/13 05:55:23 by aken             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,17 +87,16 @@ void	add_redirection(t_red **redirection, t_red *var)
 	p->next_redricts = var;
 }
 
-void	set_redirection(t_cmd *cmd)
+void	set_redirection(t_cmd *cmd, t_var var)
 {
-	t_var	var;
-
-	if (!(ft_strchr(cmd->cmd_name, '<') || ft_strchr(cmd->cmd_name, '>')))
+	cmd->redricts = NULL;
+	if (!ft_check_red(cmd->cmd_name))
 		return ;
 	var.i = -1;
 	while (cmd->cmd_name[++var.i])
 	{
 		if (cmd->cmd_name[var.i] == '\'' || cmd->cmd_name[var.i] == '"')
-			var.i += skip(cmd->cmd_name + var.i, cmd->cmd_name[var.i]);
+			skip_quotes(cmd->cmd_name, &var.i, cmd->cmd_name[var.i]);
 		if (cmd->cmd_name[var.i] == '>' || cmd->cmd_name[var.i] == '<')
 		{
 			var.closed = var.i;
@@ -110,7 +109,7 @@ void	set_redirection(t_cmd *cmd)
 			var.temp = malloc(var.closed + 2);
 			ft_strlcpy(var.temp, cmd->cmd_name, var.closed + 1);
 			cmd->cmd_name = ft_strjoin(var.temp, cmd->cmd_name + var.i);
-			set_redirection(cmd);
+			set_redirection(cmd, var);
 			return ;
 		}
 	}
