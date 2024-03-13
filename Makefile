@@ -12,7 +12,8 @@ SRC = main.c\
 	cleaning_quotes.c\
 	setting_redirections.c\
 	tokenize_cmds.c\
-	signal_handle.c
+	signal_handle.c\
+	free.c
 
 SRC_TEST = test_driven.c\
 			parsing_quotes.c\

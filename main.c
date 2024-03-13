@@ -65,7 +65,8 @@ int main (int ac, char **av, char **env)
 			if (cmd)
 			{
 				// if (execute(cmd, &input, env))
-					continue ;
+				free_all(cmd, &input);
+					exit(0);
 			}
 			else
 				continue ;

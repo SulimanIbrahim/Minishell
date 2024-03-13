@@ -95,16 +95,17 @@ typedef struct command
 
 bool		parsing(t_input *input);
 bool		quote_parsing(char *line, t_var *var);
-void		skip_quotes(t_input *input, int *i, int q_type);
+void		skip_quotes(char *input, int *i, int q_type);
 bool		tokenize_cmds(t_input *input, t_cmd **cmds, t_var *var);
 bool		clean_quotes(t_input *input, t_var *var);
 char		*readline(const char *line);
 void		ft_check_env(t_input *input, t_var *vars);
 int			ft_check_redirections(t_input *input, t_var *vars);
-void		set_redirection(t_cmd *cmd);
+void		set_redirection(t_cmd *cmd, t_var var);
 int			skip(char *cmds, char c);
 void		signal_handler(int signum);
 void		rl_replace_line(const char *str, int line_num);
-
+char		*ft_check_red(char *cmd_name);
+void		free_all(t_cmd **cmd, t_input *input);
 
 #endif

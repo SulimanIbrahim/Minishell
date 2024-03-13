@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 00:48:25 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/09 07:57:25 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/13 06:01:07 by aken             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 static bool	find_pipe(t_input *input, int *len)
 {
 	if (input->cmds[*(len)] == DOUBLE_QUOTE)
-		skip_quotes(input, len, DOUBLE_QUOTE);
+		skip_quotes(input->cmds, len, DOUBLE_QUOTE);
 	if (input->cmds[*(len)] == SINGLE_QUOTE)
-		skip_quotes(input, len, SINGLE_QUOTE);
+		skip_quotes(input->cmds, len, SINGLE_QUOTE);
 	if (input->cmds[*(len)] == PIPE)
 		return (true);
 	return (false);
@@ -38,21 +38,22 @@ bool	tokenize_cmds(t_input *input, t_cmd **cmd, t_var *var)
 			var->i = -1;
 			cmd[++var->j] = (t_cmd *)ft_calloc(sizeof(t_cmd), 1);
 			cmd[var->j]->cmd_name = (char *)malloc(var->len + 1);
-			if (!cmd[var->j]->cmd_name)
+			if (!cmd[var->j] || !cmd[var->j]->cmd_name)
 				return (false);
 			while (var->n < var->len)
 				cmd[var->j]->cmd_name[++var->i] = input->cmds[++var->n];
 			cmd[var->j]->cmd_name[var->i] = '\0';
-			cmd[var->j]->redricts = NULL;
-			set_redirection(cmd[var->j]);
+			set_redirection(cmd[var->j], (*var));
 			cmd[var->j]->cmd = ft_split(cmd[var->j]->cmd_name, ' ');
 		}
+		if (!input->cmds[var->len])
+			break ;
 	}
 	return (true);
 }
 	// try this to print each cmd and the redirections in it
 	// int i = 0;
-	// while (cmd[i])
+	// while (i < input->num_of_cmd)
 	// {
 	// 	var->c = -1;
 	// 	while (cmd[i]->cmd[++var->c])
