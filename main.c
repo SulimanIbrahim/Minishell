@@ -6,7 +6,7 @@
 /*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/11 07:16:07 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/13 10:43:03 by aken             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int main (int ac, char **av, char **env)
 			if (cmd)
 			{
 				// if (execute(cmd, &input, env))
-					continue ;
+				free_all(cmd, &input);
+					exit(0);
 			}
 			else
 				continue ;
