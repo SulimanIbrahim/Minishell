@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/03/11 06:50:27 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/14 00:54:03 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # include <stdlib.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 # include "Libft-42/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -101,5 +103,8 @@ void		ft_check_env(t_input *input, t_var *vars);
 int			ft_check_redirections(t_input *input, t_var *vars);
 void		set_redirection(t_cmd *cmd);
 int			skip(char *cmds, char c);
+void		signal_handler(int signum);
+void		rl_replace_line(const char *str, int line_num);
+
 
 #endif
