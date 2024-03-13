@@ -6,7 +6,7 @@
 /*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 00:48:25 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/13 05:55:55 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/13 06:01:07 by aken             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ bool	tokenize_cmds(t_input *input, t_cmd **cmd, t_var *var)
 			var->i = -1;
 			cmd[++var->j] = (t_cmd *)ft_calloc(sizeof(t_cmd), 1);
 			cmd[var->j]->cmd_name = (char *)malloc(var->len + 1);
-			if (!cmd[var->j]->cmd_name)
+			if (!cmd[var->j] || !cmd[var->j]->cmd_name)
 				return (false);
 			while (var->n < var->len)
 				cmd[var->j]->cmd_name[++var->i] = input->cmds[++var->n];
