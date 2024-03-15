@@ -3,30 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:46:24 by aken              #+#    #+#             */
-/*   Updated: 2024/03/13 10:42:19 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/16 01:10:09 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_redirections(t_red	*redirection)
+void	free_redirections(t_red	**redirection)
 {
 	t_red	*tmp;
+	t_red	*p;
 
-	if (!redirection)
+	p = *redirection;
+	if (!p)
 		return ;
-	tmp = redirection;
-	while (tmp)
+	while (p)
 	{
-		tmp = redirection->next_redricts;
-		if (redirection->file_name)
-			free(redirection->file_name);
-		free(redirection);
+		tmp = p->next_redricts;
+		if (p->file_name)
+			free(p->file_name);
+		free(p);
+		p = tmp;
 	}
-	redirection = NULL;
+	*redirection = NULL;
 }
 
 void	free_input(t_input *input)
@@ -39,15 +41,21 @@ void	free_input(t_input *input)
 
 void	free_cmd(t_cmd *cmd)
 {
-	int	i;
+	int		i;
+	t_red	*red;
 
 	i = 0;
 	if (!cmd)
 		return ;
 	if (cmd->cmd_name)
 		free (cmd->cmd_name);
-	if (cmd->redricts)
-		free_redirections(cmd->redricts);
+	red = cmd->redricts;
+	while (red)
+	{
+		red = cmd->redricts->next_redricts;
+		free_redirections(&(cmd->redricts));
+		cmd->redricts = red;
+	}
 	if (cmd->cmd)
 	{
 		while (cmd->cmd[i])

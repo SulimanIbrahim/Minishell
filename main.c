@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/14 00:59:06 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/16 00:45:35 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int main (int ac, char **av, char **env)
 			{
 				// if (execute(cmd, &input, env))
 				free_all(cmd, &input);
-					exit(0);
+					// exit(0);
 			}
 			else
 				continue ;
