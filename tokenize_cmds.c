@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 00:48:25 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/13 06:01:07 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/16 06:52:33 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int num_of_error;
 
 static bool	find_pipe(t_input *input, int *len)
 {
@@ -31,6 +33,8 @@ bool	tokenize_cmds(t_input *input, t_cmd **cmd, t_var *var)
 	while (input->cmds[++var->len])
 	{
 		find_pipe(input, &var->len);
+		if (!input->cmds[var->len])
+			break ;
 		if (input->cmds[var->len + 1] == '\0' || input->cmds[var->len] == PIPE)
 		{
 			if (input->cmds[var->len + 1] == '\0')
@@ -43,26 +47,29 @@ bool	tokenize_cmds(t_input *input, t_cmd **cmd, t_var *var)
 			while (var->n < var->len)
 				cmd[var->j]->cmd_name[++var->i] = input->cmds[++var->n];
 			cmd[var->j]->cmd_name[var->i] = '\0';
+			cmd[var->j]->redricts = NULL;
 			set_redirection(cmd[var->j], (*var));
 			cmd[var->j]->cmd = ft_split(cmd[var->j]->cmd_name, ' ');
 		}
 		if (!input->cmds[var->len])
 			break ;
 	}
+	// try this to print each cmd and the redirections in it
+	int i = 0;
+	t_red *p;
+	while (i < input->num_of_cmd)
+	{
+		var->c = -1;
+		while (cmd[i]->cmd[++var->c])
+			printf("%s num_oferror == %i\n", cmd[i]->cmd[var->c], num_of_error);
+		p = cmd[i]->redricts;
+		while (p)
+		{
+			printf("status == \"%i\"  file == \"%s\" \n", p->type, p->file_name);
+			p = p->next_redricts;
+		}
+		printf("------- \n");
+		i++;
+	}
 	return (true);
 }
-	// try this to print each cmd and the redirections in it
-	// int i = 0;
-	// while (i < input->num_of_cmd)
-	// {
-	// 	var->c = -1;
-	// 	while (cmd[i]->cmd[++var->c])
-	// 		printf("%s\n", cmd[i]->cmd[var->c]);
-	// 	while (cmd[i]->redricts)
-	// 	{
-	// 		printf("status == \"%i\"  file == \"%s\"\n", cmd[i]->redricts->type, cmd[i]->redricts->file_name);
-	// 		cmd[i]->redricts = cmd[i]->redricts->next_redricts;
-	// 	}
-	// 	printf("------- \n");
-	// 	i++;
-	// }

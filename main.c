@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/14 00:59:06 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/16 06:53:24 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	num_of_error = 0;
+// num_of_error = 0;
 
 bool execute(t_cmd *cmd, t_input *input, char **env)
 {
@@ -52,11 +54,15 @@ int main (int ac, char **av, char **env)
 		signal(SIGINT, signal_handler);
 		signal(SIGQUIT, SIG_IGN);
 		input.num_of_cmd = 1;
-		input.cmds = readline("\x1b[94mMinishell >> \x1b[0m");
-		if (!input.cmds)
-			exit(1);
+		// input.cmds = readline("\x1b[94mMinishell >> \x1b[0m");
+		input.cmds = ft_strdup("$PATH > k");
 		input.env = env;
-		add_history(input.cmds);
+		if (!input.cmds)
+		{
+			free_all(NULL, &input);
+			exit(1);
+		}
+		// add_history(input.cmds);
 		if (parsing(&input))
 		{
 			cmd = (t_cmd **)ft_calloc(input.num_of_cmd, sizeof(t_cmd));

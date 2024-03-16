@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:29:36 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/13 05:41:49 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/16 06:52:11 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern	int	num_of_error;
 
 void	skip_quotes(char *input, int *i, int q_type)
 {
@@ -38,6 +40,7 @@ bool	pipe_parsing(t_input *input, t_var *var)
 			input->num_of_cmd++;
 			while (input->cmds[var->i] == ' ')
 				var->i++;
+			num_of_error = 6;
 			if (input->cmds[var->i] == '\0'
 				|| input->cmds[var->i] == PIPE)
 				return (printf("Syntax error : unexpected pipe \n"), false);
