@@ -6,27 +6,28 @@
 /*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:46:24 by aken              #+#    #+#             */
-/*   Updated: 2024/03/13 10:42:19 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/16 05:51:24 by aken             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_redirections(t_red	*redirection)
+void	free_redirections(t_red	**redirection)
 {
 	t_red	*tmp;
+	t_red	*p;
 
 	if (!redirection)
 		return ;
-	tmp = redirection;
-	while (tmp)
+	p = *redirection;
+	while (p)
 	{
-		tmp = redirection->next_redricts;
-		if (redirection->file_name)
-			free(redirection->file_name);
-		free(redirection);
+		tmp = p->next_redricts;
+		free(p->file_name);
+		free(p);
+		p = tmp;
 	}
-	redirection = NULL;
+	*redirection = NULL;
 }
 
 void	free_input(t_input *input)
@@ -39,7 +40,7 @@ void	free_input(t_input *input)
 
 void	free_cmd(t_cmd *cmd)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	if (!cmd)
@@ -47,7 +48,7 @@ void	free_cmd(t_cmd *cmd)
 	if (cmd->cmd_name)
 		free (cmd->cmd_name);
 	if (cmd->redricts)
-		free_redirections(cmd->redricts);
+		free_redirections(&(cmd->redricts));
 	if (cmd->cmd)
 	{
 		while (cmd->cmd[i])
@@ -69,4 +70,5 @@ void	free_all(t_cmd **cmd, t_input *input)
 		free(cmd);
 	}
 	free_input(input);
+	clear_history();
 }

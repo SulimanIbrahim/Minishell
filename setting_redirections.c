@@ -6,7 +6,7 @@
 /*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 00:07:34 by aken              #+#    #+#             */
-/*   Updated: 2024/03/13 07:19:38 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/16 05:07:22 by aken             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ t_enm	set_redirection_2(char *cmd)
 
 void	extracting_file_name(char *cmd, t_var *var)
 {
-	char	*file;
-
 	var->n = 0;
 	var->j = 0;
 	while (cmd[var->n] && cmd[var->n] != ' ')
@@ -49,17 +47,16 @@ void	extracting_file_name(char *cmd, t_var *var)
 			var->j++;
 		var->n++;
 	}
-	file = malloc(var->j + 1);
+	var->red->file_name = malloc(var->j + 1);
 	var->n = 0;
 	var->j = 0;
 	while (cmd[var->n] && cmd[var->n] != ' ')
 	{
 		if (cmd[var->n] && cmd[var->n] != '\'' && cmd[var->n] != '"')
-			file[var->j++] = cmd[var->n];
+			var->red->file_name[var->j++] = cmd[var->n];
 		var->n++;
 	}
-	file[var->j] = '\0';
-	var->red->file_name = file;
+	var->red->file_name[var->j] = '\0';
 	var->i += var->n;
 }
 
@@ -67,7 +64,7 @@ t_red	*alloc_redirection(void)
 {
 	t_red	*p;
 
-	p = malloc(sizeof(t_red) + 1);
+	p = malloc(sizeof(t_red));
 	p->next_redricts = NULL;
 	return (p);
 }
@@ -76,12 +73,12 @@ void	add_redirection(t_red **redirection, t_red *var)
 {
 	t_red	*p;
 
-	p = *redirection;
-	if (!p)
+	if (*redirection == NULL)
 	{
 		*redirection = var;
 		return ;
 	}
+	p = *redirection;
 	while (p->next_redricts)
 		p = p->next_redricts;
 	p->next_redricts = var;
@@ -89,6 +86,8 @@ void	add_redirection(t_red **redirection, t_red *var)
 
 void	set_redirection(t_cmd *cmd, t_var var)
 {
+	char	*tmp;
+
 	if (!ft_check_red(cmd->cmd_name))
 		return ;
 	var.i = -1;
@@ -100,14 +99,17 @@ void	set_redirection(t_cmd *cmd, t_var var)
 		{
 			var.closed = var.i;
 			var.red = alloc_redirection();
-			add_redirection(&(cmd->redricts), var.red);
 			var.red->type = set_redirection_2(cmd->cmd_name + var.i);
 			var.i += skip(cmd->cmd_name + var.i, cmd->cmd_name[var.i]);
 			var.i += skip(cmd->cmd_name + var.i, ' ');
 			extracting_file_name(cmd->cmd_name + var.i, &var);
-			var.temp = malloc(var.closed + 2);
-			ft_strlcpy(var.temp, cmd->cmd_name, var.closed + 1);
+			var.temp = malloc(var.closed + 1);
+			ft_strlcpy(var.temp, cmd->cmd_name, var.closed);
+			tmp = cmd->cmd_name;
 			cmd->cmd_name = ft_strjoin(var.temp, cmd->cmd_name + var.i);
+			free(tmp);
+			free (var.temp);
+			add_redirection(&(cmd->redricts), var.red);
 			set_redirection(cmd, var);
 			return ;
 		}

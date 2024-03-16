@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/14 00:59:06 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/16 05:49:51 by aken             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 bool execute(t_cmd *cmd, t_input *input, char **env)
 {
@@ -53,9 +52,13 @@ int main (int ac, char **av, char **env)
 		signal(SIGQUIT, SIG_IGN);
 		input.num_of_cmd = 1;
 		input.cmds = readline("\x1b[94mMinishell >> \x1b[0m");
-		if (!input.cmds)
-			exit(1);
+		// input.cmds = ft_strdup("ls >$ n $PATH >k	$p");
 		input.env = env;
+		if (!input.cmds)
+		{
+			free_all(NULL, &input);
+			exit(1);
+		}
 		add_history(input.cmds);
 		if (parsing(&input))
 		{
@@ -66,7 +69,7 @@ int main (int ac, char **av, char **env)
 			{
 				// if (execute(cmd, &input, env))
 				free_all(cmd, &input);
-					exit(0);
+					// exit(0);
 			}
 			else
 				continue ;
