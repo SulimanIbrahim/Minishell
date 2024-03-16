@@ -3,41 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/14 00:59:06 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/17 01:45:13 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-bool execute(t_cmd *cmd, t_input *input, char **env)
-{
-	int i = 0;
-	int id = 1;
-	int status;
-	char *command;
+// bool execute(t_cmd *cmd, t_input *input, char **env)
+// {
+// 	int i = 0;
+// 	int id = 1;
+// 	int status;
+// 	char *command;
 
-	env = NULL;
-	i = -1;
-	while (++i < input->num_of_cmd)
-	{
-		if (id == 0)
-			exit(0);
-		id = fork();
-		if (id == 0)
-		{
-			command = ft_strjoin("/bin/", cmd[i].cmd_name);
-			if (execve(command, &cmd[i].cmd_name, env) == -1)
-				printf("shell : command not found !!!\n");
-			exit(0);
-		}
-	}
-	wait(&status);
-	return (true);
-}
+// 	env = NULL;
+// 	i = -1;
+// 	while (++i < input->num_of_cmd)
+// 	{
+// 		if (id == 0)
+// 			exit(0);
+// 		id = fork();
+// 		if (id == 0)
+// 		{
+// 			command = ft_strjoin("/bin/", cmd[i].cmd_name);
+// 			if (execve(command, &cmd[i].cmd_name, env) == -1)
+// 				printf("shell : command not found !!!\n");
+// 			exit(0);
+// 		}
+// 	}
+// 	wait(&status);
+// 	return (true);
+// }
 
 int main (int ac, char **av, char **env)
 {
@@ -64,9 +64,9 @@ int main (int ac, char **av, char **env)
 			tokenize_cmds(&input, cmd, &var);
 			if (cmd)
 			{
-				// if (execute(cmd, &input, env))
-				free_all(cmd, &input);
+				if (!execute(cmd, &input))
 					exit(0);
+				free_all(cmd, &input);
 			}
 			else
 				continue ;

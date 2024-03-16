@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/03/14 00:54:03 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/17 01:35:04 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,5 +107,6 @@ void		signal_handler(int signum);
 void		rl_replace_line(const char *str, int line_num);
 char		*ft_check_red(char *cmd_name);
 void		free_all(t_cmd **cmd, t_input *input);
+bool		execute(t_cmd **cmd, t_input *input);
 
 #endif
