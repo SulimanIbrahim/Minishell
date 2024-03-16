@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 00:48:25 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/16 05:56:16 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/17 00:43:25 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ bool	tokenize_cmds(t_input *input, t_cmd **cmd, t_var *var)
 	// while (i < input->num_of_cmd)
 	// {
 	// 	var->c = -1;
+	// 	if (!cmd || !cmd[i])
+	// 		return (true);
 	// 	while (cmd[i]->cmd[++var->c])
 	// 		printf("%s\n", cmd[i]->cmd[var->c]);
 	// 	p = cmd[i]->redricts;
