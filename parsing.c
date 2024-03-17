@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:29:36 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/13 05:41:49 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/17 22:20:40 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ bool	parsing(t_input *input)
 	t_var	var;
 
 	if (!pipe_quote_pars(input, &var))
-		return (false);
+		return (free_input(input), false);
 	if (ft_check_redirections(input, &var))
-		return (false);
+		return (free_input(input), false);
 	ft_check_env(input, &var);
 	return (true);
 }

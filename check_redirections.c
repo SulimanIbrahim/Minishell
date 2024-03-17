@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 23:42:46 by aken              #+#    #+#             */
-/*   Updated: 2024/03/16 05:13:40 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/17 22:18:39 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ char	*ft_check_red(char *cmd_name)
 			skip_quotes(cmd_name, &i, cmd_name[i]);
 		if (cmd_name[i] && (cmd_name[i] == '>' || cmd_name[i] == '<'))
 			return (cmd_name + i);
+		else if (!cmd_name[i])
+			return (NULL);
 		i++;
 	}
 	return (NULL);

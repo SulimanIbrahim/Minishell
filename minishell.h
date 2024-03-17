@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/03/14 00:54:03 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/17 22:19:59 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,19 +93,20 @@ typedef struct command
 	t_red	*redricts;
 }		t_cmd;
 
+int			skip(char *cmds, char c);
+int			ft_check_redirections(t_input *input, t_var *vars);
 bool		parsing(t_input *input);
-bool		quote_parsing(char *line, t_var *var);
-void		skip_quotes(char *input, int *i, int q_type);
 bool		tokenize_cmds(t_input *input, t_cmd **cmds, t_var *var);
 bool		clean_quotes(t_input *input, t_var *var);
-char		*readline(const char *line);
-void		ft_check_env(t_input *input, t_var *vars);
-int			ft_check_redirections(t_input *input, t_var *vars);
-void		set_redirection(t_cmd *cmd, t_var var);
-int			skip(char *cmds, char c);
-void		signal_handler(int signum);
-void		rl_replace_line(const char *str, int line_num);
+bool		quote_parsing(char *line, t_var *var);
 char		*ft_check_red(char *cmd_name);
+char		*readline(const char *line);
+void		rl_replace_line(const char *str, int line_num);
+void		skip_quotes(char *input, int *i, int q_type);
+void		ft_check_env(t_input *input, t_var *vars);
+void		set_redirection(t_cmd *cmd, t_var var);
 void		free_all(t_cmd **cmd, t_input *input);
+void		signal_handler(int signum);
+void		free_input(t_input *input);
 
 #endif
