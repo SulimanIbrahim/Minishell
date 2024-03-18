@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/03/17 22:19:59 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/18 08:12:24 by aken             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ void		ft_check_env(t_input *input, t_var *vars);
 void		set_redirection(t_cmd *cmd, t_var var);
 void		free_all(t_cmd **cmd, t_input *input);
 void		signal_handler(int signum);
+void		init_var(t_var *var);
 void		free_input(t_input *input);
 
 #endif

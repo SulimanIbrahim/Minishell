@@ -1,6 +1,6 @@
 NAME = minishell
 NAME_TEST = result
-CFLAGS = -Wall -Wextra -Werror #-g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
 READLINE = -L/users/$(USER)/.brew/opt/readline/lib
 LIBFT = ./Libft-42/libft.a
 
@@ -34,13 +34,13 @@ all : $(NAME)
 
 $(NAME) : $(OBJ)
 	@make all -C ./Libft-42
-	$(CC) $(CFLAGS) $(READLINE) $(OBJ) $(LIBFT)  -I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -l readline -o $(NAME)
+	$(CC) $(CFLAGS) $(READLINE) $(OBJ) $(LIBFT) -I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -l readline -o $(NAME)
 
 test : $(NAME_TEST)
 
 $(NAME_TEST) : $(OBJ_TEST)
 	@make all -C ./Libft-42
-	$(CC) $(CFLAGS) $(READLINE) $(OBJ_TEST) $(LIBFT) -o $(NAME_TEST) 
+	$(CC) $(CFLAGS) $(READLINE) $(OBJ_TEST) $(LIBFT) -I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -l readline -o $(NAME_TEST) 
 clean :
 	@make clean -C ./Libft-42
 	rm -rf $(OBJ) $(OBJ_TEST)

@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 00:48:25 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/17 00:43:25 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/18 08:24:48 by aken             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	init_var(t_var *var)
+{
+	var->i = 0;
+	var->j = 0;
+	var->n = 0;
+	var->c = 0;
+	var->len = 0;
+	var->closed = 0;
+	var->temp = NULL;
+}
 
 static bool	find_pipe(t_input *input, int *len)
 {
