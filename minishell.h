@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/03/18 08:12:24 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/20 19:32:54 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ typedef struct vars
 	int		len;
 	int		closed;
 	char	*temp;
+	char	*temp2;
+	char	**path;
 	t_red	*red;
 }		t_var;
 
@@ -94,12 +96,15 @@ typedef struct command
 }		t_cmd;
 
 int			skip(char *cmds, char c);
+int			ft_check_builtins(char *s, char **env);
 int			ft_check_redirections(t_input *input, t_var *vars);
-bool		parsing(t_input *input);
+bool		execute(t_cmd **cmd, t_input *input, t_var *var);
 bool		tokenize_cmds(t_input *input, t_cmd **cmds, t_var *var);
 bool		clean_quotes(t_input *input, t_var *var);
 bool		quote_parsing(char *line, t_var *var);
+bool		parsing(t_input *input);
 char		*ft_check_red(char *cmd_name);
+char		**mini_split(char *s, char c);
 char		*readline(const char *line);
 void		rl_replace_line(const char *str, int line_num);
 void		skip_quotes(char *input, int *i, int q_type);
@@ -109,5 +114,8 @@ void		free_all(t_cmd **cmd, t_input *input);
 void		signal_handler(int signum);
 void		init_var(t_var *var);
 void		free_input(t_input *input);
+void		free_var(t_var	*var);
+void		free_all(t_cmd **cmd, t_input *input);
+void		free_cmd(t_cmd *cmd);
 
 #endif

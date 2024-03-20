@@ -6,37 +6,11 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/18 08:17:09 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/20 20:05:56 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-bool execute(t_cmd *cmd, t_input *input, char **env)
-{
-	int i = 0;
-	int id = 1;
-	int status;
-	char *command;
-
-	env = NULL;
-	i = -1;
-	while (++i < input->num_of_cmd)
-	{
-		if (id == 0)
-			exit(0);
-		id = fork();
-		if (id == 0)
-		{
-			command = ft_strjoin("/bin/", cmd[i].cmd_name);
-			if (execve(command, &cmd[i].cmd_name, env) == -1)
-				printf("shell : command not found !!!\n");
-			exit(0);
-		}
-	}
-	wait(&status);
-	return (true);
-}
 
 int main (int ac, char **av, char **env)
 {
@@ -52,7 +26,6 @@ int main (int ac, char **av, char **env)
 		signal(SIGQUIT, SIG_IGN);
 		input.num_of_cmd = 1;
 		input.cmds = readline("\x1b[94mMinishell >> \x1b[0m");
-		// input.cmds = ft_strdup("ls >$ n $PATH >k	$p");
 		input.env = env;
 		if (!input.cmds)
 		{
@@ -68,14 +41,11 @@ int main (int ac, char **av, char **env)
 			tokenize_cmds(&input, cmd, &var);
 			if (cmd)
 			{
-				// if (execute(cmd, &input, env))
+				// execute(cmd, &input, &var);
 				free_all(cmd, &input);
 					// exit(0);
 			}
-			else
-				continue ;
 		}
-		continue ;
 	}
 	return (0);
 }

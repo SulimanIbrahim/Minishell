@@ -6,11 +6,28 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:46:24 by aken              #+#    #+#             */
-/*   Updated: 2024/03/17 00:40:05 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:23:03 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_var(t_var	*var)
+{
+	var->i = 0;
+	if (!var)
+		return ;
+	if (var->temp)
+		free(var->temp);
+	if (var->temp2)
+		free(var->temp2);
+	if (var->path)
+	{
+		while (var->path[var->i])
+			free(var->path[var->i++]);
+		free(var->path);
+	}
+}
 
 void	free_redirections(t_red	**redirection)
 {
