@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:01:06 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/03/20 11:53:09 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:17:36 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ static	int	ft_end(char *s, char c, int start)
 		start += skip(s + start, ' ');
 		while (s[start] && s[start] != k)
 			start++;
-		return (start);
+		return (start++);
 	}
 	if (s[start] && s[start] != c && s[start] != '"' && s[start] != '\'')
 	{
 		while (s[start] && s[start] != c && s[start] != '"' && s[start] != '\'')
 			start++;
-		return (start);
+		return (start - 1);
 	}
 	return (start);
 }
@@ -72,7 +72,7 @@ static	int	ft_check_qout(t_var *var)
 	{
 		k = var->temp[i++];
 		i += skip(var->temp + i, ' ');
-		if (var->temp[i] && var->temp[i++] == k)
+		if (var->temp[i++] == k)
 			return (i);
 	}
 	return (0);
