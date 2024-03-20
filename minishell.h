@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/03/18 08:12:24 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/20 11:46:42 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,5 +109,6 @@ void		free_all(t_cmd **cmd, t_input *input);
 void		signal_handler(int signum);
 void		init_var(t_var *var);
 void		free_input(t_input *input);
+char		**mini_split(char *s, char c);
 
 #endif
