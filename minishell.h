@@ -114,5 +114,6 @@ void		free_all(t_cmd **cmd, t_input *input);
 void		signal_handler(int signum);
 void		init_var(t_var *var);
 void		free_input(t_input *input);
+char		**mini_split(char *s, char c);
 
 #endif
