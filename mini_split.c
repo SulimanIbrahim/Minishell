@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:01:06 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/03/21 12:35:47 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/22 00:46:19 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ static	int	ft_check_qout(t_var *var)
 	{
 		k = var->temp[i++];
 		i += skip(var->temp + i, ' ');
-		if (var->temp[i++] == k)
-			return (i);
+		if (var->temp[i] == k)
+			return (++i);
 	}
 	return (0);
 }
