@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/03/18 08:12:24 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/21 23:28:54 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ typedef	enum
 	OUTPUT,
 	APPEND,
 	HERDOC,
-	HERSTR,
 }		t_enm;
 
 typedef struct redirection
@@ -99,6 +98,7 @@ bool		parsing(t_input *input);
 bool		tokenize_cmds(t_input *input, t_cmd **cmds, t_var *var);
 bool		clean_quotes(t_input *input, t_var *var);
 bool		quote_parsing(char *line, t_var *var);
+char		**dup_shell(char **env);
 char		*ft_check_red(char *cmd_name);
 char		*readline(const char *line);
 void		rl_replace_line(const char *str, int line_num);
