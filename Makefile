@@ -13,7 +13,8 @@ SRC = main.c\
 	setting_redirections.c\
 	tokenize_cmds.c\
 	signal_handle.c\
-	free.c
+	free.c\
+	mini_split.c
 
 SRC_TEST = test_driven.c\
 	parsing.c\

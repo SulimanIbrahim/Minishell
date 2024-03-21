@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 00:48:25 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/18 08:24:48 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/20 11:54:53 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ bool	tokenize_cmds(t_input *input, t_cmd **cmd, t_var *var)
 			cmd[var->j]->cmd_name[var->i] = '\0';
 			cmd[var->j]->redricts = NULL;
 			set_redirection(cmd[var->j], (*var));
-			cmd[var->j]->cmd = ft_split(cmd[var->j]->cmd_name, ' ');
+			cmd[var->j]->cmd = mini_split(cmd[var->j]->cmd_name, ' ');
 		}
 		if (!input->cmds[var->len])
 			break ;
