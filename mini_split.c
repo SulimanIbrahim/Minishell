@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:01:06 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/03/20 15:17:36 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/21 12:35:47 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,10 @@ static	void	ft_word_counter(char *s, char c, t_var *var)
 			}
 			var->i++;
 		}
-		else if (s[var->i] && s[var->i] != c)
+		if (s[var->i] && s[var->i] != c)
 		{
 			var->closed++;
-			while (s[var->i] && s[var->i] != c
-				&& !(s[var->i] == '"' || s[var->i] == '\''))
+			while (s[var->i] && s[var->i] != c)
 				var->i++;
 		}
 	}
@@ -43,20 +42,21 @@ static	int	ft_end(char *s, char c, int start)
 {
 	char	k;
 
-	start += skip(s + start, ' ');
-	if (s[start] == '"' || s[start] == '\'')
+	while (s[start])
 	{
-		k = s[start++];
 		start += skip(s + start, ' ');
-		while (s[start] && s[start] != k)
+		if (s[start] && (s[start] == '"' || s[start] == '\''))
+		{
+			k = s[start++];
+			start += skip(s + start, ' ');
+			while (s[start] && s[start] != k)
+				start++;
 			start++;
-		return (start++);
-	}
-	if (s[start] && s[start] != c && s[start] != '"' && s[start] != '\'')
-	{
+		}
 		while (s[start] && s[start] != c && s[start] != '"' && s[start] != '\'')
 			start++;
-		return (start - 1);
+		if (s[start] && s[start] == c)
+			return (start - 1);
 	}
 	return (start);
 }
