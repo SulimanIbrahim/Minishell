@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/03/21 23:28:54 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/22 05:48:50 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef	enum
 	OUTPUT,
 	APPEND,
 	HERDOC,
+	HERSTR
 }		t_enm;
 
 typedef struct redirection
@@ -109,5 +110,6 @@ void		free_all(t_cmd **cmd, t_input *input);
 void		signal_handler(int signum);
 void		init_var(t_var *var);
 void		free_input(t_input *input);
+void		add_shlvl(char **env);
 
 #endif

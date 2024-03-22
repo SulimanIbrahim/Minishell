@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/21 23:13:34 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/22 05:47:26 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int main (int ac, char **av, char **env)
 	(void)av;
 	(void)ac;
 	input.env = dup_shell(env);
+	add_shlvl(input.env);
 	while (1)
 	{
 		signal(SIGINT, signal_handler);

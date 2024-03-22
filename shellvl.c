@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 21:10:16 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/03/21 23:28:44 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/22 06:00:14 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**dup_shell(char **env)
 	var.i = 0;
 	while (env[var.i])
 		var.i++;
-	dup_shell = malloc(sizeof(char *) * var.i + 1);
+	dup_shell = malloc(sizeof(char *) * (var.i + 1));
 	var.i = -1;
 	while (env[++var.i])
 		dup_shell[var.i] = ft_strdup(env[var.i]);
@@ -32,17 +32,17 @@ char	**dup_shell(char **env)
 
 void	add_shlvl(char **env)
 {
-	t_var	var;
+	t_var		var;
 
 	var.i = 0;
 	if (!env || !env[0])
 		return ;
-	while (env[var.i] && !ft_strncmp(env[var.i], "SHLVL", 6))
+	while (env[var.i] && ft_strncmp(env[var.i], "SHLVL", 5))
 		var.i++;
 	if (!env[var.i])
 		return ;
 	var.n = ft_atoi(ft_strchr(env[var.i], '=') + 1);
 	var.temp = env[var.i];
 	free(var.temp);
-	
+	env[var.i] = ft_strdup(ft_strjoin("SHLVL=", ft_itoa(var.n + 1)));
 }

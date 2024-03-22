@@ -1,6 +1,6 @@
 NAME = minishell
 NAME_TEST = result
-CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 READLINE = -L/users/$(USER)/.brew/opt/readline/lib
 LIBFT = ./Libft-42/libft.a
 
@@ -13,7 +13,8 @@ SRC = main.c\
 	setting_redirections.c\
 	tokenize_cmds.c\
 	signal_handle.c\
-	free.c
+	free.c\
+	shellvl.c
 
 SRC_TEST = test_driven.c\
 	parsing.c\
