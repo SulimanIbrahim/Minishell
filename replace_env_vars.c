@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   replace_env_vars.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 23:43:11 by aken              #+#    #+#             */
-/*   Updated: 2024/03/18 08:23:35 by aken             ###   ########.fr       */
+/*   Updated: 2024/03/21 22:49:54 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*env_srch(char *cmd)
 		return (NULL);
 	while (cmd[i])
 	{
-		if (cmd[i] == '\'' || cmd[i] == '"')
+		if (cmd[i] == '\'')
 			skip_quotes(cmd, &i, cmd[i]);
 		if (cmd[i] && cmd[i] == '$' && cmd[i + 1] && cmd[i + 1] != ' ')
 			return (cmd + i);

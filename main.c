@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/20 20:05:56 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/22 05:36:37 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,14 @@ int main (int ac, char **av, char **env)
 
 	(void)av;
 	(void)ac;
+	input.env = dup_shell(env);
+	add_shlvl(input.env);
 	while (1)
 	{
 		signal(SIGINT, signal_handler);
 		signal(SIGQUIT, SIG_IGN);
 		input.num_of_cmd = 1;
 		input.cmds = readline("\x1b[94mMinishell >> \x1b[0m");
-		input.env = env;
 		if (!input.cmds)
 		{
 			free_all(NULL, &input);
@@ -39,9 +40,9 @@ int main (int ac, char **av, char **env)
 			cmd = (t_cmd **)ft_calloc(input.num_of_cmd, sizeof(t_cmd));
 			cmd[input.num_of_cmd] = NULL;
 			tokenize_cmds(&input, cmd, &var);
-			if (cmd)
+			if (cmd && cmd[0])
 			{
-				// execute(cmd, &input, &var);
+				execute(cmd, &input, &var);
 				free_all(cmd, &input);
 					// exit(0);
 			}

@@ -6,11 +6,11 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:01:06 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/03/20 14:49:16 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/22 00:56:00 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+# include "minishell.h"
 
 static	void	ft_word_counter(char *s, char c, t_var *var)
 {
@@ -27,13 +27,13 @@ static	void	ft_word_counter(char *s, char c, t_var *var)
 				while (s[var->i] && s[var->i] != var->j)
 					var->i++;
 			}
-			var->i++;
+			else
+				var->i++;
 		}
-		else if (s[var->i] && s[var->i] != c)
+		if (s[var->i] && s[var->i] != c)
 		{
 			var->closed++;
-			while (s[var->i] && s[var->i] != c
-				&& !(s[var->i] == '"' || s[var->i] == '\''))
+			while (s[var->i] && s[var->i] != c)
 				var->i++;
 		}
 	}
@@ -43,20 +43,20 @@ static	int	ft_end(char *s, char c, int start)
 {
 	char	k;
 
-	start += skip(s + start, ' ');
-	if (s[start] == '"' || s[start] == '\'')
+	while (s[start])
 	{
-		k = s[start++];
 		start += skip(s + start, ' ');
-		while (s[start] && s[start] != k)
-			start++;
-		return (start++);
-	}
-	if (s[start] && s[start] != c && s[start] != '"' && s[start] != '\'')
-	{
+		if (s[start] && (s[start] == '"' || s[start] == '\''))
+		{
+			k = s[start++];
+			start += skip(s + start, ' ');
+			while (s[start] && s[start] != k)
+				start++;
+		}
 		while (s[start] && s[start] != c && s[start] != '"' && s[start] != '\'')
 			start++;
-		return (start - 1);
+		if (s[start] && s[start] == c)
+			return (start - 1);
 	}
 	return (start);
 }
@@ -72,8 +72,8 @@ static	int	ft_check_qout(t_var *var)
 	{
 		k = var->temp[i++];
 		i += skip(var->temp + i, ' ');
-		if (var->temp[i++] == k)
-			return (i);
+		if (var->temp[i] == k)
+			return (++i);
 	}
 	return (0);
 }
@@ -93,10 +93,9 @@ static	char	**ft_set(char **d, char c, int cc, t_var *var)
 		var->n = 0;
 		while (var->i <= var->j && var->i <= var->len)
 		{
-			if (var->temp[var->i] == '"' || var->temp[var->i] == '\'')
-				var->i++;
-			else
-				d[var->c][var->n++] = var->temp[var->i++];
+			if (var->temp[var->i] != '"' && var->temp[var->i] != '\'')
+				d[var->c][var->n++] = var->temp[var->i];
+			var->i++;
 		}
 		d[var->c][var->n] = 0;
 		var->c++;

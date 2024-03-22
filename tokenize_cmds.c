@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 00:48:25 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/20 20:06:06 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/22 01:05:47 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	init_var(t_var *var)
 	var->c = 0;
 	var->len = 0;
 	var->closed = 0;
+	var->id = 0;
 	var->temp = NULL;
 	var->temp2 = NULL;
 	var->path = NULL;
@@ -75,7 +76,7 @@ bool	tokenize_cmds(t_input *input, t_cmd **cmd, t_var *var)
 		if (!cmd || !cmd[i])
 			return (true);
 		while (cmd[i]->cmd[++var->c])
-			printf("%s\n", cmd[i]->cmd[var->c]);
+			printf("(%s)\n", cmd[i]->cmd[var->c]);
 		p = cmd[i]->redricts;
 		while (p)
 		{
