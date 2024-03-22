@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/22 05:47:26 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/22 06:09:03 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int main (int ac, char **av, char **env)
 		signal(SIGQUIT, SIG_IGN);
 		input.num_of_cmd = 1;
 		input.cmds = readline("\x1b[94mMinishell >> \x1b[0m");
-		// input.cmds = ft_strdup("ls >$ n $PATH >k	$p");
 		if (!input.cmds)
 		{
 			free_all(NULL, &input);

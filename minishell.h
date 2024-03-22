@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/03/22 05:48:50 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/22 06:08:26 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef	enum
 	OUTPUT,
 	APPEND,
 	HERDOC,
-	HERSTR
+	HERSTR,
 }		t_enm;
 
 typedef struct redirection

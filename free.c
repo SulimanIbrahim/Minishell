@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:46:24 by aken              #+#    #+#             */
-/*   Updated: 2024/03/22 06:04:50 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/22 06:08:46 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,6 @@ void	free_redirections(t_red	**redirection)
 
 void	free_input(t_input *input)
 {
-	int	i;
-
-	i = 0;
 	if (!input)
 		return ;
 	if (input->cmds)
