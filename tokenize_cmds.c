@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 00:48:25 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/20 11:54:53 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/22 00:32:58 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,6 @@ bool	tokenize_cmds(t_input *input, t_cmd **cmd, t_var *var)
 		if (!input->cmds[var->len])
 			break ;
 	}
-	return (true);
-}
-	// try this to print each cmd and the redirections in it
 	// int i = 0;
 	// t_red *p;
 	// while (i < input->num_of_cmd)
@@ -84,3 +81,6 @@ bool	tokenize_cmds(t_input *input, t_cmd **cmd, t_var *var)
 	// 	printf("------- \n");
 	// 	i++;
 	// }
+	return (true);
+}
+	// try this to print each cmd and the redirections in it

@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/03/21 08:38:55 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/22 00:04:48 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct vars
 	int		status;
 	int		len;
 	int		closed;
-	int		*fd;
+	int		fd[2];
 	char	*temp;
 	char	*cmd_tmp;
 	t_red	*red;

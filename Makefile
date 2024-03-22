@@ -25,7 +25,8 @@ SRC_TEST = test_driven.c\
 	setting_redirections.c\
 	tokenize_cmds.c\
 	signal_handle.c\
-	free.c
+	free.c\
+	mini_split.c
 
 OBJ = $(SRC:%.c=%.o)
 

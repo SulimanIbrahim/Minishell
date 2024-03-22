@@ -6,16 +6,17 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/21 09:02:47 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/22 15:52:43 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+
+
 bool execute(t_cmd **cmd, t_input *input, t_var *var)
 {
 	var->id = 1;
-	var->i = -1;
 	var->j = 0;
 	if (input->num_of_cmd == 1)
 	{
@@ -36,20 +37,38 @@ bool execute(t_cmd **cmd, t_input *input, t_var *var)
 	}
 	else
 	{
+		var->i = -1;
+		var->j = 0;
 		while (++var->i < input->num_of_cmd)
 		{
+			pipe(var->fd);
 			if (var->id == 0)
 				exit(0);
 			var->id = fork();
 			if (var->id == 0)
 			{
+				if (var->i == 0)
+				{
+					close(var->fd[0]);
+					dup2(var->fd[1], STDOUT_FILENO);
+				}
+				else if ((var->i + 1) == input->num_of_cmd)
+				{
+					dup2(var->fd[0], STDIN_FILENO);
+					close(var->fd[1]);
+				}
+				else
+				{
+					dup2(var->fd[0], STDIN_FILENO);
+					dup2(var->fd[1], STDOUT_FILENO);	
+				}
 				var->len = ft_strlen(cmd[var->i]->cmd[0]);
 				if (ft_strnstr(cmd[var->i]->cmd[0], "/bin/", var->len) == NULL)
-					cmd[var->i]->cmd_path = ft_strjoin("/bin/", cmd[0]->cmd[0]);
+					cmd[var->i]->cmd_path = ft_strjoin("/bin/", cmd[var->i]->cmd[0]);
 				else
 					cmd[var->i]->cmd_path = cmd[var->i]->cmd[0];
 				if (execve(cmd[var->i]->cmd_path, cmd[var->i]->cmd, NULL) == -1)
-					printf("command not found !!!\n");
+					printf("(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
 				exit(0);
 			}
 		}
@@ -72,7 +91,6 @@ int main (int ac, char **av, char **env)
 		signal(SIGQUIT, SIG_IGN);
 		input.num_of_cmd = 1;
 		input.cmds = readline("\x1b[94mMinishell >> \x1b[0m");
-		// input.cmds = ft_strdup("ls >$ n $PATH >k	$p");
 		input.env = env;
 		if (!input.cmds)
 		{
@@ -90,7 +108,6 @@ int main (int ac, char **av, char **env)
 			{
 				if (execute(cmd, &input, &var))
 				free_all(cmd, &input);
-					// exit(0);
 			}
 			else
 				continue ;
