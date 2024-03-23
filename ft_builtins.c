@@ -56,7 +56,7 @@ int	ft_env(char **env)
 	return (1);
 }
 
-bool	ft_exec_builtin(char *s, int i, char **env)
+bool	ft_exec_builtin(char *s, int i, t_input *input)
 {
 	printf("inside!!!!!!!!!!!!!!!!!!!\n");
 	if (i == 0)
@@ -66,15 +66,15 @@ bool	ft_exec_builtin(char *s, int i, char **env)
 	else if (i == 2)
 		return (pwd());
 	else if (i == 3)
-		return (1);
+		export(s, input);
 	else if (i == 4)
 		return (1);
 	else if (i == 5)
-		return (ft_env(env));
+		return (ft_env(input->env));
 	return (true);
 }
 
-bool	ft_check_builtins(char *s, char **env)
+bool	ft_check_builtins(t_cmd *cmd, t_input *input)
 {
 	char *builtins[] = {"cd", "echo"
 			, "pwd", "export", "unset", "env", NULL};
@@ -85,13 +85,14 @@ bool	ft_check_builtins(char *s, char **env)
 	j = 0;
 	while (builtins[i])
 	{
-		if (builtins[i][j] == s[j])
+		if (builtins[i][j] == cmd->cmd_name[j])
 		{
-			while (s[j] && builtins[i][j]
-					&& s[j] != ' ' && s[j] == builtins[i][j])
+			while (cmd->cmd_name[j] && builtins[i][j]
+					&& cmd->cmd_name[j] != ' '
+					&& cmd->cmd_name[j] == builtins[i][j])
 				j++;
-			if (!builtins[i][j] && (!s[j] || s[j] == ' '))
-				return (ft_exec_builtin(s + j, i, env));
+			if (!builtins[i][j] && (!cmd->cmd_name[j] || cmd->cmd_name[j] == ' '))
+				return (ft_exec_builtin(cmd->cmd_name + j, i, input));
 		}
 		j = 0;
 		i++;

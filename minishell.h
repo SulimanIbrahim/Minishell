@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/03/22 05:27:37 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/23 00:55:33 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ typedef struct command
 }		t_cmd;
 
 int			skip(char *cmds, char c);
-bool		ft_check_builtins(char *s, char **env);
+bool		ft_check_builtins(t_cmd *cmd, t_input *input);
 int			ft_check_redirections(t_input *input, t_var *vars);
 bool		execute(t_cmd **cmd, t_input *input, t_var *var);
 bool		tokenize_cmds(t_input *input, t_cmd **cmds, t_var *var);
@@ -116,9 +116,10 @@ void		free_all(t_cmd **cmd, t_input *input);
 void		signal_handler(int signum);
 void		init_var(t_var *var);
 void		free_input(t_input *input);
-void		free_var(t_var	*var);
+int			free_var(t_var	*var);
 void		free_all(t_cmd **cmd, t_input *input);
 void		free_cmd(t_cmd *cmd);
 void		add_shlvl(char **env);
+void		export(char *s, t_input *input);
 
 #endif

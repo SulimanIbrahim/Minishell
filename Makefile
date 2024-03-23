@@ -17,7 +17,8 @@ SRC = main.c\
 	mini_split.c\
 	execution.c\
 	ft_builtins.c\
-	shellvl.c
+	shellvl.c\
+	export.c
 
 SRC_TEST = test_driven.c\
 	parsing.c\

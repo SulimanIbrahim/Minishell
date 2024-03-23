@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 01:17:41 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/03/21 23:03:14 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/22 21:01:03 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ bool	execute_cmd(t_cmd **cmd, t_input *input, t_var *var, int i)
 				printf("shell : command not found %s\n", cmd[i]->cmd[0]);
 		}
 		free_all(cmd, input);
-		free_var(var);
-		exit (0);
+		exit (free_var(var));
 	}
 	wait(&var->c);
 	return (true);
@@ -64,7 +63,7 @@ bool	execute(t_cmd **cmd, t_input *input, t_var *var)
 	i = 0;
 	if (input->num_of_cmd == 1)
 	{
-		if (!ft_check_builtins(cmd[i]->cmd_name, input->env))
+		if (!ft_check_builtins(cmd[i], input))
 			execute_cmd(cmd, input, var, i);
 	}
 	return (true);

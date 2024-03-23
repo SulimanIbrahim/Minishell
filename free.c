@@ -6,17 +6,17 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:46:24 by aken              #+#    #+#             */
-/*   Updated: 2024/03/21 23:00:44 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/22 19:53:53 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_var(t_var	*var)
+int	free_var(t_var	*var)
 {
 	var->i = 0;
 	if (!var)
-		return ;
+		return (0);
 	if (var->temp)
 		free(var->temp);
 	if (var->path)
@@ -25,6 +25,7 @@ void	free_var(t_var	*var)
 			free(var->path[var->i++]);
 		free(var->path);
 	}
+	return (0);
 }
 
 void	free_redirections(t_red	**redirection)
