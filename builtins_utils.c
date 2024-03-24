@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_builtins.c                                      :+:      :+:    :+:   */
+/*   builtins_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/24 05:38:39 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/03/24 05:42:33 by ahibrahi         ###   ########.fr       */
+/*   Created: 2024/03/24 20:42:00 by ahibrahi          #+#    #+#             */
+/*   Updated: 2024/03/24 20:42:37 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,13 @@ int	echo(char *s)
 		i++;
 	}
 	if (flag == 0)
-		write(1, "\n",1);
+		write(1, "\n", 1);
 	return (1);
+}
+
+int	pwd(void)
+{
+	return (printf("%s\n", getenv("PWD")));
 }
 
 int	ft_env(char **env)
@@ -61,48 +66,4 @@ int	ft_env(char **env)
 	while (env[i])
 		echo(env[i++]);
 	return (1);
-}
-
-bool	ft_exec_builtin(char *s, int i, t_input *input)
-{
-	if (i == 0)
-		return (cd(s));
-	else if (i == 1)
-		return (echo(s));
-	else if (i == 2)
-		return (pwd());
-	else if (i == 3)
-		export(s, input);
-	else if (i == 4)
-		unset(s, input);
-	else if (i == 5)
-		return (ft_env(input->env));
-	return (true);
-}
-
-bool	ft_check_builtins(t_cmd *cmd, t_input *input)
-{
-	int	i;
-	int	j;
-	char *builtins[] = {"cd", "echo"
-			, "pwd", "export", "unset", "env", NULL};
-
-	i = 0;
-	j = 0;
-	while (builtins[i])
-	{
-		if (builtins[i][j] == cmd->cmd_name[j])
-		{
-			while (cmd->cmd_name[j] && builtins[i][j]
-					&& cmd->cmd_name[j] != ' '
-					&& cmd->cmd_name[j] == builtins[i][j])
-				j++;
-			if (!builtins[i][j]
-				&& (!cmd->cmd_name[j] || cmd->cmd_name[j] == ' '))
-				return (ft_exec_builtin(cmd->cmd_name + j, i, input));
-		}
-		j = 0;
-		i++;
-	}
-	return (false);
 }

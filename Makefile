@@ -16,7 +16,8 @@ SRC = main.c\
 	free.c\
 	mini_split.c\
 	execution.c\
-	ft_builtins.c\
+	builtins_utils.c\
+	builtins.c\
 	shellvl.c\
 	export.c\
 	unset.c

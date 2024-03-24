@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/03/24 01:36:58 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/24 20:44:11 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,9 +120,13 @@ int			free_var(t_var	*var);
 void		free_all(t_cmd **cmd, t_input *input);
 void		free_cmd(t_cmd *cmd);
 void		add_shlvl(char **env);
+int			env_len(char **env);
 void		export(char *s, t_input *input);
 void		unset(char *s, t_input *input);
-int			env_len(char **env);
+int			cd(char *s);
+int			echo(char *s);
+int			pwd(void);
+int			ft_env(char **env);
 void		free_split(char **split);
 
 #endif

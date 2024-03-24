@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 00:48:25 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/22 01:05:47 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/24 20:46:10 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,24 +68,24 @@ bool	tokenize_cmds(t_input *input, t_cmd **cmd, t_var *var)
 		if (!input->cmds[var->len])
 			break ;
 	}
-	int i = 0;
-	t_red *p;
-	while (i < input->num_of_cmd)
-	{
-		var->c = -1;
-		if (!cmd || !cmd[i])
-			return (true);
-		while (cmd[i]->cmd[++var->c])
-			printf("(%s)\n", cmd[i]->cmd[var->c]);
-		p = cmd[i]->redricts;
-		while (p)
-		{
-			printf("status == \"%i\"  file == \"%s\" \n", p->type, p->file_name);
-			p = p->next_redricts;
-		}
-		printf("------- \n");
-		i++;
-	}
 	return (true);
 }
+	// int i = 0;
+	// t_red *p;
+	// while (i < input->num_of_cmd)
+	// {
+	// 	var->c = -1;
+	// 	if (!cmd || !cmd[i])
+	// 		return (true);
+	// 	while (cmd[i]->cmd[++var->c])
+	// 		printf("(%s)\n", cmd[i]->cmd[var->c]);
+	// 	p = cmd[i]->redricts;
+	// 	while (p)
+	// 	{
+	// 		printf("status == \"%i\"  file == \"%s\" \n", p->type, p->file_name);
+	// 		p = p->next_redricts;
+	// 	}
+	// 	printf("------- \n");
+	// 	i++;
+	// }
 	// try this to print each cmd and the redirections in it

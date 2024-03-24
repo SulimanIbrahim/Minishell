@@ -6,16 +6,11 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 19:58:29 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/03/24 05:39:30 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/24 20:42:25 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	pwd(void)
-{
-	return (printf("%s\n", getenv("PWD")));
-}
 
 static	int	env_search(char *new, char **env)
 {
