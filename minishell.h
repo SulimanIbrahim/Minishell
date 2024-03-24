@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/03/22 06:08:26 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/21 08:38:55 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,13 @@ typedef struct vars
 	int		j;
 	int		n;
 	int		c;
+	int		id;
+	int		status;
 	int		len;
 	int		closed;
+	int		*fd;
 	char	*temp;
+	char	*cmd_tmp;
 	t_red	*red;
 }		t_var;
 
@@ -90,6 +94,7 @@ typedef struct command
 {
 	char	*cmd_name;
 	char	**cmd;
+	char	*cmd_path;
 	t_red	*redricts;
 }		t_cmd;
 
@@ -111,5 +116,6 @@ void		signal_handler(int signum);
 void		init_var(t_var *var);
 void		free_input(t_input *input);
 void		add_shlvl(char **env);
+char		**mini_split(char *s, char c);
 
 #endif
