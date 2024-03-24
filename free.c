@@ -6,7 +6,11 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:46:24 by aken              #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/03/24 21:28:28 by ahibrahi         ###   ########.fr       */
+=======
+/*   Updated: 2024/03/22 06:08:46 by ahibrahi         ###   ########.fr       */
+>>>>>>> b472a6a91b3710ca92205f12834628889f43cbd8
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +40,12 @@ void	free_input(t_input *input)
 	if (!input)
 		return ;
 	if (input->cmds)
+<<<<<<< HEAD
 		free (input->cmds);
 	// free (input);
+=======
+		free(input->cmds);
+>>>>>>> b472a6a91b3710ca92205f12834628889f43cbd8
 }
 
 void	free_cmd(t_cmd *cmd)

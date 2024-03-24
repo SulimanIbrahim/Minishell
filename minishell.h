@@ -7,10 +7,14 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*   Updated: 2024/03/16 06:53:18 by ahibrahi         ###   ########.fr       */
 =======
 /*   Updated: 2024/03/21 08:38:55 by suibrahi         ###   ########.fr       */
 >>>>>>> e71d4723a1539649c6a00d1d5adcb437bc40b619
+=======
+/*   Updated: 2024/03/22 06:08:26 by ahibrahi         ###   ########.fr       */
+>>>>>>> b472a6a91b3710ca92205f12834628889f43cbd8
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +113,7 @@ bool		parsing(t_input *input);
 bool		tokenize_cmds(t_input *input, t_cmd **cmds, t_var *var);
 bool		clean_quotes(t_input *input, t_var *var);
 bool		quote_parsing(char *line, t_var *var);
+char		**dup_shell(char **env);
 char		*ft_check_red(char *cmd_name);
 char		*readline(const char *line);
 void		rl_replace_line(const char *str, int line_num);
@@ -119,6 +124,10 @@ void		free_all(t_cmd **cmd, t_input *input);
 void		signal_handler(int signum);
 void		init_var(t_var *var);
 void		free_input(t_input *input);
+<<<<<<< HEAD
 char		**mini_split(char *s, char c);
+=======
+void		add_shlvl(char **env);
+>>>>>>> b472a6a91b3710ca92205f12834628889f43cbd8
 
 #endif
