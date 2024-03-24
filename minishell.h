@@ -104,6 +104,7 @@ bool		parsing(t_input *input);
 bool		tokenize_cmds(t_input *input, t_cmd **cmds, t_var *var);
 bool		clean_quotes(t_input *input, t_var *var);
 bool		quote_parsing(char *line, t_var *var);
+char		**dup_shell(char **env);
 char		*ft_check_red(char *cmd_name);
 char		*readline(const char *line);
 void		rl_replace_line(const char *str, int line_num);
@@ -114,6 +115,7 @@ void		free_all(t_cmd **cmd, t_input *input);
 void		signal_handler(int signum);
 void		init_var(t_var *var);
 void		free_input(t_input *input);
+void		add_shlvl(char **env);
 char		**mini_split(char *s, char c);
 
 #endif

@@ -1,21 +1,22 @@
 NAME = minishell
 NAME_TEST = result
-CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 READLINE = -L/users/$(USER)/.brew/opt/readline/lib
 LIBFT = ./Libft-42/libft.a
 
 SRC = main.c\
 	parsing.c\
 	parsing_quotes.c\
-  	check_redirections.c\
+  check_redirections.c\
 	replace_env_vars.c\
 	cleaning_quotes.c\
 	setting_redirections.c\
 	tokenize_cmds.c\
 	signal_handle.c\
 	free.c\
-	mini_split.c
-
+	shellvl.c\
+  mini_split.c
+ 
 SRC_TEST = test_driven.c\
 	parsing.c\
 	parsing_quotes.c\
@@ -25,7 +26,9 @@ SRC_TEST = test_driven.c\
 	setting_redirections.c\
 	tokenize_cmds.c\
 	signal_handle.c\
-	free.c
+	free.c\
+  shellvl.c\
+  mini_split.c
 
 OBJ = $(SRC:%.c=%.o)
 
