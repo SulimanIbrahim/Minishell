@@ -6,7 +6,11 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/03/16 06:53:18 by ahibrahi         ###   ########.fr       */
+=======
+/*   Updated: 2024/03/21 08:38:55 by suibrahi         ###   ########.fr       */
+>>>>>>> e71d4723a1539649c6a00d1d5adcb437bc40b619
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +78,13 @@ typedef struct vars
 	int		j;
 	int		n;
 	int		c;
+	int		id;
+	int		status;
 	int		len;
 	int		closed;
+	int		*fd;
 	char	*temp;
+	char	*cmd_tmp;
 	t_red	*red;
 }		t_var;
 
@@ -91,22 +99,26 @@ typedef struct command
 {
 	char	*cmd_name;
 	char	**cmd;
+	char	*cmd_path;
 	t_red	*redricts;
 }		t_cmd;
 
+int			skip(char *cmds, char c);
+int			ft_check_redirections(t_input *input, t_var *vars);
 bool		parsing(t_input *input);
-bool		quote_parsing(char *line, t_var *var);
-void		skip_quotes(char *input, int *i, int q_type);
 bool		tokenize_cmds(t_input *input, t_cmd **cmds, t_var *var);
 bool		clean_quotes(t_input *input, t_var *var);
-char		*readline(const char *line);
-void		ft_check_env(t_input *input, t_var *vars);
-int			ft_check_redirections(t_input *input, t_var *vars);
-void		set_redirection(t_cmd *cmd, t_var var);
-int			skip(char *cmds, char c);
-void		signal_handler(int signum);
-void		rl_replace_line(const char *str, int line_num);
+bool		quote_parsing(char *line, t_var *var);
 char		*ft_check_red(char *cmd_name);
+char		*readline(const char *line);
+void		rl_replace_line(const char *str, int line_num);
+void		skip_quotes(char *input, int *i, int q_type);
+void		ft_check_env(t_input *input, t_var *vars);
+void		set_redirection(t_cmd *cmd, t_var var);
 void		free_all(t_cmd **cmd, t_input *input);
+void		signal_handler(int signum);
+void		init_var(t_var *var);
+void		free_input(t_input *input);
+char		**mini_split(char *s, char c);
 
 #endif

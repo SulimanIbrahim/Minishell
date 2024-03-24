@@ -15,116 +15,154 @@ int main(int ac, char **av, char **env){
     (void)av;
 	(void)ac;
     input.env = env;
-    input.cmds = "|\0";
+    input.cmds = ft_strdup("|");
 
    test_add(&input, false, 1);
     ////////////////////////////////////////////////////
-   input.cmds = "ld | fdgd |\0";
+    free_all(NULL, &input);
+   input.cmds = ft_strdup("ld | fdgd |");
    test_add(&input, false, 2);
    ////////////////////////////////////////////////////
-   input.cmds = "ls | ls\0";
+    free_all(NULL, &input);
+   input.cmds = ft_strdup("ls | ls");
    test_add(&input, true, 3);
    ////////////////////////////////////////////////////
-   input.cmds = "ls || ls\0";
+    free_all(NULL, &input);
+   input.cmds = ft_strdup("ls || ls");
    test_add(&input, false, 4);
    ////////////////////////////////////////////////////
-   input.cmds = "\'\'\0";
+    free_all(NULL, &input);
+   input.cmds = ft_strdup("\'\'");
    test_add(&input, true, 5);
    ////////////////////////////////////////////////////
-   input.cmds = "\"\"\0";
+    free_all(NULL, &input);
+   input.cmds = ft_strdup("\"\"");
    test_add(&input, true, 6);
    ////////////////////////////////////////////////////
-   input.cmds = "\'ls\"\0";
+    free_all(NULL, &input);
+   input.cmds = ft_strdup("\'ls\"");
    test_add(&input, false, 7);
    ////////////////////////////////////////////////////
-   input.cmds = "\"ls\"\0";
+    free_all(NULL, &input);
+   input.cmds = ft_strdup("\"ls\"");
    test_add(&input, true, 8);
    ////////////////////////////////////////////////////
-   input.cmds = "\"\"\"\'\0";
+    free_all(NULL, &input);
+   input.cmds = ft_strdup("\"\"\"\'");
    test_add(&input, false, 9);
    ////////////////////////////////////////////////////
-   input.cmds = "\"\'\"\'\0";
+    free_all(NULL, &input);
+   input.cmds = ft_strdup("\"\'\"\'");
    test_add(&input, false, 10);
    ////////////////////////////////////////////////////
-   input.cmds = "\"\'\"\'\0";
+    free_all(NULL, &input);
+   input.cmds = ft_strdup("\"\'\"\'");
    test_add(&input, false, 11);
    ////////////////////////////////////////////////////
-   input.cmds = "ls >> k >> k>\0";
+    free_all(NULL, &input);
+   input.cmds = ft_strdup("ls >> k >> k>");
     test_add(&input, false,12);
    ////////////////////////////////////////////////////
-   input.cmds = "$PATH\0";
+    free_all(NULL, &input);
+   input.cmds = ft_strdup("$PATH");
     test_add(&input, true,13);
    ////////////////////////////////////////////////////
-   input.cmds = "ls >> l\0";
+    free_all(NULL, &input);
+   input.cmds = ft_strdup("ls >> l");
     test_add(&input, true , 14);
     ////////////////////////////////////////////////////
-    input.cmds = "ls <l\0";
+    free_all(NULL, &input);
+    input.cmds = ft_strdup("ls <l");
     test_add(&input, true ,15);
     ////////////////////////////////////////////////////
-    input.cmds = "ls > c >\0";
+    free_all(NULL, &input);
+    input.cmds = ft_strdup("ls > c >");
     test_add(&input,false , 16);
     ////////////////////////////////////////////////////
-    input.cmds = "ls |\0";
+    free_all(NULL, &input);
+    input.cmds = ft_strdup("ls |");
     test_add(&input, false, 17);
     ////////////////////////////////////////////////////
-    input.cmds = ">\0";
+    free_all(NULL, &input);
+    input.cmds = ft_strdup(">");
     test_add(&input,false ,18);
     ////////////////////////////////////////////////////
-    input.cmds = "$\0";
+    free_all(NULL, &input);
+    input.cmds = ft_strdup("$");
     test_add(&input, true,19);
     ////////////////////////////////////////////////////
-    input.cmds = "$PWD\0";
+    free_all(NULL, &input);
+    input.cmds = ft_strdup("$PWD");
     test_add(&input, true,20);
     ////////////////////////////////////////////////////
-    input.cmds = "\0";
+    free_all(NULL, &input);
+    input.cmds = ft_strdup("");
     test_add(&input, true,21);
     ////////////////////////////////////////////////////
-    input.cmds = "ls\'ls\'\0";
+    free_all(NULL, &input);
+    input.cmds = ft_strdup("ls\'ls\'");
     test_add(&input, true,22);
     ////////////////////////////////////////////////////
-    input.cmds = "ls | \"|\" | k\0";
+    free_all(NULL, &input);
+    input.cmds = ft_strdup("ls | \"|\" | k");
     test_add(&input, true,23);
     ////////////////////////////////////////////////////
-    input.cmds = "ls | \"|\" | k |\0";
+    free_all(NULL, &input);
+    input.cmds = ft_strdup("ls | \"|\" | k |");
     test_add(&input, false,24);
     ////////////////////////////////////////////////////
-    input.cmds = "ls | \"|\" | k \"\"|\0";
+    free_all(NULL, &input);
+    input.cmds = ft_strdup("ls | \"|\" | k \"\"|");
     test_add(&input, false,25);
     ////////////////////////////////////////////////////
-    input.cmds = "ls | \"|\" kk\0";
+    free_all(NULL, &input);
+    input.cmds = ft_strdup("ls | \"|\" kk");
     test_add(&input, true,26);
     ////////////////////////////////////////////////////
-    input.cmds = "ls \">\"\0";
+    free_all(NULL, &input);
+    input.cmds = ft_strdup("ls \">\"");
     test_add(&input, true,27);
     ////////////////////////////////////////////////////
-    input.cmds = "ls \">\" >\0";
+    free_all(NULL, &input);
+    input.cmds = ft_strdup("ls \">\" >");
     test_add(&input, false,28);
     ////////////////////////////////////////////////////
-    input.cmds = "ls >\0";
+    free_all(NULL, &input);
+    input.cmds = ft_strdup("ls >");
     test_add(&input, false,29);
     ////////////////////////////////////////////////////
-    input.cmds = "ls > \"\'\"\0";
+    free_all(NULL, &input);
+    input.cmds = ft_strdup("ls > \"\'\"");
     test_add(&input, true,30);
     ////////////////////////////////////////////////////
-    input.cmds = "ls > \"\"\0";
+    free_all(NULL, &input);
+    input.cmds = ft_strdup("ls > \"\"");
     test_add(&input, true,31);
     ////////////////////////////////////////////////////
-    input.cmds = "ls > \"\" | > \"|\"\0";
+    free_all(NULL, &input);
+    input.cmds = ft_strdup("ls > \"\" | > \"|\"");
     test_add(&input, true,32);
     ////////////////////////////////////////////////////
-    input.cmds = "ls > k | ls > | \0";
+    free_all(NULL, &input);
+    input.cmds = ft_strdup("ls > k | ls > | ");
     test_add(&input, false,33);
-   input.cmds = "ls \">>\" k >> k\">\"\0";
+    ////////////////////////////////////////////////////
+    free_all(NULL, &input);
+   input.cmds = ft_strdup("ls \">>\" k >> k\">\"");
     test_add(&input, true,33);
    ////////////////////////////////////////////////////
-   input.cmds = "ls >> l\">\"\0";
+    free_all(NULL, &input);
+   input.cmds = ft_strdup("ls >> l\">\"");
     test_add(&input, true, 34);
     ////////////////////////////////////////////////////
-    input.cmds = "ls <l\0";
+    free_all(NULL, &input);
+    input.cmds = ft_strdup("ls <l");
     test_add(&input, true ,35);
     ////////////////////////////////////////////////////
-    input.cmds = "ls > c \'>\'<\0";
+    free_all(NULL, &input);
+    input.cmds = ft_strdup("ls > c \'>\'<");
     test_add(&input, false, 36);
     ////////////////////////////////////////////////////
+    free_all(NULL, &input);
 }
 

@@ -13,15 +13,19 @@ SRC = main.c\
 	setting_redirections.c\
 	tokenize_cmds.c\
 	signal_handle.c\
-	free.c
+	free.c\
+	mini_split.c
 
 SRC_TEST = test_driven.c\
-			parsing_quotes.c\
-			parsing.c\
-     		check_redirections.c\
-			replace_env_vars.c\
-			cleaning_quotes.c\
-			signal_handle.c
+	parsing.c\
+	parsing_quotes.c\
+  	check_redirections.c\
+	replace_env_vars.c\
+	cleaning_quotes.c\
+	setting_redirections.c\
+	tokenize_cmds.c\
+	signal_handle.c\
+	free.c
 
 OBJ = $(SRC:%.c=%.o)
 
@@ -31,13 +35,13 @@ all : $(NAME)
 
 $(NAME) : $(OBJ)
 	@make all -C ./Libft-42
-	$(CC) $(CFLAGS) $(READLINE) $(OBJ) $(LIBFT)  -I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -l readline -o $(NAME)
+	$(CC) $(CFLAGS) $(READLINE) $(OBJ) $(LIBFT) -I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -l readline -o $(NAME)
 
 test : $(NAME_TEST)
 
 $(NAME_TEST) : $(OBJ_TEST)
 	@make all -C ./Libft-42
-	$(CC) $(CFLAGS) $(READLINE) $(OBJ_TEST) $(LIBFT) -o $(NAME_TEST) 
+	$(CC) $(CFLAGS) $(READLINE) $(OBJ_TEST) $(LIBFT) -I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -l readline -o $(NAME_TEST) 
 clean :
 	@make clean -C ./Libft-42
 	rm -rf $(OBJ) $(OBJ_TEST)
