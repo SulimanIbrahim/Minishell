@@ -6,15 +6,17 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 05:38:39 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/03/24 20:45:51 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/24 21:06:36 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**init_bulitins(char **builtins)
+static	char	**init_bulitins(void)
 {
-	builtins = malloc(sizeof(char *) * 6);
+	char	**builtins;
+
+	builtins = malloc(sizeof(char *) * 7);
 	if (!builtins)
 		return (NULL);
 	builtins[0] = ft_strdup("cd");
@@ -52,8 +54,8 @@ bool	ft_check_builtins(t_cmd *cmd, t_input *input)
 
 	i = 0;
 	j = 0;
-	init_bulitins(builtins);
-	while (builtins[i])
+	builtins = init_bulitins();
+	while (builtins && builtins[i])
 	{
 		if (builtins[i][j] == cmd->cmd_name[j])
 		{
@@ -68,5 +70,6 @@ bool	ft_check_builtins(t_cmd *cmd, t_input *input)
 		j = 0;
 		i++;
 	}
+	free_split(builtins);
 	return (false);
 }

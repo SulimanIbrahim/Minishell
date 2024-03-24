@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 20:42:00 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/03/24 20:42:37 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/24 21:00:42 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,15 @@ int	cd(char *s)
 	int	i;
 
 	i = 0;
-	while (s[i] == ' ')
+	while (s[i] && s[i] == ' ')
 		i++;
+	if (ft_strchr(s + i, ' '))
+		return (printf("cd: string not in pwd: %s\n", s + i));
 	if (!s || !s[i])
 		chdir("HOME");
 	else
-		chdir(s + i);
+		if (chdir(s + i) == -1)
+			printf("cd: no such file or directory: %s\n", s + i);
 	return (1);
 }
 
