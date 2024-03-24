@@ -6,12 +6,11 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/22 15:52:43 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/24 05:49:11 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 
 bool execute(t_cmd **cmd, t_input *input, t_var *var)
@@ -25,12 +24,12 @@ bool execute(t_cmd **cmd, t_input *input, t_var *var)
 		var->id = fork();
 		if (var->id == 0)
 		{
-			var->len = ft_strlen(cmd[0]->cmd[0]);
-			if (ft_strnstr(cmd[0]->cmd[0], "/bin/", var->len) == NULL)
+			// var->len = ft_strlen(cmd[0]->cmd[0]);
+			if (ft_strchr(cmd[0]->cmd[0], '/') == NULL)
 				cmd[0]->cmd_path = ft_strjoin("/bin/", cmd[0]->cmd[0]);
 			else
 				cmd[0]->cmd_path = cmd[0]->cmd[0];
-			if (execve(cmd[0]->cmd_path, cmd[0]->cmd, NULL) == -1)
+			if (execve(cmd[0]->cmd_path, cmd[0]->cmd, input->env) == -1)
 				printf("command not found !!!\n");
 			exit(0);
 		}
@@ -39,41 +38,53 @@ bool execute(t_cmd **cmd, t_input *input, t_var *var)
 	{
 		var->i = -1;
 		var->j = 0;
+		pipe(var->fd);
+		if (var->id == 0)
+			exit(0);
 		while (++var->i < input->num_of_cmd)
 		{
-			pipe(var->fd);
-			if (var->id == 0)
-				exit(0);
 			var->id = fork();
 			if (var->id == 0)
 			{
 				if (var->i == 0)
 				{
 					close(var->fd[0]);
-					dup2(var->fd[1], STDOUT_FILENO);
+					if (dup2(var->fd[1], STDOUT_FILENO) == -1)
+						printf("ana amell moshkella");
+					close(var->fd[1]);
+					
 				}
 				else if ((var->i + 1) == input->num_of_cmd)
 				{
-					dup2(var->fd[0], STDIN_FILENO);
 					close(var->fd[1]);
+					if (dup2(var->fd[0], STDIN_FILENO) == -1)
+						printf("ana zool tany amell moshkella");
+					close(var->fd[0]);
 				}
 				else
 				{
-					dup2(var->fd[0], STDIN_FILENO);
-					dup2(var->fd[1], STDOUT_FILENO);	
+					if (dup2(var->fd[1], STDOUT_FILENO) == -1)
+						printf("ana amell moshkella");
+					if (dup2(var->fd[0], STDIN_FILENO) == -1)
+						printf("ana zool tany amell moshkella");
+					close(var->fd[0]);
+					close(var->fd[1]);
 				}
-				var->len = ft_strlen(cmd[var->i]->cmd[0]);
-				if (ft_strnstr(cmd[var->i]->cmd[0], "/bin/", var->len) == NULL)
-					cmd[var->i]->cmd_path = ft_strjoin("/bin/", cmd[var->i]->cmd[0]);
+				if (ft_strchr(cmd[var->i]->cmd[0], '/') == NULL)
+					cmd[0]->cmd_path = ft_strjoin("/bin/", cmd[var->i]->cmd[0]);
 				else
 					cmd[var->i]->cmd_path = cmd[var->i]->cmd[0];
-				if (execve(cmd[var->i]->cmd_path, cmd[var->i]->cmd, NULL) == -1)
+
+				if (execve(cmd[var->i]->cmd_path, cmd[var->i]->cmd, input->env) == -1)
 					printf("(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
 				exit(0);
 			}
 		}
+		close(var->fd[0]);
+		close(var->fd[1]);
+	while (wait(&var->status) > -1)
+		;
 	}
-	wait(&var->status);
 	return (true);
 }
 

@@ -42,7 +42,7 @@ test : $(NAME_TEST)
 
 $(NAME_TEST) : $(OBJ_TEST)
 	@make all -C ./Libft-42
-	$(CC) $(CFLAGS) $(READLINE) $(OBJ_TEST) $(LIBFT) -I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -l readline -o $(NAME_TEST) 
+	$(CC) $(CFLAGS) $(READLINE) $(OBJ_TEST) $(LIBFT) -I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -l readline -o $(NAME_TEST) && ./result
 clean :
 	@make clean -C ./Libft-42
 	rm -rf $(OBJ) $(OBJ_TEST)
