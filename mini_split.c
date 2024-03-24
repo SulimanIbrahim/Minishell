@@ -6,11 +6,11 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:01:06 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/03/22 00:56:00 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/24 05:42:53 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 static	void	ft_word_counter(char *s, char c, t_var *var)
 {

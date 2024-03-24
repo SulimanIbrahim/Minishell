@@ -1,16 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 19:58:29 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/03/24 01:38:26 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/24 05:39:30 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	pwd(void)
+{
+	return (printf("%s\n", getenv("PWD")));
+}
 
 static	int	env_search(char *new, char **env)
 {
@@ -25,7 +30,7 @@ static	int	env_search(char *new, char **env)
 	{
 		while (new[j] && env[i][j] && env[i][j] != '=' && new[j] == env[i][j])
 			j++;
-		if (new[j] == '=' && env[i][j] == '=')
+		if (!new[j] && env[i][j] == '=')
 			return (i);
 		i++;
 		j = 0;
@@ -33,63 +38,43 @@ static	int	env_search(char *new, char **env)
 	return (0);
 }
 
-int	env_len(char **env)
+void	free_split(char **split)
 {
 	int	i;
 
 	i = 0;
-	while (env[i])
-		i++;
-	return (i);
+	if (!split)
+		return ;
+	while (split[i])
+		free(split[i++]);
+	free(split);
 }
 
-static	void	add_env(char *new, int len, t_input *input)
+static	void	remove_env(t_input *input, int c)
 {
 	int		i;
+	int		j;
+	int		len;
 	char	**tmp;
 
 	i = 0;
-	tmp = malloc(sizeof(char *) * (len + 2));
+	j = 0;
+	len = env_len(input->env);
+	tmp = malloc(sizeof(char *) * (len + 1));
 	if (!tmp)
 		return ;
 	while (input->env[i])
 	{
-		tmp[i] = ft_strdup(input->env[i]);
+		if (i != c)
+			tmp[j++] = ft_strdup(input->env[i]);
 		free(input->env[i++]);
 	}
 	free(input->env);
-	tmp[i++] = ft_strdup(new);
-	tmp[i] = NULL;
+	tmp[j] = NULL;
 	input->env = tmp;
 }
 
-static	void	replace_env(char *new, t_input *input, int i)
-{
-	char	*tmp;
-	int		c;
-
-	c = 5;
-	if (!ft_strncmp(new, input->env[i], c))
-	{
-		while (new[++c])
-		{
-			if (!ft_isdigit(new[c]))
-				break ;
-		}
-		if (c == 6 || new[c])
-		{
-			tmp = input->env[i];
-			free(tmp);
-			input->env[i] = ft_strdup("SHLVL=0");
-			return ;
-		}
-	}
-	tmp = input->env[i];
-	free(tmp);
-	input->env[i] = ft_strdup(new);
-}
-
-void	export(char *s, t_input *input)
+void	unset(char *s, t_input *input)
 {
 	t_var	var;
 	char	**tmp;
@@ -100,18 +85,16 @@ void	export(char *s, t_input *input)
 		return ;
 	while (tmp[var.i])
 	{
-		var.j = 0;
 		if (ft_strchr(tmp[var.i], '='))
 		{
-			var.j = env_search(tmp[var.i], input->env);
-			if (var.j != 0)
-				replace_env(tmp[var.i], input, var.j);
-			else
-			{
-				var.len = env_len(input->env);
-				add_env(tmp[var.i], var.len, input);
-			}
+			printf("unset: %s: invalid parameter name\n", tmp[var.i]);
+			free_split(tmp);
+			return ;
 		}
+		var.j = 0;
+		var.j = env_search(tmp[var.i], input->env);
+		if (var.j != 0)
+			remove_env(input, var.j);
 		var.i++;
 	}
 	free_split(tmp);
