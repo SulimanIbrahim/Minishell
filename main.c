@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/24 05:49:11 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/25 00:31:05 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,50 +38,55 @@ bool execute(t_cmd **cmd, t_input *input, t_var *var)
 	{
 		var->i = -1;
 		var->j = 0;
-		pipe(var->fd);
-		if (var->id == 0)
-			exit(0);
+		var->fdnum = -1;
+		var->fd = malloc(input->num_of_cmd + 1 * sizeof(int **));
 		while (++var->i < input->num_of_cmd)
 		{
+			if (var->id == 0)
+				exit(0);
+			if (var->i % 2 == 0 && ((var->i + 1) != input->num_of_cmd))
+				pipe(var->fd[++var->fdnum]);
 			var->id = fork();
 			if (var->id == 0)
 			{
 				if (var->i == 0)
 				{
-					close(var->fd[0]);
-					if (dup2(var->fd[1], STDOUT_FILENO) == -1)
-						printf("ana amell moshkella");
-					close(var->fd[1]);
-					
+					if (dup2(var->fd[var->fdnum][1], STDOUT_FILENO) == -1)
+						exit(1);
+					close(var->fd[var->fdnum][0]);
+					close(var->fd[var->fdnum][1]);
 				}
 				else if ((var->i + 1) == input->num_of_cmd)
 				{
-					close(var->fd[1]);
-					if (dup2(var->fd[0], STDIN_FILENO) == -1)
-						printf("ana zool tany amell moshkella");
-					close(var->fd[0]);
+					if (dup2(var->fd[var->fdnum][0], STDIN_FILENO) == -1)
+						exit(1);
+					close(var->fd[var->fdnum][1]);
+					close(var->fd[var->fdnum][0]);
 				}
 				else
 				{
-					if (dup2(var->fd[1], STDOUT_FILENO) == -1)
-						printf("ana amell moshkella");
-					if (dup2(var->fd[0], STDIN_FILENO) == -1)
-						printf("ana zool tany amell moshkella");
-					close(var->fd[0]);
-					close(var->fd[1]);
+					if (dup2(var->fd[var->fdnum][0], STDIN_FILENO) == -1)
+						exit(1);
+					if (dup2(var->fd[var->fdnum][1], STDOUT_FILENO) == -1)
+						exit(1);
+					close(var->fd[var->fdnum][0]);
+					close(var->fd[var->fdnum][1]);
 				}
 				if (ft_strchr(cmd[var->i]->cmd[0], '/') == NULL)
 					cmd[0]->cmd_path = ft_strjoin("/bin/", cmd[var->i]->cmd[0]);
 				else
 					cmd[var->i]->cmd_path = cmd[var->i]->cmd[0];
-
 				if (execve(cmd[var->i]->cmd_path, cmd[var->i]->cmd, input->env) == -1)
 					printf("(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
 				exit(0);
 			}
 		}
-		close(var->fd[0]);
-		close(var->fd[1]);
+		// var->i = -1;
+		// while(++var->i < (input->num_of_cmd / 2))
+		// {
+		// 	close(var->fd[var->fdnum][0]);
+		// 	close(var->fd[var->fdnum][1]);
+		// }
 	while (wait(&var->status) > -1)
 		;
 	}
