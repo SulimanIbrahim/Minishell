@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/03/25 00:16:24 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/26 05:10:08 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,10 @@ typedef struct vars
 	int		len;
 	int		closed;
 	int		fdnum;
-	int		*fd;
+	int		*fd[2];
+	char	**splitted;
 	char	*temp;
+	char	*cmd_path;
 	char	*cmd_tmp;
 	t_red	*red;
 }		t_var;
@@ -111,10 +113,11 @@ void		rl_replace_line(const char *str, int line_num);
 void		skip_quotes(char *input, int *i, int q_type);
 void		ft_check_env(t_input *input, t_var *vars);
 void		set_redirection(t_cmd *cmd, t_var var);
-void		free_all(t_cmd **cmd, t_input *input);
+void		free_all(t_cmd **cmd, t_input *input, t_var *var);
 void		signal_handler(int signum);
 void		init_var(t_var *var);
 void		free_input(t_input *input);
 char		**mini_split(char *s, char c);
+void		free_vars(t_var *var);
 
 #endif
