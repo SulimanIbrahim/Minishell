@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/03/26 05:10:08 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/27 04:17:03 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 # define ANSI_COLOR_BG_CYAN       "\x1b[46m"
 # define ANSI_COLOR_BG_WHITE      "\x1b[47m"
 
-typedef	enum
+typedef enum
 {
 	INPUT,
 	OUTPUT,
@@ -78,7 +78,8 @@ typedef struct vars
 	int		len;
 	int		closed;
 	int		fdnum;
-	int		*fd[2];
+	int		fd[2];
+	int		prev_fd;
 	char	**splitted;
 	char	*temp;
 	char	*cmd_path;
