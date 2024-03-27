@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 20:42:00 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/03/27 07:31:05 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/27 08:53:15 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,11 @@
 
 int	cd(t_cmd *cmd)
 {
-	int	i;
-
-	i = env_len(cmd->cmd);
-	if (i > 2)
-		return (printf("cd: string not in pwd: %s\n", cmd->cmd[1]));
-	i = 1;
-	if (!cmd || !cmd->cmd[i])
-		chdir("HOME");
+	if (!cmd || !cmd->cmd[1])
+		chdir(getenv("HOME"));
 	else
-		if (chdir(cmd->cmd[i]) == -1)
-			printf("cd: no such file or directory: %s\n", cmd->cmd[i]);
+		if (chdir(cmd->cmd[1]) == -1)
+			printf("cd: no such file or directory: %s\n", cmd->cmd[1]);
 	return (1);
 }
 

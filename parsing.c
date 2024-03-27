@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:29:36 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/17 22:20:40 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/27 08:43:14 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,47 @@ bool	pipe_parsing(t_input *input, t_var *var)
 	return (true);
 }
 
+bool	check_command_ubstitution(t_input *input, t_var *var)
+{
+	var->i = 1;
+	char 	q;
+	char 	c;
+
+	var->temp = ft_strchr(input->cmds, '$');
+	while (var->temp)
+	{
+		if (!var->temp)
+			return (true);
+		if (var->temp[var->i] && (var->temp[var->i] == '\'' || var->temp[var->i] == '"'))
+		{
+			q = var->temp[var->i++];
+			while (var->temp[var->i] && var->temp[var->i] != q)
+			{
+				if (var->temp[var->i] && (var->temp[var->i] == '(' || var->temp[var->i] == '{' || var->temp[var->i] == '['))
+				{
+					if (var->temp[var->i] == '(')
+						c = var->temp[var->i] + 1;
+					else
+						c = var->temp[var->i] + 2;
+					while (var->temp[var->i] && var->temp[var->i] != c)
+					{
+						if (var->temp[var->i] && var->temp[var->i] == q)
+							return (printf("bash: syntax error near unexpected token\n"), false);
+						var->i++;
+					}
+				}
+				if (var->temp[var->i] && var->temp[var->i] == c)
+					break ;
+				var->i++;
+			}
+		}
+		if (var->temp[var->i] && (var->temp[var->i] == '(' || var->temp[var->i] == '{' || var->temp[var->i] == '['))
+			return (printf("bash: syntax error near unexpected token\n"), false);
+		var->temp = ft_strchr(var->temp + var->i, '$');
+	}
+	return (true);
+}
+
 bool	pipe_quote_pars(t_input *input, t_var *var)
 {
 	if (!quote_parsing(input->cmds, var))
@@ -62,6 +103,8 @@ bool	parsing(t_input *input)
 	if (!pipe_quote_pars(input, &var))
 		return (free_input(input), false);
 	if (ft_check_redirections(input, &var))
+		return (free_input(input), false);
+	if (!check_command_ubstitution(input, &var))
 		return (free_input(input), false);
 	ft_check_env(input, &var);
 	return (true);

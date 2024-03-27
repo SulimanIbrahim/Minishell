@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 05:38:39 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/03/27 07:37:16 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/27 09:01:02 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ bool	ft_check_builtins(t_cmd *cmd, t_input *input)
 	i = 0;
 	j = 0;
 	builtins = init_bulitins();
-	while (builtins && builtins[i])
+	while (builtins && builtins[i] && cmd->cmd[0])
 	{
 		if (builtins[i][j] == cmd->cmd[0][j])
 		{

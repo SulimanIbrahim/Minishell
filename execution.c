@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 01:17:41 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/03/25 04:37:07 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/27 09:02:47 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ bool	execute(t_cmd **cmd, t_input *input, t_var *var)
 	int		i;
 
 	i = 0;
+	if (!cmd[0] || !cmd[0]->cmd || !cmd[0]->cmd[0])
+		return (true);
 	if (input->num_of_cmd == 1)
 	{
 		if (!ft_check_builtins(cmd[i], input))
