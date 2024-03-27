@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/27 06:22:37 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/27 22:48:44 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,13 @@ bool execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
 			if (dup2(var->prev_fd, STDIN_FILENO) == -1)
 				exit(1);
 			close(var->prev_fd);
-			if ((var->i + 1) == input->num_of_cmd)
-			{
-				close(var->fd[1]);
-				close(var->fd[0]);
-			}
-			else
+			if ((var->i + 1) != input->num_of_cmd)
 			{
 				if (dup2(var->fd[1], STDOUT_FILENO) == -1)
 					exit(1);
-				close(var->fd[0]);
-				close(var->fd[1]);
 			}
+			close(var->fd[0]);
+			close(var->fd[1]);
 			if (ft_strchr(cmd[var->i]->cmd[0], '/') == NULL)
 			{
 				var->splitted = ft_split(getenv("PATH"), ':');
@@ -55,16 +50,10 @@ bool execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
 					var->cmd_path = ft_strjoin(var->temp, cmd[var->i]->cmd[0]);
 					if (access(var->cmd_path, X_OK) == 0)
 						break ;
-					else if (var->splitted[var->i + 1] == NULL)
-					{
-						// printf("(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
-						// free_all(cmd, input, var);
-						break ;
-					}
-					free(var->temp);
-					free(var->cmd_path);
-					var->temp = NULL;
-					var->cmd_path = NULL;
+					// free(var->temp);
+					// free(var->cmd_path);
+					// var->temp = NULL;
+					// var->cmd_path = NULL;
 				}
 			}
 			else
@@ -78,19 +67,22 @@ bool execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
 					var->cmd_path = cmd[var->i]->cmd[0];
 			}
 			if (execve(var->cmd_path, cmd[var->i]->cmd, input->env) == -1)
+			{
 				printf("(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
-			exit(0);
+				free_all(cmd, input, var);
+				exit(0);
+			}
 		}
 		else{
 			close(var->fd[1]);
-			var->prev_fd = var->fd[0];
+			var->prev_fd = dup(var->fd[0]);
+			close(var->fd[0]);
 		}
 	}
-
+	close(var->prev_fd);
 	close(var->fd[0]);
 	close(var->fd[1]);
-	while (wait(&var->status) > -1)
-		;
+
 	return (true);
 }
 
@@ -102,6 +94,8 @@ bool execute(t_cmd **cmd, t_input *input, t_var *var)
 	var->cmd_path = NULL;
 	var->splitted = NULL;
 	var->temp = NULL;
+	if (!cmd[var->i])
+		return (true);
 	if (input->num_of_cmd == 1)
 	{
 		if (fork() == 0)
@@ -117,9 +111,9 @@ bool execute(t_cmd **cmd, t_input *input, t_var *var)
 						break ;
 					else if (var->splitted[var->i + 1] == NULL)
 					{
-						printf("command not found !!\n");
-						free_all(cmd, input, var);
-						exit(1);
+						// printf("command not found !!\n");
+						// free_all(cmd, input, var);
+						break ;
 					}
 					free(var->temp);
 					free(var->cmd_path);
@@ -144,6 +138,12 @@ bool execute(t_cmd **cmd, t_input *input, t_var *var)
 	}
 	else
 		execute_pipes(cmd, input, var);
+	var->c = 0;
+	while (var->c < input->num_of_cmd)
+	{
+		wait(NULL);
+		var->c++;
+	}
 	return (true);
 }
 
