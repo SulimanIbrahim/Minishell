@@ -6,53 +6,55 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 20:42:00 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/03/24 21:00:42 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/27 07:31:05 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	cd(char *s)
+int	cd(t_cmd *cmd)
 {
 	int	i;
 
-	i = 0;
-	while (s[i] && s[i] == ' ')
-		i++;
-	if (ft_strchr(s + i, ' '))
-		return (printf("cd: string not in pwd: %s\n", s + i));
-	if (!s || !s[i])
+	i = env_len(cmd->cmd);
+	if (i > 2)
+		return (printf("cd: string not in pwd: %s\n", cmd->cmd[1]));
+	i = 1;
+	if (!cmd || !cmd->cmd[i])
 		chdir("HOME");
 	else
-		if (chdir(s + i) == -1)
-			printf("cd: no such file or directory: %s\n", s + i);
+		if (chdir(cmd->cmd[i]) == -1)
+			printf("cd: no such file or directory: %s\n", cmd->cmd[i]);
 	return (1);
 }
 
-int	echo(char *s)
+int	echo(t_input *input)
 {
-	int	i;
-	int	flag;
+	int		i;
+	int		flag;
+	char	*p;
 
 	i = 0;
 	flag = 0;
-	while (s[i] && s[i] == ' ')
-		i++;
-	if (s[i] && s[i] == '-' && s[i + 1] == 'n')
+	p = ft_strchr(input->cmds, ' ');
+	while (*p && *p == ' ')
+		p++;
+	if (p[i] && p[i++] == '-')
 	{
-		i += 2;
-		while (s[i] && s[i] == ' ')
-			i++;
-		flag = 1;
+		if (p[i] && p[i++] == 'n')
+		{
+			if (!p[i] || p[i] == ' ')
+			{
+				flag = 1;
+				p += i;
+			}
+		}
 	}
-	while (s[i])
-	{
-		if (s[i] != '"' && s[i] != '\'')
-			write(1, &s[i], 1);
-		i++;
-	}
-	if (flag == 0)
-		write(1, "\n", 1);
+	while (*p && *p == ' ')
+		p++;
+	printf("%s", p);
+	if (flag != 1)
+		printf("\n");
 	return (1);
 }
 
@@ -67,6 +69,23 @@ int	ft_env(char **env)
 
 	i = 0;
 	while (env[i])
-		echo(env[i++]);
+		printf("%s\n", env[i++]);
 	return (1);
+}
+
+int	ft_exit(t_cmd *cmd)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = env_len(cmd->cmd);
+	printf("exit\n");
+	if (len > 2)
+		return (printf("bash: exit: too many arguments\n"));
+	if (str_is_digit(cmd->cmd[1]) == 1)
+		printf("bash: exit: %s: numeric argument required\n", cmd->cmd[1]);
+	if (cmd->cmd[1])
+		exit (ft_atoi(cmd->cmd[1]));
+	exit (0);
 }

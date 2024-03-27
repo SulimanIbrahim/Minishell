@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 19:58:29 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/03/24 01:38:26 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/27 06:04:37 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,53 +66,33 @@ static	void	add_env(char *new, int len, t_input *input)
 static	void	replace_env(char *new, t_input *input, int i)
 {
 	char	*tmp;
-	int		c;
 
-	c = 5;
-	if (!ft_strncmp(new, input->env[i], c))
-	{
-		while (new[++c])
-		{
-			if (!ft_isdigit(new[c]))
-				break ;
-		}
-		if (c == 6 || new[c])
-		{
-			tmp = input->env[i];
-			free(tmp);
-			input->env[i] = ft_strdup("SHLVL=0");
-			return ;
-		}
-	}
 	tmp = input->env[i];
 	free(tmp);
 	input->env[i] = ft_strdup(new);
 }
 
-void	export(char *s, t_input *input)
+void	export(t_cmd *cmd, t_input *input)
 {
 	t_var	var;
-	char	**tmp;
 
 	var.i = 0;
-	tmp = ft_split(s, ' ');
-	if (!tmp)
+	if (!cmd)
 		return ;
-	while (tmp[var.i])
+	while (cmd->cmd[var.i])
 	{
 		var.j = 0;
-		if (ft_strchr(tmp[var.i], '='))
+		if (ft_strchr(cmd->cmd[var.i], '='))
 		{
-			var.j = env_search(tmp[var.i], input->env);
+			var.j = env_search(cmd->cmd[var.i], input->env);
 			if (var.j != 0)
-				replace_env(tmp[var.i], input, var.j);
+				replace_env(cmd->cmd[var.i], input, var.j);
 			else
 			{
 				var.len = env_len(input->env);
-				add_env(tmp[var.i], var.len, input);
+				add_env(cmd->cmd[var.i], var.len, input);
 			}
 		}
 		var.i++;
 	}
-	free_split(tmp);
 }

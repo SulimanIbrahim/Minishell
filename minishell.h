@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/03/24 20:44:11 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/27 07:19:40 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,12 +121,14 @@ void		free_all(t_cmd **cmd, t_input *input);
 void		free_cmd(t_cmd *cmd);
 void		add_shlvl(char **env);
 int			env_len(char **env);
-void		export(char *s, t_input *input);
-void		unset(char *s, t_input *input);
-int			cd(char *s);
-int			echo(char *s);
+void		export(t_cmd *cmd, t_input *input);
+void		unset(t_cmd *cmd, t_input *input);
+int			cd(t_cmd *cmd);
+int			echo(t_input *input);
 int			pwd(void);
 int			ft_env(char **env);
 void		free_split(char **split);
+int			ft_exit(t_cmd *cmd);
+int			str_is_digit(char *str);
 
 #endif

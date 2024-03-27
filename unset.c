@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 19:58:29 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/03/24 20:42:25 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/27 06:08:15 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,28 +69,24 @@ static	void	remove_env(t_input *input, int c)
 	input->env = tmp;
 }
 
-void	unset(char *s, t_input *input)
+void	unset(t_cmd *cmd, t_input *input)
 {
 	t_var	var;
-	char	**tmp;
 
 	var.i = 0;
-	tmp = ft_split(s, ' ');
-	if (!tmp)
+	if (!cmd)
 		return ;
-	while (tmp[var.i])
+	while (cmd->cmd[var.i])
 	{
-		if (ft_strchr(tmp[var.i], '='))
+		if (ft_strchr(cmd->cmd[var.i], '='))
 		{
-			printf("unset: %s: invalid parameter name\n", tmp[var.i]);
-			free_split(tmp);
+			printf("unset: %s: invalid parameter name\n", cmd->cmd[var.i]);
 			return ;
 		}
 		var.j = 0;
-		var.j = env_search(tmp[var.i], input->env);
+		var.j = env_search(cmd->cmd[var.i], input->env);
 		if (var.j != 0)
 			remove_env(input, var.j);
 		var.i++;
 	}
-	free_split(tmp);
 }

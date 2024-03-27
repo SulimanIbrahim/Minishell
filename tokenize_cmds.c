@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 00:48:25 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/24 20:46:10 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/27 07:25:12 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ bool	tokenize_cmds(t_input *input, t_cmd **cmd, t_var *var)
 	}
 	return (true);
 }
+	// try this to print each cmd and the redirections in it
 	// int i = 0;
 	// t_red *p;
 	// while (i < input->num_of_cmd)
@@ -88,4 +89,3 @@ bool	tokenize_cmds(t_input *input, t_cmd **cmd, t_var *var)
 	// 	printf("------- \n");
 	// 	i++;
 	// }
-	// try this to print each cmd and the redirections in it
