@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 19:58:29 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/03/27 06:08:15 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/28 22:29:46 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	unset(t_cmd *cmd, t_input *input)
 	{
 		if (ft_strchr(cmd->cmd[var.i], '='))
 		{
-			printf("unset: %s: invalid parameter name\n", cmd->cmd[var.i]);
+			printf("unset: '%s': not a valid identifier\n", cmd->cmd[var.i]);
 			return ;
 		}
 		var.j = 0;
