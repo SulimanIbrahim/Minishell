@@ -6,24 +6,18 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:46:24 by aken              #+#    #+#             */
-/*   Updated: 2024/03/26 05:10:24 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/29 04:11:23 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void free_vars(t_var *var)
+void	free_vars(t_var *var)
 {
-	if (var->cmd_path)
-		free (var->cmd_path);
-	if (var->temp)
-		free (var->temp);
-	if (var->cmd_tmp)
-		free (var->cmd_tmp);
 	if (var->splitted)
 	{
 		var->i = -1;
-		while (var->splitted[var->i])
+		while (var->splitted[++var->i])
 			free(var->splitted[var->i]);
 		free(var->splitted);
 	}
@@ -77,15 +71,13 @@ void	free_cmd(t_cmd *cmd)
 
 void	free_all(t_cmd **cmd, t_input *input, t_var *var)
 {
-	int	i;
-	(void)var;
-	i = 0;
+	var->i = 0;
 	if (cmd)
 	{
-		while (cmd[i])
-			free_cmd(cmd[i++]);
+		while (cmd[var->i])
+			free_cmd(cmd[var->i++]);
 		free(cmd);
 	}
 	free_input(input);
-	// free_vars(var);
+	free_vars(var);
 }

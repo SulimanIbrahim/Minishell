@@ -14,7 +14,9 @@ SRC = main.c\
 	tokenize_cmds.c\
 	signal_handle.c\
 	free.c\
-	mini_split.c
+	mini_split.c\
+	execution_cmd_pipes.c\
+	execution_cmd_pipes_utils.c
 
 SRC_TEST = test_driven.c\
 	parsing.c\
@@ -26,7 +28,9 @@ SRC_TEST = test_driven.c\
 	tokenize_cmds.c\
 	signal_handle.c\
 	free.c\
-	mini_split.c
+	mini_split.c\
+	execution_cmd_pipes.c\
+	execution_cmd_pipes_utils.c
 
 OBJ = $(SRC:%.c=%.o)
 

@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/03/27 04:17:03 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/29 03:40:52 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,11 @@ void		signal_handler(int signum);
 void		init_var(t_var *var);
 void		free_input(t_input *input);
 char		**mini_split(char *s, char c);
+bool		execute(t_cmd **cmd, t_input *input, t_var *var);
 void		free_vars(t_var *var);
+void		free_splitted(t_var *var);
+void		wait_process(t_input *input, t_var *var);
+void		close_fd(t_var *var);
+void		init_all(t_var *var);
 
 #endif
