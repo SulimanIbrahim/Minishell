@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/03/29 03:40:52 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/01 02:37:04 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ void		free_vars(t_var *var);
 void		free_splitted(t_var *var);
 void		wait_process(t_input *input, t_var *var);
 void		close_fd(t_var *var);
+void		close_all(t_input *input, t_var *var);
 void		init_all(t_var *var);
 
 #endif

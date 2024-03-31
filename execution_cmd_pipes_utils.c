@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 03:40:08 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/28 03:41:02 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/01 02:36:51 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@ void	close_fd(t_var *var)
 {
 	close(var->fd[0]);
 	close(var->fd[1]);
+}
+
+void	close_all(t_input *input, t_var *var)
+{
+	var->c = -1;
+	while (++var->c < input->num_of_cmd)
+		close(var->prev_fd--);
 }
 
 void	init_all(t_var *var)
