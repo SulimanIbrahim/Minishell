@@ -7,7 +7,7 @@ LIBFT = ./Libft-42/libft.a
 SRC = main.c\
 	parsing.c\
 	parsing_quotes.c\
-  	check_redirections.c\
+  check_redirections.c\
 	replace_env_vars.c\
 	cleaning_quotes.c\
 	setting_redirections.c\
@@ -16,8 +16,9 @@ SRC = main.c\
 	free.c\
 	mini_split.c\
 	execution_cmd_pipes.c\
-	execution_cmd_pipes_utils.c
-
+	execution_cmd_pipes_utils.c\
+	shellvl.c\
+ 
 SRC_TEST = test_driven.c\
 	parsing.c\
 	parsing_quotes.c\
@@ -30,7 +31,8 @@ SRC_TEST = test_driven.c\
 	free.c\
 	mini_split.c\
 	execution_cmd_pipes.c\
-	execution_cmd_pipes_utils.c
+	execution_cmd_pipes_utils.c\
+  shellvl.c
 
 OBJ = $(SRC:%.c=%.o)
 

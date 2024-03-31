@@ -46,7 +46,7 @@ void	free_input(t_input *input)
 	if (!input)
 		return ;
 	if (input->cmds)
-		free (input->cmds);
+		free(input->cmds);
 }
 
 void	free_cmd(t_cmd *cmd)

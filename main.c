@@ -23,13 +23,14 @@ int main (int ac, char **av, char **env)
 	ft_memset(&var, 0, sizeof(t_var));
 	ft_memset(&input, 0, sizeof(t_input));
 	ft_memset(&cmd, 0, sizeof(t_cmd));
+	input.env = dup_shell(env);
+	add_shlvl(input.env);
 	while (1)
 	{
 		signal(SIGINT, signal_handler);
 		signal(SIGQUIT, SIG_IGN);
 		input.num_of_cmd = 1;
 		input.cmds = readline("\x1b[94mMinishell >> \x1b[0m");
-		input.env = env;
 		if (!input.cmds)
 		{
 			free_all(NULL, &input, &var);
