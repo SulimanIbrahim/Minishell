@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:55:33 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/29 04:46:55 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/31 06:51:49 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	execute_execve(t_cmd **cmd, t_input *input, t_var *var)
 	{
 		printf("(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
 		free_all(cmd, input, var);
-		exit(0);
+		exit(1);
 	}
 }
 
@@ -56,25 +56,44 @@ static bool	execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
 	var->prev_fd = STDIN_FILENO;
 	while (++var->i < input->num_of_cmd)
 	{
-		pipe(var->fd);
+		if (pipe(var->fd) == -1) {
+			perror("pipe ✅");
+			return (false);
+		}
 		if (fork() == 0)
 		{
-			dup2(var->prev_fd, STDIN_FILENO);
-			close(var->prev_fd);
-			if ((var->i + 1) != input->num_of_cmd)
-				dup2(var->fd[1], STDOUT_FILENO);
-			close_fd(var);
+			fprintf(stderr,"-----fd child-----\n");
+			if (dup2(var->prev_fd, STDIN_FILENO) == -1)
+				write(2,"true dup2 inside child STDIN ✅ \n", 35);
+			if (close(var->prev_fd) == 0)
+				fprintf(stderr, "true closing fd num(%d) prev_fd child\n", var->prev_fd);
+			if ((var->i + 1) != input->num_of_cmd)			
+				if (dup2(var->fd[1], STDOUT_FILENO) == -1)
+					write(2,"true dup2 inside child STDOUT ✅\n",35);
+			if (close(var->fd[0]) == 0)
+				fprintf(stderr, "true closing fd num(%d) INPUT child\n", var->fd[0]);
+			if (close(var->fd[1]) == 0)
+				fprintf(stderr, "true closing fd num(%d) OUTPUT child\n", var->fd[1]);	
 			get_path(cmd, var);
 			execute_execve(cmd, input, var);
+			exit(1);
 		}
 		else
 		{
-			var->prev_fd = dup(var->fd[0]);
-			close_fd(var);
+				// printf("-----fd parent-----\n");
+			fprintf(stderr,"-----fd parent-----\n");
+			var->prev_fd = var->fd[0];
+			if (close(var->fd[1]) == 0)
+				printf("true closing fd num(%d) OUTPUT parent\n", var->fd[1]);
 		}
 	}
+	
+	close(var->fd[1]);
 	close(var->prev_fd);
-	close_fd(var);
+	// var->c = -1;
+	// while (++var->c < input->num_of_cmd)
+	// 	close(var->prev_fd--);
+	// 		// printf("true closing prev_fd num(%d)BARRRRAAA \n", var->prev_fd--);
 	return (true);
 }
 
@@ -89,21 +108,17 @@ bool	execute(t_cmd **cmd, t_input *input, t_var *var)
 		if (fork() == 0)
 		{
 			get_path(cmd, var);
-			printf("cmd[0]->cmd[0] = <%s>\n", cmd[0]->cmd[0]);
-			printf("cmd[0]->cmd[1] = <%s>\n", cmd[0]->cmd[1]);
 			if (execve(var->cmd_path, cmd[0]->cmd, input->env) == -1)
 				printf("(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
 			free_all(cmd, input, var);
-			exit(0);
+			exit(1);
 		}
 	}
 	else
 		execute_pipes(cmd, input, var);
-	var->c = 0;
-	while (var->c < input->num_of_cmd)
-	{
+	var->c = -1;
+	while (++var->c < input->num_of_cmd)
 		wait(NULL);
-		var->c++;
-	}
+	
 	return (true);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:01:06 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/03/21 12:35:47 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/30 04:13:55 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static	void	ft_word_counter(char *s, char c, t_var *var)
 				while (s[var->i] && s[var->i] != var->j)
 					var->i++;
 			}
-			var->i++;
+			if (s[var->i]) // this was added to fix the segfault for this case input.cmds = ft_strdup("ls > k | ls > | ");
+				var->i++;
 		}
 		if (s[var->i] && s[var->i] != c)
 		{
@@ -51,9 +52,10 @@ static	int	ft_end(char *s, char c, int start)
 			start += skip(s + start, ' ');
 			while (s[start] && s[start] != k)
 				start++;
-			start++;
+			if (s[start]) // this was added to fix the segfault for this case (input.cmds = ft_strdup("ls >> l\">\"");)
+				start++;
 		}
-		while (s[start] && s[start] != c && s[start] != '"' && s[start] != '\'')
+		while (s[start] && s[start] != c && s[start] != DOUBLE_QUOTE && s[start] != SINGLE_QUOTE)
 			start++;
 		if (s[start] && s[start] == c)
 			return (start - 1);
