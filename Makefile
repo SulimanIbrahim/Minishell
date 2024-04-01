@@ -1,6 +1,6 @@
 NAME = minishell
 NAME_TEST = result
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3 #  -fsanitize=address
 READLINE = -L/users/$(USER)/.brew/opt/readline/lib
 LIBFT = ./Libft-42/libft.a
 
@@ -14,8 +14,10 @@ SRC = main.c\
 	tokenize_cmds.c\
 	signal_handle.c\
 	free.c\
+	mini_split.c\
+	execution_cmd_pipes.c\
+	execution_cmd_pipes_utils.c\
 	shellvl.c\
-  mini_split.c
  
 SRC_TEST = test_driven.c\
 	parsing.c\
@@ -27,8 +29,10 @@ SRC_TEST = test_driven.c\
 	tokenize_cmds.c\
 	signal_handle.c\
 	free.c\
-  shellvl.c\
-  mini_split.c
+	mini_split.c\
+	execution_cmd_pipes.c\
+	execution_cmd_pipes_utils.c\
+  shellvl.c
 
 OBJ = $(SRC:%.c=%.o)
 
@@ -44,7 +48,7 @@ test : $(NAME_TEST)
 
 $(NAME_TEST) : $(OBJ_TEST)
 	@make all -C ./Libft-42
-	$(CC) $(CFLAGS) $(READLINE) $(OBJ_TEST) $(LIBFT) -I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -l readline -o $(NAME_TEST) 
+	$(CC) $(CFLAGS) $(READLINE) $(OBJ_TEST) $(LIBFT) -I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -l readline -o $(NAME_TEST) && ./result
 clean :
 	@make clean -C ./Libft-42
 	rm -rf $(OBJ) $(OBJ_TEST)

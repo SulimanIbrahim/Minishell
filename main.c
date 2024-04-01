@@ -3,60 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/22 06:09:03 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/01 03:57:37 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-bool execute(t_cmd **cmd, t_input *input, t_var *var)
-{
-	var->id = 1;
-	var->i = -1;
-	var->j = 0;
-	if (input->num_of_cmd == 1)
-	{
-		if (var->id == 0)
-			exit(0);
-		var->id = fork();
-		if (var->id == 0)
-		{
-			var->len = ft_strlen(cmd[0]->cmd[0]);
-			if (ft_strnstr(cmd[0]->cmd[0], "/bin/", var->len) == NULL)
-				cmd[0]->cmd_path = ft_strjoin("/bin/", cmd[0]->cmd[0]);
-			else
-				cmd[0]->cmd_path = cmd[0]->cmd[0];
-			if (execve(cmd[0]->cmd_path, cmd[0]->cmd, NULL) == -1)
-				printf("command not found !!!\n");
-			exit(0);
-		}
-	}
-	else
-	{
-		while (++var->i < input->num_of_cmd)
-		{
-			if (var->id == 0)
-				exit(0);
-			var->id = fork();
-			if (var->id == 0)
-			{
-				var->len = ft_strlen(cmd[var->i]->cmd[0]);
-				if (ft_strnstr(cmd[var->i]->cmd[0], "/bin/", var->len) == NULL)
-					cmd[var->i]->cmd_path = ft_strjoin("/bin/", cmd[0]->cmd[0]);
-				else
-					cmd[var->i]->cmd_path = cmd[var->i]->cmd[0];
-				if (execve(cmd[var->i]->cmd_path, cmd[var->i]->cmd, NULL) == -1)
-					printf("command not found !!!\n");
-				exit(0);
-			}
-		}
-	}
-	wait(&var->status);
-	return (true);
-}
 
 int main (int ac, char **av, char **env)
 {
@@ -66,6 +20,9 @@ int main (int ac, char **av, char **env)
 
 	(void)av;
 	(void)ac;
+	ft_memset(&var, 0, sizeof(t_var));
+	ft_memset(&input, 0, sizeof(t_input));
+	ft_memset(&cmd, 0, sizeof(t_cmd));
 	input.env = dup_shell(env);
 	add_shlvl(input.env);
 	while (1)
@@ -76,8 +33,9 @@ int main (int ac, char **av, char **env)
 		input.cmds = readline("\x1b[94mMinishell >> \x1b[0m");
 		if (!input.cmds)
 		{
-			free_all(NULL, &input);
+			free_all(NULL, &input, &var);
 			clear_history();
+			free_env(input.env);
 			exit(1);
 		}
 		add_history(input.cmds);
@@ -88,9 +46,8 @@ int main (int ac, char **av, char **env)
 			tokenize_cmds(&input, cmd, &var);
 			if (cmd)
 			{
-				if (execute(cmd, &input, &var))
-				free_all(cmd, &input);
-					// exit(0);
+				execute(cmd, &input, &var);
+				free_all(cmd, &input, &var);
 			}
 			else
 				continue ;

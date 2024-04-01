@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/03/21 08:38:55 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/01 03:52:54 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@
 # define ANSI_COLOR_BG_CYAN       "\x1b[46m"
 # define ANSI_COLOR_BG_WHITE      "\x1b[47m"
 
-typedef	enum
+typedef enum
 {
 	INPUT,
 	OUTPUT,
@@ -77,8 +77,12 @@ typedef struct vars
 	int		status;
 	int		len;
 	int		closed;
-	int		*fd;
+	int		fdnum;
+	int		fd[2];
+	int		prev_fd;
+	char	**splitted;
 	char	*temp;
+	char	*cmd_path;
 	char	*cmd_tmp;
 	t_red	*red;
 }		t_var;
@@ -111,11 +115,19 @@ void		rl_replace_line(const char *str, int line_num);
 void		skip_quotes(char *input, int *i, int q_type);
 void		ft_check_env(t_input *input, t_var *vars);
 void		set_redirection(t_cmd *cmd, t_var var);
-void		free_all(t_cmd **cmd, t_input *input);
+void		free_all(t_cmd **cmd, t_input *input, t_var *var);
 void		signal_handler(int signum);
 void		init_var(t_var *var);
 void		free_input(t_input *input);
 void		add_shlvl(char **env);
 char		**mini_split(char *s, char c);
+bool		execute(t_cmd **cmd, t_input *input, t_var *var);
+void		free_vars(t_var *var);
+void		free_splitted(t_var *var);
+void		wait_process(t_input *input, t_var *var);
+void		close_fd(t_var *var);
+void		close_all(t_input *input, t_var *var);
+void		init_all(t_var *var);
+void		free_env(char **env);
 
 #endif
