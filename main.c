@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/27 06:11:43 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/01 03:57:37 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ int main (int ac, char **av, char **env)
 
 	(void)av;
 	(void)ac;
+	ft_memset(&var, 0, sizeof(t_var));
+	ft_memset(&input, 0, sizeof(t_input));
+	ft_memset(&cmd, 0, sizeof(t_cmd));
 	input.env = dup_shell(env);
 	add_shlvl(input.env);
 	while (1)
@@ -30,8 +33,9 @@ int main (int ac, char **av, char **env)
 		input.cmds = readline("\x1b[94mMinishell >> \x1b[0m");
 		if (!input.cmds)
 		{
-			free_all(NULL, &input);
+			free_all(NULL, &input, &var);
 			clear_history();
+			free_env(input.env);
 			exit(1);
 		}
 		add_history(input.cmds);
@@ -40,13 +44,15 @@ int main (int ac, char **av, char **env)
 			cmd = (t_cmd **)ft_calloc(input.num_of_cmd, sizeof(t_cmd));
 			cmd[input.num_of_cmd] = NULL;
 			tokenize_cmds(&input, cmd, &var);
-			if (cmd && cmd[0])
+			if (cmd)
 			{
 				execute(cmd, &input, &var);
-				free_all(cmd, &input);
-					// exit(0);
+				free_all(cmd, &input, &var);
 			}
+			else
+				continue ;
 		}
+		continue ;
 	}
 	return (0);
 }

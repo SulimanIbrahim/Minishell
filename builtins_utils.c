@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 20:42:00 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/03/27 08:53:15 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/01 06:22:06 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,41 +16,40 @@ int	cd(t_cmd *cmd)
 {
 	if (!cmd || !cmd->cmd[1])
 		chdir(getenv("HOME"));
-	else
-		if (chdir(cmd->cmd[1]) == -1)
-			printf("cd: no such file or directory: %s\n", cmd->cmd[1]);
+	else if (chdir(cmd->cmd[1]) == -1)
+		printf("cd: no such file or directory: %s\n", cmd->cmd[1]);
 	return (1);
 }
 
-int	echo(t_input *input)
-{
-	int		i;
-	int		flag;
-	char	*p;
+// int	echo(t_input *input)
+// {
+// 	int		i;
+// 	int		flag;
+// 	char	*p;
 
-	i = 0;
-	flag = 0;
-	p = ft_strchr(input->cmds, ' ');
-	while (*p && *p == ' ')
-		p++;
-	if (p[i] && p[i++] == '-')
-	{
-		if (p[i] && p[i++] == 'n')
-		{
-			if (!p[i] || p[i] == ' ')
-			{
-				flag = 1;
-				p += i;
-			}
-		}
-	}
-	while (*p && *p == ' ')
-		p++;
-	printf("%s", p);
-	if (flag != 1)
-		printf("\n");
-	return (1);
-}
+// 	i = 0;
+// 	flag = 0;
+// 	p = ft_strchr(input->cmds, ' ');
+// 	while (*p && *p == ' ')
+// 		p++;
+// 	if (p[i] && p[i++] == '-')
+// 	{
+// 		if (p[i] && p[i++] == 'n')
+// 		{
+// 			if (!p[i] || p[i] == ' ')
+// 			{
+// 				flag = 1;
+// 				p += i;
+// 			}
+// 		}
+// 	}
+// 	while (*p && *p == ' ')
+// 		p++;
+// 	printf("%s", p);
+// 	if (flag != 1)
+// 		printf("\n");
+// 	return (1);
+// }
 
 int	pwd(void)
 {
@@ -69,10 +68,8 @@ int	ft_env(char **env)
 
 int	ft_exit(t_cmd *cmd)
 {
-	int	i;
 	int	len;
 
-	i = 0;
 	len = env_len(cmd->cmd);
 	printf("exit\n");
 	if (len > 2)

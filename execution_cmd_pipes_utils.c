@@ -1,26 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal_handle.c                                    :+:      :+:    :+:   */
+/*   execution_cmd_pipes_utils.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 00:24:30 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/14 01:01:25 by suibrahi         ###   ########.fr       */
+/*   Created: 2024/03/28 03:40:08 by suibrahi          #+#    #+#             */
+/*   Updated: 2024/04/01 02:36:51 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	signal_handler(int signum) 
+void	wait_process(t_input *input, t_var *var)
 {
-	if (signum == SIGINT)
+	var->c = 0;
+	while (var->c < input->num_of_cmd)
 	{
-		printf("\n");
-		rl_on_new_line();
-		// there is problem in this function its not in the header
-		// rl_replace_line("", 0);
-		rl_redisplay();
+		wait(NULL);
+		var->c++;
 	}
 }
 
+void	close_fd(t_var *var)
+{
+	close(var->fd[0]);
+	close(var->fd[1]);
+}
+
+void	close_all(t_input *input, t_var *var)
+{
+	var->c = -1;
+	while (++var->c < input->num_of_cmd)
+		close(var->prev_fd--);
+}
+
+void	init_all(t_var *var)
+{
+	var->splitted = NULL;
+	var->temp = NULL;
+	var->cmd_path = NULL;
+}

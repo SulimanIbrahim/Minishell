@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setting_redirections.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 00:07:34 by aken              #+#    #+#             */
-/*   Updated: 2024/03/27 09:00:11 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/03/16 05:07:22 by aken             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ void	add_redirection(t_red **redirection, t_red *var)
 
 void	set_redirection(t_cmd *cmd, t_var var)
 {
+	char	*tmp;
+
 	if (!ft_check_red(cmd->cmd_name))
 		return ;
 	var.i = -1;
@@ -102,10 +104,10 @@ void	set_redirection(t_cmd *cmd, t_var var)
 			var.i += skip(cmd->cmd_name + var.i, ' ');
 			extracting_file_name(cmd->cmd_name + var.i, &var);
 			var.temp = malloc(var.closed + 1);
-			ft_strlcpy(var.temp, cmd->cmd_name, var.closed + 1);
-			var.temp2 = cmd->cmd_name;
+			ft_strlcpy(var.temp, cmd->cmd_name, var.closed);
+			tmp = cmd->cmd_name;
 			cmd->cmd_name = ft_strjoin(var.temp, cmd->cmd_name + var.i);
-			free(var.temp2);
+			free(tmp);
 			free (var.temp);
 			add_redirection(&(cmd->redricts), var.red);
 			set_redirection(cmd, var);
