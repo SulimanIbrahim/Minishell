@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:01:06 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/03/30 04:13:55 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/01 03:38:11 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ static	void	ft_word_counter(char *s, char c, t_var *var)
 		if (s[var->i] == '"' || s[var->i] == '\'')
 		{
 			var->j = s[var->i++];
+			var->closed++;
 			var->i += skip(s + var->i, ' ');
 			if (!(s[var->i] == var->j))
 			{
-				var->closed++;
 				while (s[var->i] && s[var->i] != var->j)
 					var->i++;
 			}
@@ -55,7 +55,8 @@ static	int	ft_end(char *s, char c, int start)
 			if (s[start]) // this was added to fix the segfault for this case (input.cmds = ft_strdup("ls >> l\">\"");)
 				start++;
 		}
-		while (s[start] && s[start] != c && s[start] != DOUBLE_QUOTE && s[start] != SINGLE_QUOTE)
+		while (s[start] && s[start] != c && s[start] != DOUBLE_QUOTE
+			&& s[start] != SINGLE_QUOTE)
 			start++;
 		if (s[start] && s[start] == c)
 			return (start - 1);
@@ -63,30 +64,10 @@ static	int	ft_end(char *s, char c, int start)
 	return (start);
 }
 
-static	int	ft_check_qout(t_var *var)
-{
-	char	k;
-	int		i;
-
-	i = var->i;
-	i += skip(var->temp + i, ' ');
-	while (var->temp[i] && (var->temp[i] == '"' || var->temp[i] == '\''))
-	{
-		k = var->temp[i++];
-		i += skip(var->temp + i, ' ');
-		if (var->temp[i++] == k)
-			return (i);
-	}
-	return (0);
-}
-
 static	char	**ft_set(char **d, char c, int cc, t_var *var)
 {
 	while (var->c < cc && var->i <= var->len)
 	{
-		var->i += skip(var->temp + var->i, ' ');
-		while (!(ft_check_qout(var) == 0))
-			var->i = ft_check_qout(var);
 		var->i += skip(var->temp + var->i, ' ');
 		var->j = ft_end(var->temp, c, var->i);
 		d[var->c] = malloc((var->j - var->i + 2));

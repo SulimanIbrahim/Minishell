@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_cmd_pipes.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:55:33 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/01 03:02:02 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/01 03:58:45 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ static void	execute_execve(t_cmd **cmd, t_input *input, t_var *var)
 	}
 	exit(1);
 }
-
 
 static bool	execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
 {
