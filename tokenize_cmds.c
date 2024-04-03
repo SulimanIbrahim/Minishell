@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 00:48:25 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/27 09:03:34 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/01 02:56:18 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	init_var(t_var *var)
 	var->id = 0;
 	var->temp = NULL;
 	var->temp2 = NULL;
-	var->path = NULL;
 }
 
 static bool	find_pipe(t_input *input, int *len)
@@ -70,7 +69,6 @@ bool	tokenize_cmds(t_input *input, t_cmd **cmd, t_var *var)
 	}
 	return (true);
 }
-	// try this to print each cmd and the redirections in it
 	// int i = 0;
 	// t_red *p;
 	// while (i < input->num_of_cmd)
@@ -89,3 +87,4 @@ bool	tokenize_cmds(t_input *input, t_cmd **cmd, t_var *var)
 	// 	printf("------- \n");
 	// 	i++;
 	// }
+	// try this to print each cmd and the redirections in it

@@ -6,11 +6,24 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/21 21:10:16 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/03/22 05:59:58 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/01 03:55:40 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_env(char **env)
+{
+	int	i;
+
+	i = 0;
+	if (env)
+	{
+		while (env[i])
+			free(env[i++]);
+		free(env);
+	}
+}
 
 char	**dup_shell(char **env)
 {
@@ -44,5 +57,8 @@ void	add_shlvl(char **env)
 	var.n = ft_atoi(ft_strchr(env[var.i], '=') + 1);
 	var.temp = env[var.i];
 	free(var.temp);
-	env[var.i] = ft_strdup(ft_strjoin("SHLVL=", ft_itoa(var.n + 1)));
+	var.temp = ft_itoa(var.n + 1);
+	var.cmd_tmp = ft_strjoin("SHLVL=", var.temp);
+	free(var.temp);
+	env[var.i] = var.cmd_tmp;
 }
