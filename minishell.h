@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/04/01 05:55:33 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/04 04:15:21 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ typedef enum
 	OUTPUT,
 	APPEND,
 	HERDOC,
-	HERSTR,
 }		t_enm;
 
 typedef struct redirection
@@ -82,6 +81,7 @@ typedef struct vars
 	int		prev_fd;
 	char	**splitted;
 	char	*temp;
+	char	*temp2;
 	char	*cmd_path;
 	char	*cmd_tmp;
 	t_red	*red;
@@ -110,6 +110,10 @@ bool		tokenize_cmds(t_input *input, t_cmd **cmds, t_var *var);
 bool		clean_quotes(t_input *input, t_var *var);
 bool		quote_parsing(char *line, t_var *var);
 char		**dup_shell(char **env);
+bool		parsing(t_input *input);
+char		*ft_check_red(char *cmd_name);
+char		**mini_split(char *s, char c);
+char		**dup_shell(char **env);
 char		*ft_check_red(char *cmd_name);
 char		*readline(const char *line);
 void		rl_replace_line(const char *str, int line_num);
@@ -120,6 +124,17 @@ void		free_all(t_cmd **cmd, t_input *input, t_var *var);
 void		signal_handler(int signum);
 void		init_var(t_var *var);
 void		free_input(t_input *input);
+void		add_shlvl(char **env);
+char		**mini_split(char *s, char c);
+bool		execute(t_cmd **cmd, t_input *input, t_var *var);
+void		free_vars(t_var *var);
+void		free_splitted(t_var *var);
+void		wait_process(t_input *input, t_var *var);
+void		close_fd(t_var *var);
+void		close_all(t_input *input, t_var *var);
+void		init_all(t_var *var);
+void		free_env(char **env);
+void		free_cmd(t_cmd *cmd);
 void		add_shlvl(char **env);
 int			env_len(char **env);
 void		export(t_cmd *cmd, t_input *input);

@@ -6,11 +6,11 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:01:06 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/01 03:38:11 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/04 04:11:30 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+# include "minishell.h"
 
 static	void	ft_word_counter(char *s, char c, t_var *var)
 {
@@ -76,10 +76,9 @@ static	char	**ft_set(char **d, char c, int cc, t_var *var)
 		var->n = 0;
 		while (var->i <= var->j && var->i <= var->len)
 		{
-			if (var->temp[var->i] == '"' || var->temp[var->i] == '\'')
-				var->i++;
-			else
-				d[var->c][var->n++] = var->temp[var->i++];
+			if (var->temp[var->i] != '"' && var->temp[var->i] != '\'')
+				d[var->c][var->n++] = var->temp[var->i];
+			var->i++;
 		}
 		d[var->c][var->n] = 0;
 		var->c++;

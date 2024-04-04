@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:55:33 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/01 05:54:26 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/04 04:15:55 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,3 +100,4 @@ bool	execute(t_cmd **cmd, t_input *input, t_var *var)
 		wait(NULL);
 	return (true);
 }
+
