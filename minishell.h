@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/04/01 03:52:54 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/04 12:01:55 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include "Libft-42/libft.h"
+# include "get_next_line/get_next_line.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 # define SINGLE_QUOTE 39
@@ -57,7 +58,6 @@ typedef enum
 	OUTPUT,
 	APPEND,
 	HERDOC,
-	HERSTR,
 }		t_enm;
 
 typedef struct redirection
@@ -66,6 +66,17 @@ typedef struct redirection
 	char		*file_name;
 	void		*next_redricts;
 }		t_red;
+
+typedef struct redirection_vars
+{
+	int			input_fd;
+	int			input_type;
+	int			output_fd;
+	int			output_type;
+	int			tmp_in_fd;
+	int			tmp_out_fd;
+	char		*key;
+}			t_red_vars;
 
 typedef struct vars
 {
@@ -129,5 +140,6 @@ void		close_fd(t_var *var);
 void		close_all(t_input *input, t_var *var);
 void		init_all(t_var *var);
 void		free_env(char **env);
+void		execute_red(t_cmd *cmd, t_input *input, t_var *var);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:55:33 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/01 03:58:45 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/04 09:49:52 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,9 @@ bool	execute(t_cmd **cmd, t_input *input, t_var *var)
 		if (fork() == 0)
 		{
 			get_path(cmd, var);
-			if (execve(var->cmd_path, cmd[0]->cmd, input->env) == -1)
+			if (cmd[0]->redricts)
+				execute_red(cmd[0], input, var);
+			else if (execve(var->cmd_path, cmd[0]->cmd, input->env) == -1)
 				printf("(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
 			free_all(cmd, input, var);
 			exit(0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setting_redirections.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 00:07:34 by aken              #+#    #+#             */
-/*   Updated: 2024/03/16 05:07:22 by aken             ###   ########.fr       */
+/*   Updated: 2024/04/04 11:29:52 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,7 @@ t_enm	set_redirection_2(char *cmd)
 	else if (cmd[i] == '<')
 	{
 		if (cmd[++i] && cmd[i] == '<')
-		{
-			if (cmd[++i] && cmd[i] == '>')
-				return (HERSTR);
-			else
-				return (HERDOC);
-		}
+			return (HERDOC);
 	}
 	return (INPUT);
 }

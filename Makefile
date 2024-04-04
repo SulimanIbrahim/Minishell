@@ -18,6 +18,9 @@ SRC = main.c\
 	execution_cmd_pipes.c\
 	execution_cmd_pipes_utils.c\
 	shellvl.c\
+	execute_red.c\
+	get_next_line/get_next_line.c\
+	get_next_line/get_next_line_utils.c
  
 SRC_TEST = test_driven.c\
 	parsing.c\
@@ -32,7 +35,7 @@ SRC_TEST = test_driven.c\
 	mini_split.c\
 	execution_cmd_pipes.c\
 	execution_cmd_pipes_utils.c\
-  shellvl.c
+  	shellvl.c
 
 OBJ = $(SRC:%.c=%.o)
 
