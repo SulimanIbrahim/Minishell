@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 04:19:23 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/04 07:12:38 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/04 08:52:24 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	print_lines(char **lines, bool n_flag, int i)
 	}
 }
 
-bool	our_echo(char **cmd)
+bool	echo(char **cmd)
 {
 	t_var	var;
 

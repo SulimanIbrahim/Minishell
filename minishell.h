@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/04/04 04:15:21 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/04 08:52:18 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct vars
 	int		fdnum;
 	int		fd[2];
 	int		prev_fd;
+	bool	nflag;
 	char	**splitted;
 	char	*temp;
 	char	*temp2;
@@ -140,7 +141,6 @@ int			env_len(char **env);
 void		export(t_cmd *cmd, t_input *input);
 void		unset(t_cmd *cmd, t_input *input);
 int			cd(t_cmd *cmd);
-int			echo(t_input *input);
 int			pwd(void);
 int			ft_env(char **env);
 void		free_split(char **split);
@@ -155,5 +155,6 @@ void		close_fd(t_var *var);
 void		close_all(t_input *input, t_var *var);
 void		init_all(t_var *var);
 void		free_env(char **env);
+bool		echo(char **cmd);
 
 #endif

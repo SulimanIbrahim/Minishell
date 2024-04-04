@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 05:38:39 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/01 06:19:45 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/04 08:54:24 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static	char	**init_bulitins(void)
 {
 	char	**builtins;
 
-	builtins = malloc(sizeof(char *) * 7);
+	builtins = malloc(sizeof(char *) * 8);
 	if (!builtins)
 		return (NULL);
 	builtins[0] = ft_strdup("cd");
@@ -42,8 +42,8 @@ static	char	**init_bulitins(void)
 	builtins[3] = ft_strdup("unset");
 	builtins[4] = ft_strdup("env");
 	builtins[5] = ft_strdup("exit");
-	builtins[6] = NULL;
-	// builtins[7] = ft_strdup("echo");
+	builtins[6] = ft_strdup("echo");
+	builtins[7] = NULL;
 	return (builtins);
 }
 
@@ -51,8 +51,6 @@ bool	ft_exec_builtin(t_cmd *cmd, int i, t_input *input)
 {
 	if (i == 0)
 		return (cd(cmd));
-	// else if (i == 1)
-	// 	return (echo(s));
 	else if (i == 1)
 		return (pwd());
 	else if (i == 2)
@@ -63,6 +61,8 @@ bool	ft_exec_builtin(t_cmd *cmd, int i, t_input *input)
 		return (ft_env(input->env));
 	else if (i == 5)
 		return (ft_exit(cmd));
+	else if (i == 6)
+		return (echo(cmd->cmd));
 	return (true);
 }
 
