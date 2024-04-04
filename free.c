@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:46:24 by aken              #+#    #+#             */
-/*   Updated: 2024/04/04 04:16:27 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/04 04:18:13 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,6 @@ void	free_vars(t_var *var)
 	var->i = 0;
 	if (var->temp)
 		free(var->temp);
-	if (var->path)
-	{
-		var->i = -1;
-		while (var->splitted[++var->i])
-			free(var->splitted[var->i]);
-		free(var->splitted);
-	}
 }
 
 void	free_redirections(t_red	**redirection)
