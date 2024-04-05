@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/04/01 03:52:54 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/05 05:40:15 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct vars
 	int		len;
 	int		closed;
 	int		fdnum;
+	int		nflag;
 	int		fd[2];
 	int		prev_fd;
 	char	**splitted;
@@ -129,5 +130,6 @@ void		close_fd(t_var *var);
 void		close_all(t_input *input, t_var *var);
 void		init_all(t_var *var);
 void		free_env(char **env);
+bool	our_echo(char **cmd);
 
 #endif

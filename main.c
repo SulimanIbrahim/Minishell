@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/01 03:57:37 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/05 08:52:36 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int main (int ac, char **av, char **env)
 		signal(SIGINT, signal_handler);
 		signal(SIGQUIT, SIG_IGN);
 		input.num_of_cmd = 1;
-		input.cmds = readline("\x1b[94mMinishell >> \x1b[0m");
+		input.cmds = readline("\x1b[94mBigShell >> \x1b[0m");
 		if (!input.cmds)
 		{
 			free_all(NULL, &input, &var);
