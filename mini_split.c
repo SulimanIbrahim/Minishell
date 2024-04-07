@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 static	void	ft_word_counter(char *s, char c, t_var *var)
 {
@@ -76,9 +76,10 @@ static	char	**ft_set(char **d, char c, int cc, t_var *var)
 		var->n = 0;
 		while (var->i <= var->j && var->i <= var->len)
 		{
-			if (var->temp[var->i] != '"' && var->temp[var->i] != '\'')
-				d[var->c][var->n++] = var->temp[var->i];
-			var->i++;
+			if (var->temp[var->i] == '"' || var->temp[var->i] == '\'')
+				var->i++;
+			else
+				d[var->c][var->n++] = var->temp[var->i++];
 		}
 		d[var->c][var->n] = 0;
 		var->c++;

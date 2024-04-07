@@ -21,7 +21,8 @@ void	init_var(t_var *var)
 	var->len = 0;
 	var->closed = 0;
 	var->temp = NULL;
-	var->temp2 = NULL;
+	var->cmd_path = NULL;
+	var->cmd_tmp = NULL;
 }
 
 static bool	find_pipe(t_input *input, int *len)

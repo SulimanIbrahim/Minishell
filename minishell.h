@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/04/04 08:52:18 by ahibrahi         ###   ########.fr       */
+/*   Created: 2024/03/09 05:15:28 by ahibrahi          #+#    #+#             */
+/*   Updated: 2024/04/05 05:40:15 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ typedef struct vars
 	bool	nflag;
 	char	**splitted;
 	char	*temp;
-	char	*temp2;
 	char	*cmd_path;
 	char	*cmd_tmp;
 	t_red	*red;
@@ -158,5 +157,6 @@ void		close_all(t_input *input, t_var *var);
 void		init_all(t_var *var);
 void		free_env(char **env);
 bool		echo(char **cmd);
+
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_cmd_pipes.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:55:33 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/04 04:15:55 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/05 08:59:15 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static bool	get_path(t_cmd **cmd, t_var *var)
 			if (access(var->cmd_path, F_OK) == 0)
 				return (free(var->temp), true);
 			if (var->splitted[var->j + 1] == NULL)
-				return (free(var->temp), true);
+				return (free(var->temp), false);
 			free(var->temp);
 			free(var->cmd_path);
 		}
@@ -40,11 +40,14 @@ static void	execute_execve(t_cmd **cmd, t_input *input, t_var *var)
 	if (execve(var->cmd_path, cmd[var->i]->cmd, input->env) == -1)
 	{
 		printf("(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
-		free(var->cmd_path);
+		if (var->cmd_path)
+			free(var->cmd_path);
+		if (input->env)
+			free_env(input->env);
 		free_all(cmd, input, var);
-		exit(1);
-	}
-	exit(1);
+		close_all(input, var);
+  	exit(0);
+  }
 }
 
 static bool	execute_pipes(t_cmd **cmd, t_input *input, t_var *var)

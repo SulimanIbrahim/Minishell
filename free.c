@@ -23,7 +23,6 @@ void	free_vars(t_var *var)
 			free(var->splitted[var->i]);
 		free(var->splitted);
 	}
-	var->i = 0;
 	// if (var->temp)
 	// 	free(var->temp);
 }
