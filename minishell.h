@@ -18,6 +18,7 @@
 # include <string.h>
 # include <stdbool.h>
 # include <stdlib.h>
+# include <signal.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
@@ -104,7 +105,7 @@ typedef struct command
 }		t_cmd;
 
 int			skip(char *cmds, char c);
-int			ft_check_redirections(t_input *input, t_var *vars);
+int			ft_check_redirections(char *cmd_name, t_var *vars);
 bool		ft_check_builtins(t_cmd *cmd, t_input *input);
 bool		parsing(t_input *input);
 bool		tokenize_cmds(t_input *input, t_cmd **cmds, t_var *var);
@@ -144,7 +145,8 @@ int			cd(t_cmd *cmd);
 int			pwd(void);
 int			ft_env(char **env);
 void		free_split(char **split);
-int			ft_exit(t_cmd *cmd);
+int			ft_exit(t_cmd **cmd, t_input *input, t_var *var);
+void		ft_check_exit(t_cmd **cmd, t_input *input, t_var *var, int n);
 int			str_is_digit(char *str);
 char		**mini_split(char *s, char c);
 bool		execute(t_cmd **cmd, t_input *input, t_var *var);

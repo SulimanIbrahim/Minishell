@@ -61,7 +61,7 @@ bool	parsing(t_input *input)
 
 	if (!pipe_quote_pars(input, &var))
 		return (free_input(input), false);
-	if (ft_check_redirections(input, &var))
+	if (ft_check_redirections(input->cmds, &var))
 		return (free_input(input), false);
 	ft_check_env(input, &var);
 	return (true);

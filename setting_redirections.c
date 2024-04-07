@@ -81,7 +81,7 @@ void	add_redirection(t_red **redirection, t_red *var)
 
 void	set_redirection(t_cmd *cmd, t_var var)
 {
-	if (!ft_check_red(cmd->cmd_name))
+	if (!ft_check_red(cmd->cmd_name) || ft_check_redirections(cmd->cmd_name, &var))
 		return ;
 	var.i = -1;
 	while (cmd->cmd_name[++var.i])

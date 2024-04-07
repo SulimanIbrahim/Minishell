@@ -12,6 +12,25 @@
 
 #include "minishell.h"
 
+void	ft_check_exit(t_cmd **cmd, t_input *input, t_var *var, int n)
+{
+	int		i;
+
+	i = 0;
+	if ("exit"[i] == cmd[n]->cmd[0][i])
+	{
+		while (cmd[n]->cmd[0][i] && "exit"[i]
+				&& cmd[n]->cmd[0][i] != ' '
+				&& cmd[n]->cmd[0][i] == "exit"[i])
+			i++;
+		if (!"exit"[i]
+			&& (!cmd[n]->cmd[0][i] || cmd[n]->cmd[0][i] == ' '))
+			ft_exit(cmd, input, var);
+	}
+	return ;
+}
+
+
 int	str_is_digit(char *str)
 {
 	int	i;
@@ -33,7 +52,7 @@ static	char	**init_bulitins(void)
 {
 	char	**builtins;
 
-	builtins = malloc(sizeof(char *) * 8);
+	builtins = malloc(sizeof(char *) * 7);
 	if (!builtins)
 		return (NULL);
 	builtins[0] = ft_strdup("cd");
@@ -41,28 +60,25 @@ static	char	**init_bulitins(void)
 	builtins[2] = ft_strdup("export");
 	builtins[3] = ft_strdup("unset");
 	builtins[4] = ft_strdup("env");
-	builtins[5] = ft_strdup("exit");
-	builtins[6] = ft_strdup("echo");
-	builtins[7] = NULL;
+	builtins[5] = ft_strdup("echo");
+	builtins[6] = NULL;
 	return (builtins);
 }
 
 bool	ft_exec_builtin(t_cmd *cmd, int i, t_input *input)
 {
 	if (i == 0)
-		return (cd(cmd));
+		cd(cmd);
 	else if (i == 1)
-		return (pwd());
+		pwd();
 	else if (i == 2)
 		export(cmd, input);
 	else if (i == 3)
 		unset(cmd, input);
 	else if (i == 4)
-		return (ft_env(input->env));
+		ft_env(input->env);
 	else if (i == 5)
-		return (ft_exit(cmd));
-	else if (i == 6)
-		return (echo(cmd->cmd));
+		echo(cmd->cmd);
 	return (true);
 }
 
@@ -85,7 +101,7 @@ bool	ft_check_builtins(t_cmd *cmd, t_input *input)
 				j++;
 			if (!builtins[i][j]
 				&& (!cmd->cmd[0][j] || cmd->cmd[0][j] == ' '))
-				return (ft_exec_builtin(cmd, i, input));
+				return (free_split(builtins), ft_exec_builtin(cmd, i, input));
 		}
 		j = 0;
 		i++;

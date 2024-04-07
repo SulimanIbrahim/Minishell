@@ -31,7 +31,7 @@ static bool	get_path(t_cmd **cmd, t_var *var)
 		}
 	}
 	else
-		var->cmd_path = cmd[var->i]->cmd[0];
+		var->cmd_path = ft_strdup(cmd[var->i]->cmd[0]);
 	return (true);
 }
 
@@ -53,9 +53,12 @@ static bool	execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
 	var->prev_fd = STDIN_FILENO;
 	while (++var->i < input->num_of_cmd)
 	{
+		ft_check_exit(cmd, input, var, var->i);
 		if (pipe(var->fd) == -1)
 			return (false);
-		if (fork() == 0)
+		if (ft_check_builtins(cmd[0], input))
+				;
+		else if (fork() == 0)
 		{
 			dup2(var->prev_fd, STDIN_FILENO);
 			close(var->prev_fd);
@@ -83,12 +86,17 @@ bool	execute(t_cmd **cmd, t_input *input, t_var *var)
 		return (true);
 	if (input->num_of_cmd == 1)
 	{
-		if (fork() == 0)
+		ft_check_exit(cmd, input, var, var->i);
+		if (ft_check_builtins(cmd[0], input))
+			return (true);
+		else if (fork() == 0)
 		{
 			get_path(cmd, var);
-			if (!ft_check_builtins(cmd[0], input)
-				&& execve(var->cmd_path, cmd[0]->cmd, input->env) == -1)
+			if (execve(var->cmd_path, cmd[0]->cmd, input->env) == -1)
 				printf("(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
+			if (var->cmd_path)
+				free(var->cmd_path);
+			free_env(input->env);
 			free_all(cmd, input, var);
 			exit(0);
 		}

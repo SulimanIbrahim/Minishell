@@ -15,45 +15,16 @@
 int	cd(t_cmd *cmd)
 {
 	if (!cmd || !cmd->cmd[1])
-		chdir(getenv("HOME"));
-	else if (chdir(cmd->cmd[1]) == -1)
+		return (chdir(getenv("HOME")));
+	if (chdir(cmd->cmd[1]) == -1)
 		printf("cd: no such file or directory: %s\n", cmd->cmd[1]);
 	return (1);
 }
 
-// int	echo(t_input *input)
-// {
-// 	int		i;
-// 	int		flag;
-// 	char	*p;
-
-// 	i = 0;
-// 	flag = 0;
-// 	p = ft_strchr(input->cmds, ' ');
-// 	while (*p && *p == ' ')
-// 		p++;
-// 	if (p[i] && p[i++] == '-')
-// 	{
-// 		if (p[i] && p[i++] == 'n')
-// 		{
-// 			if (!p[i] || p[i] == ' ')
-// 			{
-// 				flag = 1;
-// 				p += i;
-// 			}
-// 		}
-// 	}
-// 	while (*p && *p == ' ')
-// 		p++;
-// 	printf("%s", p);
-// 	if (flag != 1)
-// 		printf("\n");
-// 	return (1);
-// }
-
 int	pwd(void)
 {
-	return (printf("%s\n", getenv("PWD")));
+	char	PWD[1024];
+	return (printf("%s\n", getcwd(PWD, 1024)));
 }
 
 int	ft_env(char **env)
@@ -66,17 +37,25 @@ int	ft_env(char **env)
 	return (1);
 }
 
-int	ft_exit(t_cmd *cmd)
+int	ft_exit(t_cmd **cmd, t_input *input, t_var *var)
 {
 	int	len;
+	int	exit_code;
 
-	len = env_len(cmd->cmd);
-	printf("exit\n");
-	if (len > 2)
-		return (printf("bash: exit: too many arguments\n"));
-	if (str_is_digit(cmd->cmd[1]) == 1)
-		printf("bash: exit: %s: numeric argument required\n", cmd->cmd[1]);
-	if (cmd->cmd[1])
-		exit (ft_atoi(cmd->cmd[1]));
-	exit (0);
+	exit_code = 0;
+	if (cmd && cmd[0])
+	{
+		len = env_len(cmd[0]->cmd);
+		printf("exit\n");
+		if (len > 2)
+			return (printf("bash: exit: too many arguments\n"));
+		if (str_is_digit(cmd[0]->cmd[1]) == 1)
+			printf("bash: exit: %s: numeric argument required\n", cmd[0]->cmd[1]);
+		if (cmd[0]->cmd[1])
+			exit_code = ft_atoi(cmd[0]->cmd[1]);
+	}
+	free_env(input->env);
+	free_all(cmd, input, var);
+	clear_history();
+	exit (exit_code);
 }
