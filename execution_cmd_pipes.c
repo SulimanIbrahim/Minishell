@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_cmd_pipes.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:55:33 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/04 09:49:52 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/05 08:59:15 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,31 @@ static bool	get_path(t_cmd **cmd, t_var *var)
 			if (access(var->cmd_path, F_OK) == 0)
 				return (free(var->temp), true);
 			if (var->splitted[var->j + 1] == NULL)
-				return (free(var->temp), true);
+				return (free(var->temp), false);
 			free(var->temp);
 			free(var->cmd_path);
 		}
 	}
 	else
-		var->cmd_path = cmd[var->i]->cmd[0];
+		var->cmd_path = ft_strdup(cmd[var->i]->cmd[0]);
 	return (true);
 }
 
 static void	execute_execve(t_cmd **cmd, t_input *input, t_var *var)
 {
-	if (execve(var->cmd_path, cmd[var->i]->cmd, input->env) == -1)
+	if (cmd[var->i]->redricts)
+		execute_red(cmd[var->i], input, var);
+	else if (execve(var->cmd_path, cmd[var->i]->cmd, input->env) == -1)
 	{
 		printf("(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
-		free(var->cmd_path);
+		if (var->cmd_path)
+			free(var->cmd_path);
+		if (input->env)
+			free_env(input->env);
 		free_all(cmd, input, var);
-		exit(1);
-	}
-	exit(1);
+		close_all(input, var);
+  	exit(0);
+  }
 }
 
 static bool	execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
@@ -53,9 +58,12 @@ static bool	execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
 	var->prev_fd = STDIN_FILENO;
 	while (++var->i < input->num_of_cmd)
 	{
+		ft_check_exit(cmd, input, var, var->i);
 		if (pipe(var->fd) == -1)
 			return (false);
-		if (fork() == 0)
+		if (ft_check_builtins(cmd[0], input))
+				;
+		else if (fork() == 0)
 		{
 			dup2(var->prev_fd, STDIN_FILENO);
 			close(var->prev_fd);
@@ -83,13 +91,19 @@ bool	execute(t_cmd **cmd, t_input *input, t_var *var)
 		return (true);
 	if (input->num_of_cmd == 1)
 	{
-		if (fork() == 0)
+		ft_check_exit(cmd, input, var, var->i);
+		if (ft_check_builtins(cmd[0], input))
+			return (true);
+		else if (fork() == 0)
 		{
 			get_path(cmd, var);
 			if (cmd[0]->redricts)
 				execute_red(cmd[0], input, var);
 			else if (execve(var->cmd_path, cmd[0]->cmd, input->env) == -1)
 				printf("(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
+			if (var->cmd_path)
+				free(var->cmd_path);
+			free_env(input->env);
 			free_all(cmd, input, var);
 			exit(0);
 		}
@@ -101,3 +115,4 @@ bool	execute(t_cmd **cmd, t_input *input, t_var *var)
 		wait(NULL);
 	return (true);
 }
+

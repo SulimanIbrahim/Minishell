@@ -81,26 +81,26 @@ bool	ft_check_redirections_2(char *s, int *i, int j, char c)
 	return (true);
 }
 
-int	ft_check_redirections(t_input *input, t_var *var)
+int	ft_check_redirections(char *cmd_name, t_var *var)
 {
 	var->i = -1;
 	var->j = 1;
-	if (!ft_check_red(input->cmds))
+	if (!ft_check_red(cmd_name))
 		return (0);
-	while (input->cmds[++var->i])
+	while (cmd_name[++var->i])
 	{
-		if (input->cmds[var->i] == '\'' || input->cmds[var->i] == '"')
-			skip_quotes(input->cmds, &var->i, input->cmds[var->i]);
-		if (input->cmds[var->i] == '>')
+		if (cmd_name[var->i] == '\'' || cmd_name[var->i] == '"')
+			skip_quotes(cmd_name, &var->i, cmd_name[var->i]);
+		if (cmd_name[var->i] == '>')
 		{
-			if (!ft_check_redirections_2(input->cmds, &var->i, var->j, '>')
-				|| !ft_check_char_after_direction(input->cmds + var->i))
+			if (!ft_check_redirections_2(cmd_name, &var->i, var->j, '>')
+				|| !ft_check_char_after_direction(cmd_name + var->i))
 				return (printf("bash: syntax error near unexpected token\n"));
 		}
-		else if (input->cmds[var->i] == '<')
+		else if (cmd_name[var->i] == '<')
 		{
-			if (!ft_check_redirections_2(input->cmds, &var->i, var->j, '<')
-				|| !ft_check_char_after_direction(input->cmds + var->i))
+			if (!ft_check_redirections_2(cmd_name, &var->i, var->j, '<')
+				|| !ft_check_char_after_direction(cmd_name + var->i))
 				return (printf("bash: syntax error near unexpected token\n"));
 		}
 	}

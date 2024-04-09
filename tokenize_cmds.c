@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_cmds.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 00:48:25 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/01 02:56:18 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/04 04:15:06 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	init_var(t_var *var)
 	var->len = 0;
 	var->closed = 0;
 	var->temp = NULL;
+	var->cmd_path = NULL;
+	var->cmd_tmp = NULL;
 }
 
 static bool	find_pipe(t_input *input, int *len)

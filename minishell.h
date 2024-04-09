@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/09 05:15:28 by aken              #+#    #+#             */
-/*   Updated: 2024/04/04 12:01:55 by ahibrahi         ###   ########.fr       */
+/*   Created: 2024/03/09 05:15:28 by ahibrahi          #+#    #+#             */
+/*   Updated: 2024/04/05 05:40:15 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <string.h>
 # include <stdbool.h>
 # include <stdlib.h>
+# include <signal.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
@@ -91,6 +92,7 @@ typedef struct vars
 	int		fdnum;
 	int		fd[2];
 	int		prev_fd;
+	bool	nflag;
 	char	**splitted;
 	char	*temp;
 	char	*cmd_path;
@@ -114,11 +116,16 @@ typedef struct command
 }		t_cmd;
 
 int			skip(char *cmds, char c);
-int			ft_check_redirections(t_input *input, t_var *vars);
+int			ft_check_redirections(char *cmd_name, t_var *vars);
+bool		ft_check_builtins(t_cmd *cmd, t_input *input);
 bool		parsing(t_input *input);
 bool		tokenize_cmds(t_input *input, t_cmd **cmds, t_var *var);
 bool		clean_quotes(t_input *input, t_var *var);
 bool		quote_parsing(char *line, t_var *var);
+char		**dup_shell(char **env);
+bool		parsing(t_input *input);
+char		*ft_check_red(char *cmd_name);
+char		**mini_split(char *s, char c);
 char		**dup_shell(char **env);
 char		*ft_check_red(char *cmd_name);
 char		*readline(const char *line);
@@ -140,6 +147,29 @@ void		close_fd(t_var *var);
 void		close_all(t_input *input, t_var *var);
 void		init_all(t_var *var);
 void		free_env(char **env);
+void		free_cmd(t_cmd *cmd);
+void		add_shlvl(char **env);
+int			env_len(char **env);
+void		export(t_cmd *cmd, t_input *input);
+void		unset(t_cmd *cmd, t_input *input);
+int			cd(t_cmd *cmd);
+int			pwd(void);
+int			ft_env(char **env);
+void		free_split(char **split);
+int			ft_exit(t_cmd **cmd, t_input *input, t_var *var);
+void		ft_check_exit(t_cmd **cmd, t_input *input, t_var *var, int n);
+int			str_is_digit(char *str);
+char		**mini_split(char *s, char c);
+bool		execute(t_cmd **cmd, t_input *input, t_var *var);
+void		free_vars(t_var *var);
+void		free_splitted(t_var *var);
+void		wait_process(t_input *input, t_var *var);
+void		close_fd(t_var *var);
+void		close_all(t_input *input, t_var *var);
+void		init_all(t_var *var);
+void		free_env(char **env);
+bool		echo(char **cmd);
 void		execute_red(t_cmd *cmd, t_input *input, t_var *var);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 00:07:34 by aken              #+#    #+#             */
-/*   Updated: 2024/04/04 11:29:52 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/04 04:14:18 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,7 @@ void	add_redirection(t_red **redirection, t_red *var)
 
 void	set_redirection(t_cmd *cmd, t_var var)
 {
-	char	*tmp;
-
-	if (!ft_check_red(cmd->cmd_name))
+	if (!ft_check_red(cmd->cmd_name) || ft_check_redirections(cmd->cmd_name, &var))
 		return ;
 	var.i = -1;
 	while (cmd->cmd_name[++var.i])
@@ -100,9 +98,9 @@ void	set_redirection(t_cmd *cmd, t_var var)
 			extracting_file_name(cmd->cmd_name + var.i, &var);
 			var.temp = malloc(var.closed + 1);
 			ft_strlcpy(var.temp, cmd->cmd_name, var.closed);
-			tmp = cmd->cmd_name;
+			var.cmd_tmp = cmd->cmd_name;
 			cmd->cmd_name = ft_strjoin(var.temp, cmd->cmd_name + var.i);
-			free(tmp);
+			free(var.cmd_tmp);
 			free (var.temp);
 			add_redirection(&(cmd->redricts), var.red);
 			set_redirection(cmd, var);

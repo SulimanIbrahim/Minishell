@@ -45,7 +45,7 @@ void	set_reds(t_cmd *cmd, t_red_vars *red_fd)
 						| O_APPEND | O_CREAT, 0777);
 			else
 				red_fd->output_fd = open(p->file_name, O_RDWR
-						| O_CREAT | O_TRUNC, 0777);
+						| O_CREAT, 0777);
 			red_fd->output_type = p->type;
 		}
 		p = p->next_redricts;
@@ -65,10 +65,10 @@ void	set_input(t_red_vars *red_fd)
 	else if (red_fd->key != NULL)
 	{
 		red_fd->tmp_in_fd = dup(STDIN_FILENO);
-		red_fd->input_fd = open("tmp", O_WRONLY | O_CREAT, 0777);
+		red_fd->input_fd = open("tmp", O_RDWR | O_CREAT, 0777);
 		ft_putstr_fd("> ", 1);
 		tmp = get_next_line(red_fd->tmp_in_fd);
-		while (tmp && ft_strlen(red_fd->key) != ft_strlen(tmp) && ft_strncmp(red_fd->key, tmp, ft_strlen(red_fd->key) + 1))
+		while (tmp && (ft_strlen(red_fd->key) != ft_strlen(tmp) - 1 || ft_strncmp(red_fd->key, tmp, ft_strlen(red_fd->key - 1))))
 		{
 			ft_putstr_fd("> ", 1);
 			ft_putstr_fd(tmp, red_fd->input_fd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/01 03:57:37 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/05 08:52:36 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,7 @@ int main (int ac, char **av, char **env)
 		input.num_of_cmd = 1;
 		input.cmds = readline("\x1b[94mMinishell >> \x1b[0m");
 		if (!input.cmds)
-		{
-			free_all(NULL, &input, &var);
-			clear_history();
-			free_env(input.env);
-			exit(1);
-		}
+			ft_exit(NULL, &input, &var);
 		add_history(input.cmds);
 		if (parsing(&input))
 		{
