@@ -23,8 +23,6 @@ void	free_vars(t_var *var)
 			free(var->splitted[var->i]);
 		free(var->splitted);
 	}
-	// if (var->temp)
-	// 	free(var->temp);
 }
 
 void	free_redirections(t_red	**redirection)
