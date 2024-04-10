@@ -101,7 +101,7 @@ void	set_redirection(t_cmd *cmd, t_var var)
 			var.cmd_tmp = cmd->cmd_name;
 			cmd->cmd_name = ft_strjoin(var.temp, cmd->cmd_name + var.i);
 			free(var.cmd_tmp);
-			free (var.temp);
+			free(var.temp);
 			add_redirection(&(cmd->redricts), var.red);
 			set_redirection(cmd, var);
 			return ;
