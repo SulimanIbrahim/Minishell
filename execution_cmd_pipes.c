@@ -45,7 +45,7 @@ static void	execute_execve(t_cmd **cmd, t_input *input, t_var *var)
 		if (input->env)
 			free_env(input->env);
 		free_all(cmd, input, var);
-		close_all(input, var);
+		close_all(var);
   	exit(0);
   }
 }
@@ -54,30 +54,36 @@ static bool	execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
 {
 	var->i = -1;
 	var->prev_fd = STDIN_FILENO;
+	var->flag = 0;
 	while (++var->i < input->num_of_cmd)
 	{
 		ft_check_exit(cmd, input, var, var->i);
-		if (pipe(var->fd) == -1)
-			return (false);
-		if (ft_check_builtins(cmd[0], input))
+		if (ft_check_builtins(cmd[var->i], input))
 				;
-		else if (fork() == 0)
-		{
-			dup2(var->prev_fd, STDIN_FILENO);
-			close(var->prev_fd);
-			if ((var->i + 1) != input->num_of_cmd)
-				dup2(var->fd[1], STDOUT_FILENO);
-			close_fd(var);
-			get_path(cmd, var);
-			execute_execve(cmd, input, var);
-		}
 		else
 		{
-			var->prev_fd = dup(var->fd[0]);
-			close_fd(var);
+			if (pipe(var->fd) == -1)
+				return (false);
+			if (fork() == 0)
+			{
+				dup2(var->prev_fd, STDIN_FILENO);
+				close(var->prev_fd);
+				if ((var->i + 1) != input->num_of_cmd)
+					dup2(var->fd[1], STDOUT_FILENO);
+				close_fd(var);
+				get_path(cmd, var);
+				execute_execve(cmd, input, var);
+			}
+			else
+			{
+				var->prev_fd = dup(var->fd[0]);
+				close_fd(var);
+				var->flag++;
+			}
 		}
 	}
-	close_all(input, var);
+	if (var->flag != 0)
+		close_all(var);
 	return (true);
 }
 
@@ -101,7 +107,7 @@ bool	execute(t_cmd **cmd, t_input *input, t_var *var)
 				free(var->cmd_path);
 			free_env(input->env);
 			free_all(cmd, input, var);
-			exit(0);
+			exit(1);
 		}
 	}
 	else

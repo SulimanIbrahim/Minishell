@@ -28,10 +28,10 @@ void	close_fd(t_var *var)
 	close(var->fd[1]);
 }
 
-void	close_all(t_input *input, t_var *var)
+void	close_all(t_var *var)
 {
 	var->c = -1;
-	while (++var->c < input->num_of_cmd)
+	while (++var->c < var->flag)
 		close(var->prev_fd--);
 }
 
