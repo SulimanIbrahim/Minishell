@@ -30,14 +30,9 @@ int main (int ac, char **av, char **env)
 		signal(SIGINT, signal_handler);
 		signal(SIGQUIT, SIG_IGN);
 		input.num_of_cmd = 1;
-		input.cmds = readline("\x1b[94mBigShell >> \x1b[0m");
+		input.cmds = readline("\x1b[94mMinishell >> \x1b[0m");
 		if (!input.cmds)
-		{
-			free_all(NULL, &input, &var);
-			clear_history();
-			free_env(input.env);
-			exit(1);
-		}
+			ft_exit(NULL, &input, &var);
 		add_history(input.cmds);
 		if (parsing(&input))
 		{

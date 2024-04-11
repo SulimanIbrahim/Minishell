@@ -45,47 +45,45 @@ static void	execute_execve(t_cmd **cmd, t_input *input, t_var *var)
 		if (input->env)
 			free_env(input->env);
 		free_all(cmd, input, var);
-		close_all(input, var);
-		exit(1);
-	}
-	exit(1);
+		close_all(var);
+  	exit(0);
+  }
 }
 
 static bool	execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
 {
 	var->i = -1;
 	var->prev_fd = STDIN_FILENO;
+	var->flag = 0;
 	while (++var->i < input->num_of_cmd)
 	{
-		if (pipe(var->fd) == -1)
-			return (false);
-		if (fork() == 0)
-		{
-			dup2(var->prev_fd, STDIN_FILENO);
-			close(var->prev_fd);
-			if ((var->i + 1) != input->num_of_cmd)
-				dup2(var->fd[1], STDOUT_FILENO);
-			close_fd(var);
-			if (ft_strncmp(cmd[var->i]->cmd[0], "echo", 4) == 0)
-				if (our_echo(cmd[var->i]->cmd))
-				{
-					free_all(cmd, input, var);
-					if (input->env)
-						free_env(input->env);
-					close(var->prev_fd);
-					close_fd(var);
-					exit(0);
-				}
-			get_path(cmd, var);
-			execute_execve(cmd, input, var);
-		}
+		ft_check_exit(cmd, input, var, var->i);
+		if (ft_check_builtins(cmd[var->i], input))
+				;
 		else
 		{
-			var->prev_fd = dup(var->fd[0]);
-			close_fd(var);
+			if (pipe(var->fd) == -1)
+				return (false);
+			if (fork() == 0)
+			{
+				dup2(var->prev_fd, STDIN_FILENO);
+				close(var->prev_fd);
+				if ((var->i + 1) != input->num_of_cmd)
+					dup2(var->fd[1], STDOUT_FILENO);
+				close_fd(var);
+				get_path(cmd, var);
+				execute_execve(cmd, input, var);
+			}
+			else
+			{
+				var->prev_fd = dup(var->fd[0]);
+				close_fd(var);
+				var->flag++;
+			}
 		}
 	}
-	close_all(input, var);
+	if (var->flag != 0)
+		close_all(var);
 	return (true);
 }
 
@@ -97,31 +95,19 @@ bool	execute(t_cmd **cmd, t_input *input, t_var *var)
 		return (true);
 	if (input->num_of_cmd == 1)
 	{
-		if (fork() == 0)
+		ft_check_exit(cmd, input, var, var->i);
+		if (ft_check_builtins(cmd[0], input))
+			return (true);
+		else if (fork() == 0)
 		{
-			if (ft_strncmp(cmd[0]->cmd[0], "echo", 4) == 0)
-				if (our_echo(cmd[var->i]->cmd))
-				{
-					free_all(cmd, input, var);
-					if (input->env)
-						free_env(input->env);
-					close(var->prev_fd);
-					close_fd(var);
-					exit(0);
-				}
 			get_path(cmd, var);
 			if (execve(var->cmd_path, cmd[0]->cmd, input->env) == -1)
-			{
 				printf("(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
-				if (var->cmd_path)
-					free(var->cmd_path);
-				if (input->env)
-					free_env(input->env);
-				free_all(cmd, input, var);
-				close_all(input, var);
-				exit(1);
-			}
-			exit(0);
+			if (var->cmd_path)
+				free(var->cmd_path);
+			free_env(input->env);
+			free_all(cmd, input, var);
+			exit(1);
 		}
 	}
 	else
@@ -131,3 +117,4 @@ bool	execute(t_cmd **cmd, t_input *input, t_var *var)
 		wait(NULL);
 	return (true);
 }
+
