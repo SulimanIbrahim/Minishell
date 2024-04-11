@@ -60,9 +60,15 @@ bool	parsing(t_input *input)
 	t_var	var;
 
 	if (!pipe_quote_pars(input, &var))
+	{
+		exit_num = 2;
 		return (free_input(input), false);
+	}
 	if (ft_check_redirections(input->cmds, &var))
+	{
+		exit_num = 2;
 		return (free_input(input), false);
+	}	
 	ft_check_env(input, &var);
 	return (true);
 }

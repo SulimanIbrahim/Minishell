@@ -20,7 +20,7 @@ void	signal_handler(int signum)
 		rl_on_new_line();
 		// there is problem in this function its not in the header
 		// rl_replace_line("", 0);
+		exit_num = 130;
 		rl_redisplay();
 	}
 }
-

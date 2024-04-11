@@ -52,6 +52,8 @@
 # define ANSI_COLOR_BG_CYAN       "\x1b[46m"
 # define ANSI_COLOR_BG_WHITE      "\x1b[47m"
 
+extern int exit_num;
+
 typedef enum
 {
 	INPUT,

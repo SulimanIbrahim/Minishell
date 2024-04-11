@@ -39,6 +39,7 @@ static void	execute_execve(t_cmd **cmd, t_input *input, t_var *var)
 {
 	if (execve(var->cmd_path, cmd[var->i]->cmd, input->env) == -1)
 	{
+		exit_num = 127;
 		printf("(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
 		if (var->cmd_path)
 			free(var->cmd_path);
@@ -102,7 +103,10 @@ bool	execute(t_cmd **cmd, t_input *input, t_var *var)
 		{
 			get_path(cmd, var);
 			if (execve(var->cmd_path, cmd[0]->cmd, input->env) == -1)
+			{
+				exit_num = 127;
 				printf("(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
+			}	
 			if (var->cmd_path)
 				free(var->cmd_path);
 			free_env(input->env);
