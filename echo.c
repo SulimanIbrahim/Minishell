@@ -52,12 +52,12 @@ bool	echo(char **cmd)
 
 	var.nflag = false;
 	var.i = 0;
-	if (ft_strncmp(cmd[1], "$?", 2) != 0)
-	{
-		printf("%d", exit_num);
-		exit_num = 0;
-		return (true);
-	}
+	// if (ft_strncmp(cmd[1], "$?", 2) != 0)
+	// {
+	// 	printf("%d", exit_num);
+	// 	exit_num = 0;
+	// 	return (true);
+	// }
 	while (cmd[++var.i] && check_n(cmd[var.i]))
 		var.nflag = true;
 	print_lines(cmd, var.nflag, var.i);

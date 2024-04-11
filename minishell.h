@@ -13,6 +13,9 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+
+// extern int exit_num;
+
 # include <stdio.h>
 # include <unistd.h>
 # include <string.h>
@@ -52,7 +55,6 @@
 # define ANSI_COLOR_BG_CYAN       "\x1b[46m"
 # define ANSI_COLOR_BG_WHITE      "\x1b[47m"
 
-extern int exit_num;
 
 typedef enum
 {
