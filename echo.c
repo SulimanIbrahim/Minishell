@@ -52,6 +52,8 @@ bool	echo(char **cmd)
 
 	var.nflag = false;
 	var.i = 0;
+	// if (ft_strncmp(cmd[1], "?", 1) == 0)
+	// 	return (printf("exit code = 99\n"));
 	while (cmd[++var.i] && check_n(cmd[var.i]))
 		var.nflag = true;
 	print_lines(cmd, var.nflag, var.i);

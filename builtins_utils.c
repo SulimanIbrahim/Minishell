@@ -56,6 +56,6 @@ int	ft_exit(t_cmd **cmd, t_input *input, t_var *var)
 	}
 	free_env(input->env);
 	free_all(cmd, input, var);
-	clear_history();
+	// clear_history();
 	exit (exit_code);
 }
