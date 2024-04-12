@@ -92,6 +92,7 @@ typedef struct vars
 	int		fdnum;
 	int		fd[2];
 	int		prev_fd;
+	int		flag;
 	bool	nflag;
 	char	**splitted;
 	char	*temp;
@@ -144,7 +145,6 @@ void		free_vars(t_var *var);
 void		free_splitted(t_var *var);
 void		wait_process(t_input *input, t_var *var);
 void		close_fd(t_var *var);
-void		close_all(t_input *input, t_var *var);
 void		init_all(t_var *var);
 void		free_env(char **env);
 void		free_cmd(t_cmd *cmd);
@@ -164,12 +164,10 @@ bool		execute(t_cmd **cmd, t_input *input, t_var *var);
 void		free_vars(t_var *var);
 void		free_splitted(t_var *var);
 void		wait_process(t_input *input, t_var *var);
-void		close_fd(t_var *var);
-void		close_all(t_input *input, t_var *var);
+void		execute_red(t_cmd *cmd, t_input *input, t_var *var);
+void		close_all(t_var *var);
 void		init_all(t_var *var);
 void		free_env(char **env);
 bool		echo(char **cmd);
-void		execute_red(t_cmd *cmd, t_input *input, t_var *var);
-
 
 #endif
