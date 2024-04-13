@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/05 05:40:15 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/13 20:26:13 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef enum
 typedef struct redirection
 {
 	int			type;
+	int			input_herdoc_fd;
 	char		*file_name;
 	void		*next_redricts;
 }		t_red;
@@ -168,6 +169,7 @@ void		execute_red(t_cmd *cmd, t_input *input, t_var *var);
 void		close_all(t_var *var);
 void		init_all(t_var *var);
 void		free_env(char **env);
+void		set_herdoc(t_cmd *cmd);
 bool		echo(char **cmd);
 
 #endif

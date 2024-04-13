@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 00:07:34 by aken              #+#    #+#             */
-/*   Updated: 2024/04/04 04:14:18 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/13 20:27:10 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ t_red	*alloc_redirection(void)
 	t_red	*p;
 
 	p = malloc(sizeof(t_red));
+	p->input_herdoc_fd = -1;
 	p->next_redricts = NULL;
 	return (p);
 }
