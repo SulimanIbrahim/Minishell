@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 09:04:29 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/04 13:20:15 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/12 23:29:19 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,47 +23,14 @@ void	init_red_fd(t_red_vars *red_fd)
 	red_fd->key = NULL;
 }
 
-void	set_reds(t_cmd *cmd, t_red_vars *red_fd)
+void	set_herdoc(t_red *red, t_red_vars *red_fd)
 {
-	t_red		*p;
+	char		*tmp;
 
-	p = cmd->redricts;
-	while (p)
+	if (red->type == HERDOC)
 	{
-		if (p->type == INPUT || p->type == HERDOC)
-		{
-			red_fd->input_type = p->type;
-			if (p->type == INPUT)
-				red_fd->input_fd = open(p->file_name, O_RDONLY);
-			else
-				red_fd->key = p->file_name;
-		}
-		else if (p->type == OUTPUT || p->type == APPEND)
-		{
-			if (p->type == APPEND)
-				red_fd->output_fd = open(p->file_name, O_RDWR
-						| O_APPEND | O_CREAT, 0777);
-			else
-				red_fd->output_fd = open(p->file_name, O_RDWR
-						| O_CREAT, 0777);
-			red_fd->output_type = p->type;
-		}
-		p = p->next_redricts;
-	}
-}
-
-void	set_input(t_red_vars *red_fd)
-{
-	char	*tmp;
-
-	if (red_fd->input_fd != -1)
-	{
-		red_fd->tmp_in_fd = dup(STDIN_FILENO);
-		dup2(red_fd->input_fd, STDIN_FILENO);
-		close(red_fd->input_fd);
-	}
-	else if (red_fd->key != NULL)
-	{
+		unlink("tmp");
+		red_fd->key = red->file_name;
 		red_fd->tmp_in_fd = dup(STDIN_FILENO);
 		red_fd->input_fd = open("tmp", O_RDWR | O_CREAT, 0777);
 		ft_putstr_fd("> ", 1);
@@ -84,6 +51,45 @@ void	set_input(t_red_vars *red_fd)
 	}
 }
 
+void	set_reds(t_cmd *cmd, t_red_vars *red_fd)
+{
+	t_red		*p;
+
+	p = cmd->redricts;
+	while (p)
+	{
+		if (p->type == INPUT || p->type == HERDOC)
+		{
+			red_fd->input_type = p->type;
+			if (p->type == INPUT)
+				red_fd->input_fd = open(p->file_name, O_RDONLY);
+			else
+				set_herdoc(p, red_fd);
+		}
+		else if (p->type == OUTPUT || p->type == APPEND)
+		{
+			if (p->type == APPEND)
+				red_fd->output_fd = open(p->file_name, O_RDWR
+						| O_APPEND | O_CREAT, 0777);
+			else
+				red_fd->output_fd = open(p->file_name, O_RDWR
+						| O_CREAT, 0777);
+			red_fd->output_type = p->type;
+		}
+		p = p->next_redricts;
+	}
+}
+
+void	set_input(t_red_vars *red_fd)
+{
+	if (red_fd->input_fd != -1)
+	{
+		red_fd->tmp_in_fd = dup(STDIN_FILENO);
+		dup2(red_fd->input_fd, STDIN_FILENO);
+		close(red_fd->input_fd);
+	}
+}
+
 void	execute_red(t_cmd *cmd, t_input *input, t_var *var)
 {
 	t_red_vars	red_fd;
@@ -99,6 +105,7 @@ void	execute_red(t_cmd *cmd, t_input *input, t_var *var)
 	}
 	if (execve(var->cmd_path, cmd->cmd, input->env) == -1)
 		printf("(%s) command not found !!!\n", cmd->cmd[0]);
+	unlink("tmp");
 	if (red_fd.tmp_out_fd != -1)
 	{
 		dup2(red_fd.tmp_out_fd, STDOUT_FILENO);

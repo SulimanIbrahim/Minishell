@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_cmd_pipes.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:55:33 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/05 08:59:15 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/12 23:30:36 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ static void	execute_execve(t_cmd **cmd, t_input *input, t_var *var)
 			free_env(input->env);
 		free_all(cmd, input, var);
 		close_all(var);
-  	exit(0);
-  }
+		exit(0);
+	}
 }
 
 static bool	execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
@@ -61,7 +61,7 @@ static bool	execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
 	{
 		ft_check_exit(cmd, input, var, var->i);
 		if (ft_check_builtins(cmd[var->i], input))
-				;
+			;
 		else
 		{
 			if (pipe(var->fd) == -1)
