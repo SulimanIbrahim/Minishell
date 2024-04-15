@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/13 20:26:13 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/15 05:50:41 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ void		execute_red(t_cmd *cmd, t_input *input, t_var *var);
 void		close_all(t_var *var);
 void		init_all(t_var *var);
 void		free_env(char **env);
-void		set_herdoc(t_cmd *cmd);
+void		set_herdoc(t_red *p);
 bool		echo(char **cmd);
 
 #endif

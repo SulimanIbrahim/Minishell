@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:55:33 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/13 23:40:47 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/15 05:48:42 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 static bool	get_path(t_cmd **cmd, t_var *var)
 {
 	var->j = -1;
+	if (!cmd || !cmd[0]->cmd || !cmd[0]->cmd[0])
+		return (true);
 	if (ft_strchr(cmd[var->i]->cmd[0], '/') == NULL)
 	{
 		var->splitted = ft_split(getenv("PATH"), ':');
@@ -61,7 +63,7 @@ static bool	execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
 	{
 		ft_check_exit(cmd, input, var, var->i);
 		if (cmd[var->i]->redricts)
-			set_herdoc(cmd[var->i]);
+			set_herdoc(cmd[var->i]->redricts);
 		if (ft_check_builtins(cmd[var->i], input))
 			;
 		else
@@ -101,7 +103,7 @@ bool	execute(t_cmd **cmd, t_input *input, t_var *var)
 	{
 		ft_check_exit(cmd, input, var, var->i);
 		if (cmd[0]->redricts)
-			set_herdoc(cmd[0]);
+			set_herdoc(cmd[0]->redricts);
 		if (ft_check_builtins(cmd[0], input))
 			return (true);
 		else if (fork() == 0)
@@ -125,4 +127,3 @@ bool	execute(t_cmd **cmd, t_input *input, t_var *var)
 		wait(NULL);
 	return (true);
 }
-

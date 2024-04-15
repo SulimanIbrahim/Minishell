@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 09:04:29 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/13 23:39:42 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/15 06:08:30 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,29 @@ void	init_red_fd(t_red_vars *red_fd)
 	red_fd->key = NULL;
 }
 
-void	set_herdoc(t_cmd *cmd)
+void	close_herdoc_fd(t_red *p)
 {
-	char		*tmp;
-	t_red		*p;
+	while (p)
+	{
+		if (p->input_herdoc_fd != -1)
+		{
+			printf("%d\n", p->input_herdoc_fd);
+			close(p->input_herdoc_fd);
+		}
+		p = p->next_redricts;
+	}
+}
 
-	p = cmd->redricts;
+void	set_herdoc(t_red *p)
+{
+	char	*tmp;
+
 	while (p)
 	{
 		if (p->type == HERDOC)
 		{
-			p->input_herdoc_fd = open("tmp", O_RDWR | O_CREAT, 0777);
+			unlink("tmp");
+			p->input_herdoc_fd = open("tmp", O_CREAT | O_RDWR , 0777);
 			ft_putstr_fd("> ", STDOUT_FILENO);
 			tmp = get_next_line(STDIN_FILENO);
 			while (tmp && !(ft_strlen(p->file_name) == ft_strlen(tmp) - 1
@@ -46,8 +58,8 @@ void	set_herdoc(t_cmd *cmd)
 			}
 			if (tmp)
 				free(tmp);
-			close(p->input_herdoc_fd);
-			p->input_herdoc_fd = open("tmp", O_RDWR | O_CREAT, 0777);
+			// close(p->input_herdoc_fd);
+			// p->input_herdoc_fd = open("tmp", O_RDONLY | O_CREAT, 0777);
 		}
 		p = p->next_redricts;
 	}
@@ -82,13 +94,19 @@ void	set_reds(t_cmd *cmd, t_red_vars *red_fd)
 	}
 }
 
-void	set_input(t_red_vars *red_fd)
+void	set_input_output(t_red_vars *red_fd)
 {
 	if (red_fd->input_fd != -1)
 	{
 		red_fd->tmp_in_fd = dup(STDIN_FILENO);
 		dup2(red_fd->input_fd, STDIN_FILENO);
 		close(red_fd->input_fd);
+	}
+	if (red_fd->output_fd != -1)
+	{
+		red_fd->tmp_out_fd = dup(STDOUT_FILENO);
+		dup2(red_fd->output_fd, STDOUT_FILENO);
+		close(red_fd->output_fd);
 	}
 }
 
@@ -98,24 +116,21 @@ void	execute_red(t_cmd *cmd, t_input *input, t_var *var)
 
 	init_red_fd(&red_fd);
 	set_reds(cmd, &red_fd);
-	set_input(&red_fd);
+	set_input_output(&red_fd);
+	if (var->cmd_path && execve(var->cmd_path, cmd->cmd, input->env) == -1)
+		printf("(%s) command not found !!!\n", cmd->cmd[0]);
 	if (red_fd.output_fd != -1)
 	{
-		red_fd.tmp_out_fd = dup(STDOUT_FILENO);
-		dup2(red_fd.output_fd, STDOUT_FILENO);
 		close(red_fd.output_fd);
-	}
-	if (execve(var->cmd_path, cmd->cmd, input->env) == -1)
-		printf("(%s) command not found !!!\n", cmd->cmd[0]);
-	unlink("tmp");
-	if (red_fd.tmp_out_fd != -1)
-	{
 		dup2(red_fd.tmp_out_fd, STDOUT_FILENO);
 		close(red_fd.tmp_out_fd);
 	}
-	if (red_fd.tmp_in_fd != -1)
+	if (red_fd.input_fd != -1)
 	{
+		close(red_fd.input_fd);
 		dup2(red_fd.tmp_in_fd, STDIN_FILENO);
 		close(red_fd.tmp_in_fd);
 	}
+	close_herdoc_fd(cmd->redricts);
+	unlink("tmp");
 }
