@@ -22,7 +22,11 @@ SRC =	main.c\
 		shellvl.c\
 		export.c\
 		unset.c\
-		echo.c
+		echo.c\
+		execute_red.c\
+		get_next_line/get_next_line.c\
+		get_next_line/get_next_line_utils.c\
+		execute_herdoc.c
  
 SRC_TEST =	main.c\
 			parsing.c\
@@ -42,7 +46,10 @@ SRC_TEST =	main.c\
 			shellvl.c\
 			export.c\
 			unset.c\
-			echo.c
+			echo.c\
+			execute_red.c\
+			get_next_line/get_next_line.c\
+			get_next_line/get_next_line_utils.c
 
 OBJ = $(SRC:%.c=%.o)
 

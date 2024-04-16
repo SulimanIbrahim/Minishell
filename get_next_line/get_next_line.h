@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal_handle.c                                    :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 00:24:30 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/16 14:27:59 by ahibrahi         ###   ########.fr       */
+/*   Created: 2023/09/18 20:58:27 by ahibrahi          #+#    #+#             */
+/*   Updated: 2024/04/04 12:27:40 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-void	signal_handler(int signum) 
-{
-	if (signum == SIGINT)
-	{
-		printf("\n");
-		rl_on_new_line();
-		// there is problem in this function its not in the header
-		// rl_replace_line("", 0);
-		rl_redisplay();
-	}
-}
+# include <fcntl.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include "../Libft-42/libft.h"
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 7024
+# endif
+
+char	*get_next_line(int fd);
+char	*ft_g_strdup(char *s, int k);
+char	*ft_g_strjoin(char *s1, char *s2);
+
+#endif

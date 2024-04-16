@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/05 08:52:36 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 16:38:08 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int main (int ac, char **av, char **env)
 		add_history(input.cmds);
 		if (parsing(&input))
 		{
-			cmd = (t_cmd **)ft_calloc(input.num_of_cmd, sizeof(t_cmd));
+			cmd = ft_calloc(input.num_of_cmd, sizeof(t_cmd));
 			cmd[input.num_of_cmd] = NULL;
 			tokenize_cmds(&input, cmd, &var);
 			if (cmd)

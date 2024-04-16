@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/05 05:40:15 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 16:10:31 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include "Libft-42/libft.h"
+# include "get_next_line/get_next_line.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 # define SINGLE_QUOTE 39
@@ -63,9 +64,20 @@ typedef enum
 typedef struct redirection
 {
 	int			type;
+	int			input_herdoc_fd;
 	char		*file_name;
 	void		*next_redricts;
 }		t_red;
+
+typedef struct redirection_vars
+{
+	int			input_fd;
+	int			input_type;
+	int			output_fd;
+	int			output_type;
+	int			tmp_in_fd;
+	int			tmp_out_fd;
+}			t_red_vars;
 
 typedef struct vars
 {
@@ -74,6 +86,7 @@ typedef struct vars
 	int		n;
 	int		c;
 	int		id;
+	char	k;
 	int		status;
 	int		len;
 	int		closed;
@@ -108,7 +121,7 @@ int			skip(char *cmds, char c);
 int			ft_check_redirections(char *cmd_name, t_var *vars);
 bool		ft_check_builtins(t_cmd *cmd, t_input *input);
 bool		parsing(t_input *input);
-bool		tokenize_cmds(t_input *input, t_cmd **cmds, t_var *var);
+void		tokenize_cmds(t_input *input, t_cmd **cmds, t_var *var);
 bool		clean_quotes(t_input *input, t_var *var);
 bool		quote_parsing(char *line, t_var *var);
 char		**dup_shell(char **env);
@@ -152,10 +165,12 @@ bool		execute(t_cmd **cmd, t_input *input, t_var *var);
 void		free_vars(t_var *var);
 void		free_splitted(t_var *var);
 void		wait_process(t_input *input, t_var *var);
+void		execute_red(t_cmd *cmd, t_input *input, t_var *var);
 void		close_all(t_var *var);
 void		init_all(t_var *var);
 void		free_env(char **env);
+void		set_herdoc(t_red *p);
 bool		echo(char **cmd);
-
+void		close_herdoc_fd(t_red *p);
 
 #endif
