@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:01:06 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/16 03:02:18 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 18:36:35 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static	void	ft_word_counter(char *s, char c, t_var *var)
 				while (s[var->i] && s[var->i] != var->j)
 					var->i++;
 			}
-			if (s[var->i]) // this was added to fix the segfault for this case input.cmds = ft_strdup("ls > k | ls > | ");
+			if (s[var->i])
 				var->i++;
 		}
 		if (s[var->i] && s[var->i] != c)
@@ -77,12 +77,18 @@ static	char	**ft_set(char **d, char c, int cc, t_var *var)
 		while (var->i <= var->j && var->i <= var->len)
 		{
 			if (var->temp[var->i] == '"' || var->temp[var->i] == '\'')
-				var->i++;
+			{
+				var->k = var->temp[var->i++];
+				while (var->temp[var->i] && var->temp[var->i] != var->k
+					&& var->i <= var->j && var->i <= var->len)
+					d[var->c][var->n++] = var->temp[var->i++];
+				if (var->temp[var->i])
+					var->i++;
+			}
 			else
 				d[var->c][var->n++] = var->temp[var->i++];
 		}
-		d[var->c][var->n] = 0;
-		var->c++;
+		d[var->c++][var->n] = 0;
 	}
 	return (d);
 }

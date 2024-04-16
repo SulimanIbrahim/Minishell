@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 19:58:29 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/03/27 06:04:37 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:22:11 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,14 @@ void	export(t_cmd *cmd, t_input *input)
 {
 	t_var	var;
 
-	var.i = 0;
-	if (!cmd)
+	var.i = -1;
+	if (!cmd && !cmd->cmd[1])
+	{
+		while (cmd && input->env[++var.i])
+			printf("declare -x %s\n", input->env[var.i]);
 		return ;
-	while (cmd->cmd[var.i])
+	}
+	while (cmd->cmd[++var.i])
 	{
 		var.j = 0;
 		if (ft_strchr(cmd->cmd[var.i], '='))
@@ -93,6 +97,5 @@ void	export(t_cmd *cmd, t_input *input)
 				add_env(cmd->cmd[var.i], var.len, input);
 			}
 		}
-		var.i++;
 	}
 }

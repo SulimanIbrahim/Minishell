@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   check_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 23:42:46 by aken              #+#    #+#             */
-/*   Updated: 2024/03/17 22:18:39 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 18:16:41 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	skip(char *cmds, char c)
-{
-	int	i;
-
-	i = 0;
-	while (cmds[i] && cmds[i] == c)
-		i++;
-	return (i);
-}
 
 char	*ft_check_red(char *cmd_name)
 {
@@ -59,8 +49,6 @@ bool	ft_check_char_after_direction(char	*s)
 
 bool	ft_check_redirections_2(char *s, int *i, int j, char c)
 {
-	if (s[(*i)] == '<' && c == '<')
-		(*i)++;
 	while (s[(*i)] == ' ')
 		(*i)++;
 	if (s[(*i)] == c)
@@ -81,6 +69,19 @@ bool	ft_check_redirections_2(char *s, int *i, int j, char c)
 	return (true);
 }
 
+static	int	ft_s7lb(char *cmd_name, t_var *var, char c)
+{
+	if (!ft_check_redirections_2(cmd_name, &var->i, var->j, c)
+		|| !ft_check_char_after_direction(cmd_name + var->i))
+	{
+		if (var->flag == 0)
+			return (
+				printf("bash:syntax error near unexpected token\n"));
+		return (1);
+	}
+	return (0);
+}
+
 int	ft_check_redirections(char *cmd_name, t_var *var)
 {
 	var->i = -1;
@@ -91,18 +92,11 @@ int	ft_check_redirections(char *cmd_name, t_var *var)
 	{
 		if (cmd_name[var->i] == '\'' || cmd_name[var->i] == '"')
 			skip_quotes(cmd_name, &var->i, cmd_name[var->i]);
-		if (cmd_name[var->i] == '>')
-		{
-			if (!ft_check_redirections_2(cmd_name, &var->i, var->j, '>')
-				|| !ft_check_char_after_direction(cmd_name + var->i))
-				return (printf("bash: syntax error near unexpected token\n"));
-		}
-		else if (cmd_name[var->i] == '<')
-		{
-			if (!ft_check_redirections_2(cmd_name, &var->i, var->j, '<')
-				|| !ft_check_char_after_direction(cmd_name + var->i))
-				return (printf("bash: syntax error near unexpected token\n"));
-		}
+		if (cmd_name[var->i])
+			return (0);
+		if (cmd_name[var->i] == '>' || cmd_name[var->i] == '<')
+			if (ft_s7lb(cmd_name, var, cmd_name[var->i]))
+				return (1);
 	}
 	return (0);
 }
