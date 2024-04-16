@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 23:42:46 by aken              #+#    #+#             */
-/*   Updated: 2024/04/16 16:04:39 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 18:16:41 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ int	ft_check_redirections(char *cmd_name, t_var *var)
 	{
 		if (cmd_name[var->i] == '\'' || cmd_name[var->i] == '"')
 			skip_quotes(cmd_name, &var->i, cmd_name[var->i]);
+		if (cmd_name[var->i])
+			return (0);
 		if (cmd_name[var->i] == '>' || cmd_name[var->i] == '<')
 			if (ft_s7lb(cmd_name, var, cmd_name[var->i]))
 				return (1);
