@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:55:33 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/15 21:19:32 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 12:29:06 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	execute_execve(t_cmd **cmd, t_input *input, t_var *var)
 	exit(0);
 }
 
-static bool	execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
+static void	execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
 {
 	var->i = -1;
 	var->prev_fd = STDIN_FILENO;
@@ -64,12 +64,10 @@ static bool	execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
 		ft_check_exit(cmd, input, var, var->i);
 		if (cmd[var->i]->redricts)
 			set_herdoc(cmd[var->i]->redricts);
-		if (ft_check_builtins(cmd[var->i], input))
-			;
-		else
+		if (!ft_check_builtins(cmd[var->i], input))
 		{
 			if (pipe(var->fd) == -1)
-				return (false);
+				return ;
 			if (fork() == 0)
 			{
 				dup2(var->prev_fd, STDIN_FILENO);
@@ -81,6 +79,7 @@ static bool	execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
 			}
 			else
 			{
+				close_herdoc_fd(cmd[var->i]->redricts);
 				var->prev_fd = dup(var->fd[0]);
 				close_fd(var);
 				var->flag++;
@@ -89,12 +88,10 @@ static bool	execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
 	}
 	if (var->flag != 0)
 		close_all(var);
-	return (true);
 }
 
 bool	execute(t_cmd **cmd, t_input *input, t_var *var)
 {
-	var->i = -1;
 	init_var(var);
 	if (!*cmd)
 		return (true);
@@ -107,9 +104,10 @@ bool	execute(t_cmd **cmd, t_input *input, t_var *var)
 			return (true);
 		else if (fork() == 0)
 		{
-			var->i = 0;
 			execute_execve(cmd, input, var);
 		}
+		else
+			close_herdoc_fd(cmd[0]->redricts);
 	}
 	else
 		execute_pipes(cmd, input, var);

@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 23:42:46 by aken              #+#    #+#             */
-/*   Updated: 2024/03/17 22:18:39 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 13:57:43 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ bool	ft_check_char_after_direction(char	*s)
 
 bool	ft_check_redirections_2(char *s, int *i, int j, char c)
 {
-	if (s[(*i)] == '<' && c == '<')
-		(*i)++;
 	while (s[(*i)] == ' ')
 		(*i)++;
 	if (s[(*i)] == c)
@@ -95,13 +93,23 @@ int	ft_check_redirections(char *cmd_name, t_var *var)
 		{
 			if (!ft_check_redirections_2(cmd_name, &var->i, var->j, '>')
 				|| !ft_check_char_after_direction(cmd_name + var->i))
-				return (printf("bash: syntax error near unexpected token\n"));
+			{
+				if (var->flag == 0)
+					return (
+						printf("bash:syntax error near unexpected token\n"));
+				return (1);
+			}
 		}
 		else if (cmd_name[var->i] == '<')
 		{
 			if (!ft_check_redirections_2(cmd_name, &var->i, var->j, '<')
 				|| !ft_check_char_after_direction(cmd_name + var->i))
-				return (printf("bash: syntax error near unexpected token\n"));
+			{
+				if (var->flag == 0)
+					return (
+						printf("bash: syntax error near unexpected token\n"));
+				return (1);
+			}
 		}
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 09:04:29 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/15 20:48:27 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:13:42 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	set_herdoc(t_red *p)
 		if (p->type == HERDOC)
 		{
 			unlink("tmp");
-			p->input_herdoc_fd = open("tmp", O_CREAT | O_RDWR , 0777);
+			p->input_herdoc_fd = open("tmp", O_CREAT | O_RDWR, 0777);
 			ft_putstr_fd("> ", STDOUT_FILENO);
 			tmp = get_next_line(STDIN_FILENO);
 			while (tmp && !(ft_strlen(p->file_name) == ft_strlen(tmp) - 1

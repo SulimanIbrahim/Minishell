@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/15 05:50:41 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 12:21:11 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int			skip(char *cmds, char c);
 int			ft_check_redirections(char *cmd_name, t_var *vars);
 bool		ft_check_builtins(t_cmd *cmd, t_input *input);
 bool		parsing(t_input *input);
-bool		tokenize_cmds(t_input *input, t_cmd **cmds, t_var *var);
+void		tokenize_cmds(t_input *input, t_cmd **cmds, t_var *var);
 bool		clean_quotes(t_input *input, t_var *var);
 bool		quote_parsing(char *line, t_var *var);
 char		**dup_shell(char **env);
@@ -171,5 +171,6 @@ void		init_all(t_var *var);
 void		free_env(char **env);
 void		set_herdoc(t_red *p);
 bool		echo(char **cmd);
+void		close_herdoc_fd(t_red *p);
 
 #endif
