@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/16 14:32:47 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 16:10:31 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ typedef struct redirection_vars
 	int			output_type;
 	int			tmp_in_fd;
 	int			tmp_out_fd;
-	char		*key;
 }			t_red_vars;
 
 typedef struct vars

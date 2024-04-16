@@ -6,11 +6,22 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:29:36 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/16 12:28:30 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 16:38:39 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	skip(char *cmds, char c)
+{
+	int	i;
+
+	i = 0;
+	while (cmds[i] && (cmds[i] == c
+			|| cmds[i] == '\t' || cmds[i] == '\v'))
+		i++;
+	return (i);
+}
 
 void	skip_quotes(char *input, int *i, int q_type)
 {

@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:55:33 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/16 12:29:06 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 16:32:37 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static void	execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
 	var->i = -1;
 	var->prev_fd = STDIN_FILENO;
 	var->flag = 0;
-	while (++var->i < input->num_of_cmd)
+	while (++var->i < input->num_of_cmd && cmd[var->i])
 	{
 		ft_check_exit(cmd, input, var, var->i);
 		if (cmd[var->i]->redricts)

@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 00:48:25 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/16 14:27:08 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 16:07:58 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	init_var(t_var *var)
 	var->temp = NULL;
 	var->cmd_path = NULL;
 	var->cmd_tmp = NULL;
+	var->splitted = NULL;
 }
 
 static	void	init_token_var(t_var *var)

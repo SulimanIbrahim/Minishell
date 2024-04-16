@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 09:04:29 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/16 14:36:13 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 16:10:22 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	init_red_fd(t_red_vars *red_fd)
 	red_fd->output_fd = -1;
 	red_fd->input_type = -1;
 	red_fd->output_type = -1;
-	red_fd->key = NULL;
 }
 
 void	set_reds(t_cmd *cmd, t_red_vars *red_fd)

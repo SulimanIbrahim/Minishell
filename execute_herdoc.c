@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:35:28 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/16 14:36:51 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 16:11:41 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@ void	close_herdoc_fd(t_red *p)
 	while (p)
 	{
 		if (p->input_herdoc_fd != -1)
-		{
-			printf("%d\n", p->input_herdoc_fd);
 			close(p->input_herdoc_fd);
-		}
 		p = p->next_redricts;
 	}
 }

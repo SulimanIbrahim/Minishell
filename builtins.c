@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 05:38:39 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/16 14:37:56 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 16:31:35 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_check_exit(t_cmd **cmd, t_input *input, t_var *var, int n)
 	int		i;
 
 	i = 0;
-	if (cmd && cmd[n]->cmd[0] && "exit"[i] == cmd[n]->cmd[0][i])
+	if (cmd && cmd[n] && cmd[n]->cmd[0] && "exit"[i] == cmd[n]->cmd[0][i])
 	{
 		while (cmd[n]->cmd[0][i] && "exit"[i]
 				&& cmd[n]->cmd[0][i] != ' '
