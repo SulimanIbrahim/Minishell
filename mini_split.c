@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:01:06 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/04 04:11:30 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 03:13:04 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static	int	ft_end(char *s, char c, int start)
 			start += skip(s + start, ' ');
 			while (s[start] && s[start] != k)
 				start++;
-			if (s[start]) // this was added to fix the segfault for this case (input.cmds = ft_strdup("ls >> l\">\"");)
+			if (s[start])
 				start++;
 		}
 		while (s[start] && s[start] != c && s[start] != DOUBLE_QUOTE
@@ -66,6 +66,8 @@ static	int	ft_end(char *s, char c, int start)
 
 static	char	**ft_set(char **d, char c, int cc, t_var *var)
 {
+	char	k;
+
 	while (var->c < cc && var->i <= var->len)
 	{
 		var->i += skip(var->temp + var->i, ' ');
@@ -77,12 +79,18 @@ static	char	**ft_set(char **d, char c, int cc, t_var *var)
 		while (var->i <= var->j && var->i <= var->len)
 		{
 			if (var->temp[var->i] == '"' || var->temp[var->i] == '\'')
-				var->i++;
+			{
+				k = var->temp[var->i++];
+				while (var->temp[var->i] && var->temp[var->i] != k
+					&& var->i <= var->j && var->i <= var->len)
+					d[var->c][var->n++] = var->temp[var->i++];
+				if (var->temp[var->i])
+					var->i++;
+			}
 			else
 				d[var->c][var->n++] = var->temp[var->i++];
 		}
-		d[var->c][var->n] = 0;
-		var->c++;
+		d[var->c++][var->n] = 0;
 	}
 	return (d);
 }

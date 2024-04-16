@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 09:04:29 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/15 06:08:30 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/15 20:48:27 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ void	set_herdoc(t_red *p)
 			}
 			if (tmp)
 				free(tmp);
-			// close(p->input_herdoc_fd);
-			// p->input_herdoc_fd = open("tmp", O_RDONLY | O_CREAT, 0777);
+			close(p->input_herdoc_fd);
+			p->input_herdoc_fd = open("tmp", O_RDONLY | O_CREAT, 0777);
 		}
 		p = p->next_redricts;
 	}

@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:55:33 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/15 05:48:42 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/15 21:19:32 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static bool	get_path(t_cmd **cmd, t_var *var)
 {
 	var->j = -1;
-	if (!cmd || !cmd[0]->cmd || !cmd[0]->cmd[0])
+	if (!cmd[var->i]->cmd || !cmd[var->i]->cmd[0])
 		return (true);
 	if (ft_strchr(cmd[var->i]->cmd[0], '/') == NULL)
 	{
@@ -39,19 +39,19 @@ static bool	get_path(t_cmd **cmd, t_var *var)
 
 static void	execute_execve(t_cmd **cmd, t_input *input, t_var *var)
 {
+	get_path(cmd, var);
 	if (cmd[var->i]->redricts)
 		execute_red(cmd[var->i], input, var);
-	else if (execve(var->cmd_path, cmd[var->i]->cmd, input->env) == -1)
-	{
+	else if (var->cmd_path
+		&& execve(var->cmd_path, cmd[var->i]->cmd, input->env) == -1)
 		printf("(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
-		if (var->cmd_path)
-			free(var->cmd_path);
-		if (input->env)
-			free_env(input->env);
-		free_all(cmd, input, var);
-		close_all(var);
-		exit(0);
-	}
+	if (var->cmd_path)
+		free(var->cmd_path);
+	if (input->env)
+		free_env(input->env);
+	free_all(cmd, input, var);
+	close_all(var);
+	exit(0);
 }
 
 static bool	execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
@@ -77,7 +77,6 @@ static bool	execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
 				if ((var->i + 1) != input->num_of_cmd)
 					dup2(var->fd[1], STDOUT_FILENO);
 				close_fd(var);
-				get_path(cmd, var);
 				execute_execve(cmd, input, var);
 			}
 			else
@@ -101,23 +100,15 @@ bool	execute(t_cmd **cmd, t_input *input, t_var *var)
 		return (true);
 	if (input->num_of_cmd == 1)
 	{
-		ft_check_exit(cmd, input, var, var->i);
+		ft_check_exit(cmd, input, var, 0);
 		if (cmd[0]->redricts)
 			set_herdoc(cmd[0]->redricts);
 		if (ft_check_builtins(cmd[0], input))
 			return (true);
 		else if (fork() == 0)
 		{
-			get_path(cmd, var);
-			if (cmd[0]->redricts)
-				execute_red(cmd[0], input, var);
-			else if (execve(var->cmd_path, cmd[0]->cmd, input->env) == -1)
-				printf("(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
-			if (var->cmd_path)
-				free(var->cmd_path);
-			free_env(input->env);
-			free_all(cmd, input, var);
-			exit(1);
+			var->i = 0;
+			execute_execve(cmd, input, var);
 		}
 	}
 	else
