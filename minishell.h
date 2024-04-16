@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/16 12:21:11 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:32:47 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ typedef struct vars
 	int		n;
 	int		c;
 	int		id;
+	char	k;
 	int		status;
 	int		len;
 	int		closed;

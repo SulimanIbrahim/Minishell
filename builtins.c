@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 05:38:39 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/12 23:23:14 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:37:56 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	ft_check_exit(t_cmd **cmd, t_input *input, t_var *var, int n)
 	}
 	return ;
 }
-
 
 int	str_is_digit(char *str)
 {

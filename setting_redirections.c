@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 00:07:34 by aken              #+#    #+#             */
-/*   Updated: 2024/04/15 01:25:55 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:29:33 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ void	add_redirection(t_red **redirection, t_red *var)
 
 void	set_redirection(t_cmd *cmd, t_var var)
 {
-	if (!ft_check_red(cmd->cmd_name) || ft_check_redirections(cmd->cmd_name, &var))
+	if (!ft_check_red(cmd->cmd_name)
+		|| ft_check_redirections(cmd->cmd_name, &var))
 		return ;
 	var.i = -1;
 	while (cmd->cmd_name[++var.i])
@@ -101,11 +102,9 @@ void	set_redirection(t_cmd *cmd, t_var var)
 			ft_strlcpy(var.temp, cmd->cmd_name, var.closed + 1);
 			var.cmd_tmp = cmd->cmd_name;
 			cmd->cmd_name = ft_strjoin(var.temp, cmd->cmd_name + var.i);
-			free(var.cmd_tmp);
-			free(var.temp);
 			add_redirection(&(cmd->redricts), var.red);
 			set_redirection(cmd, var);
-			return ;
+			return (free(var.temp), free(var.cmd_tmp));
 		}
 	}
 }
