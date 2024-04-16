@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:55:33 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/05 08:59:15 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 03:33:14 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,20 @@ static bool	get_path(t_cmd **cmd, t_var *var)
 
 static void	execute_execve(t_cmd **cmd, t_input *input, t_var *var)
 {
-	if (execve(var->cmd_path, cmd[var->i]->cmd, input->env) == -1)
+	ft_check_exit(cmd, input, var, var->i);
+	if (ft_check_builtins(cmd[var->i], input))
 	{
-		// exit_num = 127;
+		if (var->cmd_path)
+			free(var->cmd_path);
+		if (input->env)
+			free_env(input->env);
+		free_all(cmd, input, var);
+		close_all(var);
+		exit(0);
+	}
+	else if (execve(var->cmd_path, cmd[var->i]->cmd, input->env) == -1)
+	{
+		g_exit_num = 127;
 		printf("(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
 		if (var->cmd_path)
 			free(var->cmd_path);
@@ -47,8 +58,8 @@ static void	execute_execve(t_cmd **cmd, t_input *input, t_var *var)
 			free_env(input->env);
 		free_all(cmd, input, var);
 		close_all(var);
-  	exit(0);
-  }
+		exit(1);
+	}
 }
 
 static bool	execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
@@ -58,29 +69,23 @@ static bool	execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
 	var->flag = 0;
 	while (++var->i < input->num_of_cmd)
 	{
-		ft_check_exit(cmd, input, var, var->i);
-		if (ft_check_builtins(cmd[var->i], input))
-				;
+		if (pipe(var->fd) == -1)
+			return (false);
+		if (fork() == 0)
+		{
+			dup2(var->prev_fd, STDIN_FILENO);
+			close(var->prev_fd);
+			if ((var->i + 1) != input->num_of_cmd)
+				dup2(var->fd[1], STDOUT_FILENO);
+			close_fd(var);
+			get_path(cmd, var);
+			execute_execve(cmd, input, var);
+		}
 		else
 		{
-			if (pipe(var->fd) == -1)
-				return (false);
-			if (fork() == 0)
-			{
-				dup2(var->prev_fd, STDIN_FILENO);
-				close(var->prev_fd);
-				if ((var->i + 1) != input->num_of_cmd)
-					dup2(var->fd[1], STDOUT_FILENO);
-				close_fd(var);
-				get_path(cmd, var);
-				execute_execve(cmd, input, var);
-			}
-			else
-			{
-				var->prev_fd = dup(var->fd[0]);
-				close_fd(var);
-				var->flag++;
-			}
+			var->prev_fd = dup(var->fd[0]);
+			close_fd(var);
+			var->flag++;
 		}
 	}
 	if (var->flag != 0)
@@ -104,9 +109,9 @@ bool	execute(t_cmd **cmd, t_input *input, t_var *var)
 			get_path(cmd, var);
 			if (execve(var->cmd_path, cmd[0]->cmd, input->env) == -1)
 			{
-				// exit_num = 127;
+				g_exit_num = 127;
 				printf("(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
-			}	
+			}
 			if (var->cmd_path)
 				free(var->cmd_path);
 			free_env(input->env);
@@ -121,4 +126,3 @@ bool	execute(t_cmd **cmd, t_input *input, t_var *var)
 		wait(NULL);
 	return (true);
 }
-

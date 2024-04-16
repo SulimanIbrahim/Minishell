@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 09:46:24 by aken              #+#    #+#             */
-/*   Updated: 2024/04/04 04:18:13 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 03:34:45 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void	free_vars(t_var *var)
 {
 	if (!var)
 		return ;
+	if (var->cmd_path)
+		free(var->cmd_path);
 	if (var->splitted)
 	{
 		var->i = -1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 04:19:23 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/04 08:52:24 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 02:55:52 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,23 @@ static bool	check_n(char *line)
 	return (true);
 }
 
-static void	print_lines(char **lines, bool n_flag, int i)
+static void	print_lines(char **lines, bool n_flag, int i, int j)
 {
-	if (!lines[i])
-	{
-		if (!n_flag)
-			ft_putchar_fd('\n', STDOUT_FILENO);
-		return ;
-	}
 	while (lines[i])
 	{
-		ft_putstr_fd(lines[i], STDOUT_FILENO);
+		j = 0;
+		while (lines[i][j])
+		{
+			if (lines[i][j] && lines[i][j + 1] &&
+				lines[i][j] == '$' && lines[i][j + 1] == '?')
+			{
+				ft_putnbr_fd(g_exit_num, STDOUT_FILENO);
+				j++;
+			}
+			else
+				ft_putchar_fd(lines[i][j], STDOUT_FILENO);
+			j++;
+		}
 		if (lines[i + 1])
 			ft_putchar_fd(' ', STDOUT_FILENO);
 		else if (!lines[i + 1] && !n_flag)
@@ -52,14 +58,15 @@ bool	echo(char **cmd)
 
 	var.nflag = false;
 	var.i = 0;
-	// if (ft_strncmp(cmd[1], "$?", 2) != 0)
-	// {
-	// 	printf("%d", exit_num);
-	// 	exit_num = 0;
-	// 	return (true);
-	// }
+	var.j = 0;
 	while (cmd[++var.i] && check_n(cmd[var.i]))
 		var.nflag = true;
-	print_lines(cmd, var.nflag, var.i);
+	if (!cmd[var.i])
+	{
+		if (!var.nflag)
+			ft_putchar_fd('\n', STDOUT_FILENO);
+		return (true);
+	}
+	print_lines(cmd, var.nflag, var.i, var.j);
 	return (true);
 }

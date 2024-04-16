@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/05 05:40:15 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/15 22:40:35 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define MINISHELL_H
 
 
-// extern int exit_num;
 
 # include <stdio.h>
 # include <unistd.h>
@@ -55,6 +54,7 @@
 # define ANSI_COLOR_BG_CYAN       "\x1b[46m"
 # define ANSI_COLOR_BG_WHITE      "\x1b[47m"
 
+int g_exit_num;
 
 typedef enum
 {

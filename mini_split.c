@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mini_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 10:01:06 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/04 04:11:30 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 03:02:18 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static	int	ft_end(char *s, char c, int start)
 			start += skip(s + start, ' ');
 			while (s[start] && s[start] != k)
 				start++;
-			if (s[start]) // this was added to fix the segfault for this case (input.cmds = ft_strdup("ls >> l\">\"");)
+			if (s[start])
 				start++;
 		}
 		while (s[start] && s[start] != c && s[start] != DOUBLE_QUOTE
