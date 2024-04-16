@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 19:58:29 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/15 00:08:11 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 14:22:11 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,9 @@ void	export(t_cmd *cmd, t_input *input)
 	t_var	var;
 
 	var.i = -1;
-	if (!cmd)
-		return ;
-	if (!cmd->cmd[1])
+	if (!cmd && !cmd->cmd[1])
 	{
-		while (input->env[++var.i])
+		while (cmd && input->env[++var.i])
 			printf("declare -x %s\n", input->env[var.i]);
 		return ;
 	}
