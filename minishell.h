@@ -6,14 +6,12 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/16 18:37:56 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/17 22:00:11 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-
 
 # include <stdio.h>
 # include <unistd.h>
@@ -148,8 +146,8 @@ char		**mini_split(char *s, char c);
 bool		execute(t_cmd **cmd, t_input *input, t_var *var);
 void		free_vars(t_var *var);
 void		free_splitted(t_var *var);
-void		wait_process(t_input *input, t_var *var);
-void		close_fd(t_var *var);
+bool		close_fd(t_var *var);
+bool		close_prev_fd(t_var *var);
 void		init_all(t_var *var);
 void		free_env(char **env);
 void		free_cmd(t_cmd *cmd);
@@ -170,11 +168,11 @@ void		free_vars(t_var *var);
 void		free_splitted(t_var *var);
 void		wait_process(t_input *input, t_var *var);
 void		execute_red(t_cmd *cmd, t_input *input, t_var *var);
-void		close_all(t_var *var);
 void		init_all(t_var *var);
 void		free_env(char **env);
 void		set_herdoc(t_red *p);
 bool		echo(char **cmd);
 void		close_herdoc_fd(t_red *p);
+bool		child_dupping_fds(t_input *input, t_var *var);
 
 #endif

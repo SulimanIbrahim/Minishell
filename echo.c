@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 04:19:23 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/16 02:55:52 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/17 10:58:03 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static void	print_lines(char **lines, bool n_flag, int i, int j)
 				lines[i][j] == '$' && lines[i][j + 1] == '?')
 			{
 				ft_putnbr_fd(g_exit_num, STDOUT_FILENO);
+				g_exit_num = 0;
 				j++;
 			}
 			else

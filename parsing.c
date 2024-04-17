@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:29:36 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/16 18:37:08 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/16 22:55:32 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,23 @@ bool	pipe_quote_pars(t_input *input, t_var *var)
 	return (true);
 }
 
+void	switch_tabs(t_input *input, t_var *var)
+{
+	var->i = 0;
+	while (input->cmds[var->i])
+	{
+		if (input->cmds[var->i] == '\t')
+			input->cmds[var->i] = ' ';
+		var->i++;
+	}
+}
+
 bool	parsing(t_input *input)
 {
 	t_var	var;
 
 	var.flag = 0;
+	switch_tabs(input, &var);
 	if (!pipe_quote_pars(input, &var))
 	{
 		g_exit_num = 2;
