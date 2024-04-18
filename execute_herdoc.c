@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:35:28 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/16 16:11:41 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/17 08:04:08 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	close_herdoc_fd(t_red *p)
 	}
 }
 
-void	set_herdoc(t_red *p)
+void	set_herdoc(t_red *p, t_input *input)
 {
-	char	*tmp;
+	char	*str;
 
 	while (p)
 	{
@@ -33,17 +33,17 @@ void	set_herdoc(t_red *p)
 			unlink("tmp");
 			p->input_herdoc_fd = open("tmp", O_CREAT | O_RDWR, 0777);
 			ft_putstr_fd("> ", STDOUT_FILENO);
-			tmp = get_next_line(STDIN_FILENO);
-			while (tmp && !(ft_strlen(p->file_name) == ft_strlen(tmp) - 1
-					&& !ft_strncmp(p->file_name, tmp, ft_strlen(p->file_name))))
+			str = get_next_line(STDIN_FILENO);
+			while (str && !(ft_strlen(p->file_name) == ft_strlen(str) - 1
+					&& !ft_strncmp(p->file_name, str, ft_strlen(p->file_name))))
 			{
+				str = expand_herdoc(str, input);
 				ft_putstr_fd("> ", STDOUT_FILENO);
-				ft_putstr_fd(tmp, p->input_herdoc_fd);
-				free(tmp);
-				tmp = get_next_line(STDIN_FILENO);
+				(ft_putstr_fd(str, p->input_herdoc_fd), free(str));
+				str = get_next_line(STDIN_FILENO);
 			}
-			if (tmp)
-				free(tmp);
+			if (str)
+				free(str);
 			close(p->input_herdoc_fd);
 			p->input_herdoc_fd = open("tmp", O_RDONLY | O_CREAT, 0777);
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/18 05:46:40 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/18 18:12:54 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,11 @@ typedef struct input
 
 typedef struct command
 {
-	char	*cmd_name;
-	char	**cmd;
-	char	*cmd_path;
-	t_red	*redricts;
+	char		*cmd_name;
+	char		**cmd;
+	char		*cmd_path;
+	t_red		*redricts;
+	t_red_vars	red_vars;
 }		t_cmd;
 
 int			skip(char *cmds, char c);
@@ -127,11 +128,8 @@ void		tokenize_cmds(t_input *input, t_cmd **cmds, t_var *var);
 bool		clean_quotes(t_input *input, t_var *var);
 bool		quote_parsing(char *line, t_var *var);
 char		**dup_shell(char **env);
-bool		parsing(t_input *input);
 char		*ft_check_red(char *cmd_name);
 char		**mini_split(char *s, char c);
-char		**dup_shell(char **env);
-char		*ft_check_red(char *cmd_name);
 char		*readline(const char *line);
 void		rl_replace_line(const char *str, int line_num);
 void		skip_quotes(char *input, int *i, int q_type);
@@ -142,7 +140,6 @@ void		signal_handler(int signum);
 void		init_var(t_var *var);
 void		free_input(t_input *input);
 void		add_shlvl(char **env);
-char		**mini_split(char *s, char c);
 bool		execute(t_cmd **cmd, t_input *input, t_var *var);
 void		free_vars(t_var *var);
 void		free_splitted(t_var *var);
@@ -151,7 +148,6 @@ bool		close_prev_fd(t_var *var);
 void		init_all(t_var *var);
 void		free_env(char **env);
 void		free_cmd(t_cmd *cmd);
-void		add_shlvl(char **env);
 int			env_len(char **env);
 void		export(t_cmd *cmd, t_input *input);
 void		unset(t_cmd *cmd, t_input *input);
@@ -163,17 +159,16 @@ int			ft_exit(t_cmd **cmd, t_input *input, t_var *var);
 void		ft_check_exit(t_cmd **cmd, t_input *input, t_var *var, int n);
 int			str_is_digit(char *str);
 char		**mini_split(char *s, char c);
-bool		execute(t_cmd **cmd, t_input *input, t_var *var);
-void		free_vars(t_var *var);
-void		free_splitted(t_var *var);
-void		wait_process(t_input *input, t_var *var);
 void		execute_red(t_cmd *cmd, t_input *input, t_var *var);
 void		init_all(t_var *var);
 void		free_env(char **env);
-void		set_herdoc(t_red *p);
+void		set_herdoc(t_red *p, t_input *input);
 bool		echo(char **cmd);
 void		close_herdoc_fd(t_red *p);
 char		*ft_get_env_path(char **env);
+void		wait_process(t_input *input, t_var *var);
 bool		child_dupping_fds(t_input *input, t_var *var);
+char		*expand_herdoc(char *line, t_input *input);
+char		*env_srch(char *cmd);
 
 #endif

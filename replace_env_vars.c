@@ -21,7 +21,7 @@ char	*env_srch(char *cmd)
 		return (NULL);
 	while (cmd[i])
 	{
-		if (cmd[i] == '\'')
+		if (cmd[i] && cmd[i] == '\'')
 			skip_quotes(cmd, &i, cmd[i]);
 		if (cmd[i] && cmd[i] == '$' && cmd[i + 1]
 			&& cmd[i + 1] != ' ' && cmd[i + 1] != '?')

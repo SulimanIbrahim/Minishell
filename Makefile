@@ -1,6 +1,6 @@
 NAME = minishell
 NAME_TEST = result
-CFLAGS = -Wall -Wextra -Werror -g3 #  -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g3  #-fsanitize=address
 READLINE = -L/users/$(USER)/.brew/opt/readline/lib
 LIBFT = ./Libft-42/libft.a
 
@@ -27,6 +27,7 @@ SRC =	main.c\
 		get_next_line/get_next_line.c\
 		get_next_line/get_next_line_utils.c\
 		execute_herdoc.c\
+		expand_herdoc.c\
 		get_env.c
  
 SRC_TEST =	test_driven.c\
@@ -51,8 +52,9 @@ SRC_TEST =	test_driven.c\
 			execute_red.c\
 			get_next_line/get_next_line.c\
 			get_next_line/get_next_line_utils.c\
+			execute_herdoc.c\
 			get_env.c\
-			execute_herdoc.c
+  		expand_herdoc.c
 
 OBJ = $(SRC:%.c=%.o)
 
