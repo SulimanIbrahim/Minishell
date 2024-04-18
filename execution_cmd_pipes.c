@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   execution_cmd_pipes.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:55:33 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/16 16:32:37 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/18 05:48:47 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	get_path(t_cmd **cmd, t_var *var)
+static bool	get_path(t_cmd **cmd, t_input *input, t_var *var)
 {
 	var->j = -1;
 	if (!cmd[var->i]->cmd || !cmd[var->i]->cmd[0])
 		return (true);
 	if (ft_strchr(cmd[var->i]->cmd[0], '/') == NULL)
 	{
-		var->splitted = ft_split(getenv("PATH"), ':');
+		var->splitted = ft_split(ft_get_env_path(input->env), ':');
 		while (var->splitted[++var->j])
 		{
 			var->temp = ft_strjoin(var->splitted[var->j], "/");
@@ -39,7 +39,7 @@ static bool	get_path(t_cmd **cmd, t_var *var)
 
 static void	execute_execve(t_cmd **cmd, t_input *input, t_var *var)
 {
-	get_path(cmd, var);
+	get_path(cmd, input, var);
 	if (cmd[var->i]->redricts)
 		execute_red(cmd[var->i], input, var);
 	else if (var->cmd_path

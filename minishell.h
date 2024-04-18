@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/16 16:10:31 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/18 05:46:40 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,5 +172,6 @@ void		free_env(char **env);
 void		set_herdoc(t_red *p);
 bool		echo(char **cmd);
 void		close_herdoc_fd(t_red *p);
+char		*ft_get_env_path(char **env);
 
 #endif
