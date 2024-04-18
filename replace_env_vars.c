@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   replace_env_vars.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 23:43:11 by aken              #+#    #+#             */
-/*   Updated: 2024/04/18 13:18:22 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/18 22:17:52 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*env_srch(char *cmd)
 		if (cmd[i] && cmd[i] == '\'')
 			skip_quotes(cmd, &i, cmd[i]);
 		if (cmd[i] && cmd[i] == '$' && cmd[i + 1]
-			&& cmd[i + 1] != ' ' && cmd[i + 1] != '?')
+			&& cmd[i + 1] != ' ')
 			return (cmd + i);
 		else if (!cmd[i])
 			return (NULL);
@@ -124,9 +124,11 @@ void	ft_check_env(t_input *input, t_var *var)
 		var->temp = env_srch(input->cmds);
 		if (!var->temp)
 			return ;
-		if (ft_check_env2(input, var) == false)
+		if (var->temp && var->temp[1] && var->temp[1] == '?')
+			ft_replace_num_error(input);
+		else if (ft_check_env2(input, var) == false)
 			ft_remove_wrong_var(input);
-		if (!env_srch(input->cmds))
+		else if (!env_srch(input->cmds))
 			break ;
 	}
 }

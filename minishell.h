@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/18 19:42:49 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/18 22:17:42 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,5 +170,6 @@ void		wait_process(t_input *input, t_var *var);
 bool		child_dupping_fds(t_input *input, t_var *var);
 char		*expand_herdoc(char *line, t_input *input);
 char		*env_srch(char *cmd);
+void		ft_replace_num_error(t_input *input);
 
 #endif

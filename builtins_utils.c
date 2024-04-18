@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 20:42:00 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/17 11:25:54 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/18 20:51:29 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,17 @@ int	cd(t_cmd *cmd)
 
 int	pwd(void)
 {
-	return (printf("%s\n", getcwd(NULL, 0)));
+	char	*str;
+
+	str = NULL;
+	str = getcwd(NULL, 0);
+	printf("%s\n", str);
+	if (str)
+	{
+		free(str);
+		str = NULL;
+	}
+	return (1);
 }
 
 int	ft_env(char **env)
