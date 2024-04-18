@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:55:33 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/18 05:48:47 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/18 05:56:13 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static bool	get_path(t_cmd **cmd, t_input *input, t_var *var)
 	if (ft_strchr(cmd[var->i]->cmd[0], '/') == NULL)
 	{
 		var->splitted = ft_split(ft_get_env_path(input->env), ':');
+		if (!var->splitted)
+			return (false);
 		while (var->splitted[++var->j])
 		{
 			var->temp = ft_strjoin(var->splitted[var->j], "/");
@@ -39,7 +41,17 @@ static bool	get_path(t_cmd **cmd, t_input *input, t_var *var)
 
 static void	execute_execve(t_cmd **cmd, t_input *input, t_var *var)
 {
-	get_path(cmd, input, var);
+	if (!get_path(cmd, input, var))
+	{
+		printf("(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
+		if (var->cmd_path)
+			free(var->cmd_path);
+		if (input->env)
+			free_env(input->env);
+		free_all(cmd, input, var);
+		close_all(var);
+		exit(0);
+	}
 	if (cmd[var->i]->redricts)
 		execute_red(cmd[var->i], input, var);
 	else if (var->cmd_path
@@ -51,7 +63,7 @@ static void	execute_execve(t_cmd **cmd, t_input *input, t_var *var)
 		free_env(input->env);
 	free_all(cmd, input, var);
 	close_all(var);
-	exit(0);
+	exit(1);
 }
 
 static void	execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
