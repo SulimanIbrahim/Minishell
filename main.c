@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/18 13:18:45 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/19 00:47:07 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static bool	inite_structs(t_input *input, t_var *var, t_cmd ***cmd, char **env)
 static bool	reading_line(t_input *input, t_var *var)
 {
 	input->num_of_cmd = 1;
+	init_var(var);
 	input->cmds = readline("\x1b[94mMinishell >> \x1b[0m");
 	if (!input->cmds)
 		ft_exit(NULL, input, var);

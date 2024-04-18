@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_red.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 09:04:29 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/17 07:28:08 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/19 03:55:09 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,27 +67,42 @@ void	set_input_output(t_red_vars *red_fd)
 	}
 }
 
+void	close_input_output(t_red_vars *red_fd)
+{
+	if (red_fd->output_fd != -1)
+	{
+		close(red_fd->output_fd);
+		dup2(red_fd->tmp_out_fd, STDOUT_FILENO);
+		close(red_fd->tmp_out_fd);
+	}
+	if (red_fd->input_fd != -1)
+	{
+		close(red_fd->input_fd);
+		dup2(red_fd->tmp_in_fd, STDIN_FILENO);
+		close(red_fd->tmp_in_fd);
+	}
+}
+
 void	execute_red(t_cmd *cmd, t_input *input, t_var *var)
 {
 	t_red_vars	red_fd;
 
+	(void)var;
 	init_red_fd(&red_fd);
 	set_reds(cmd, &red_fd);
 	set_input_output(&red_fd);
-	if (var->cmd_path && execve(var->cmd_path, cmd->cmd, input->env) == -1)
+	if (ft_check_builtins(cmd, input))
+	{
+		close_input_output(&red_fd);
+		close_herdoc_fd(cmd->redricts);
+		unlink("tmp");
+	}
+	else if (var->cmd_path && var->flag == 0
+		&& execve(var->cmd_path, cmd->cmd, input->env) == -1)
 		printf("(%s) command not found !!!\n", cmd->cmd[0]);
-	if (red_fd.output_fd != -1)
 	{
-		close(red_fd.output_fd);
-		dup2(red_fd.tmp_out_fd, STDOUT_FILENO);
-		close(red_fd.tmp_out_fd);
+		close_input_output(&red_fd);
+		close_herdoc_fd(cmd->redricts);
+		unlink("tmp");
 	}
-	if (red_fd.input_fd != -1)
-	{
-		close(red_fd.input_fd);
-		dup2(red_fd.tmp_in_fd, STDIN_FILENO);
-		close(red_fd.tmp_in_fd);
-	}
-	close_herdoc_fd(cmd->redricts);
-	unlink("tmp");
 }

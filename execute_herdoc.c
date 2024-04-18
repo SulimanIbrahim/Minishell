@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_herdoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:35:28 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/17 08:04:08 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/19 02:28:11 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	set_herdoc(t_red *p, t_input *input)
 			if (str)
 				free(str);
 			close(p->input_herdoc_fd);
-			p->input_herdoc_fd = open("tmp", O_RDONLY | O_CREAT, 0777);
+			p->input_herdoc_fd = open("tmp", O_RDONLY, 0777);
 		}
 		p = p->next_redricts;
 	}

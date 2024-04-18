@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:55:33 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/18 19:36:56 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/19 03:47:58 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ static bool	get_path(t_cmd **cmd, t_input *input, t_var *var)
 
 static void	execute_execve(t_cmd **cmd, t_input *input, t_var *var)
 {
-	get_path(cmd, input, var);
+	var->flag = 0;
 	if (cmd[var->i]->redricts)
 		execute_red(cmd[var->i], input, var);
-	if (ft_check_builtins(cmd[var->i], input))
+	else if (ft_check_builtins(cmd[var->i], input))
 	{
 		if (input->env)
 			free_env(input->env);
@@ -94,6 +94,7 @@ static void	execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
 				(free_all(cmd, input, var)), exit(EXIT_FAILURE);
 			}
 			ft_check_exit(cmd, input, var, var->i);
+			get_path(cmd, input, var);
 			execute_execve(cmd, input, var);
 		}
 		else
@@ -110,12 +111,16 @@ bool	execute(t_cmd **cmd, t_input *input, t_var *var)
 		return (true);
 	if (input->num_of_cmd == 1)
 	{
+		var->flag = 1;
+		get_path(cmd, input, var);
 		ft_check_exit(cmd, input, var, 0);
 		if (cmd[0]->redricts)
 			set_herdoc(cmd[0]->redricts, input);
-		if (ft_check_builtins(cmd[0], input))
+		if (cmd[0]->redricts)
+			execute_red(cmd[0], input, var);
+		else if (ft_check_builtins(cmd[0], input))
 			return (true);
-		else if (fork() == 0)
+		if (fork() == 0)
 			execute_execve(cmd, input, var);
 		else
 			close_herdoc_fd(cmd[0]->redricts);
