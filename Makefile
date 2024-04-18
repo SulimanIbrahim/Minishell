@@ -27,7 +27,8 @@ SRC =	main.c\
 		get_next_line/get_next_line.c\
 		get_next_line/get_next_line_utils.c\
 		execute_herdoc.c\
-		expand_herdoc.c
+		expand_herdoc.c\
+		get_env.c
  
 SRC_TEST =	test_driven.c\
 			parsing.c\
@@ -52,7 +53,8 @@ SRC_TEST =	test_driven.c\
 			get_next_line/get_next_line.c\
 			get_next_line/get_next_line_utils.c\
 			execute_herdoc.c\
-		expand_herdoc.c
+			get_env.c\
+  		expand_herdoc.c
 
 OBJ = $(SRC:%.c=%.o)
 

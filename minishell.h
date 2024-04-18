@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/17 07:19:54 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/18 05:46:40 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@
 # define ANSI_COLOR_BG_MAGENTA    "\x1b[45m"
 # define ANSI_COLOR_BG_CYAN       "\x1b[46m"
 # define ANSI_COLOR_BG_WHITE      "\x1b[47m"
+
+int g_exit_num;
 
 typedef enum
 {
@@ -141,8 +143,8 @@ void		add_shlvl(char **env);
 bool		execute(t_cmd **cmd, t_input *input, t_var *var);
 void		free_vars(t_var *var);
 void		free_splitted(t_var *var);
-void		wait_process(t_input *input, t_var *var);
-void		close_fd(t_var *var);
+bool		close_fd(t_var *var);
+bool		close_prev_fd(t_var *var);
 void		init_all(t_var *var);
 void		free_env(char **env);
 void		free_cmd(t_cmd *cmd);
@@ -158,10 +160,13 @@ void		ft_check_exit(t_cmd **cmd, t_input *input, t_var *var, int n);
 int			str_is_digit(char *str);
 char		**mini_split(char *s, char c);
 void		execute_red(t_cmd *cmd, t_input *input, t_var *var);
-void		close_all(t_var *var);
-void		set_herdoc(t_red *p, t_input *input);
+void		init_all(t_var *var);
+void		free_env(char **env);
+void		set_herdoc(t_red *p);
 bool		echo(char **cmd);
 void		close_herdoc_fd(t_red *p);
+char		*ft_get_env_path(char **env);
+bool		child_dupping_fds(t_input *input, t_var *var);
 char		*expand_herdoc(char *line, t_input *input);
 char		*env_srch(char *cmd);
 

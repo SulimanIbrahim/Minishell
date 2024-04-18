@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal_handle.c                                    :+:      :+:    :+:   */
+/*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/12 00:24:30 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/16 18:40:12 by suibrahi         ###   ########.fr       */
+/*   Created: 2024/04/18 05:45:43 by suibrahi          #+#    #+#             */
+/*   Updated: 2024/04/18 14:10:12 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	signal_handler(int signum) 
+char	*ft_get_env_path(char **env)
 {
-	if (signum == SIGINT)
+	if (!env)
+		return (NULL);
+	while (*env != NULL)
 	{
-		printf("\n");
-		rl_on_new_line();
-		// there is problem in this function its not in the header
-		// rl_replace_line("", 0);
-		g_exit_num = 130;
-		rl_redisplay();
+		if (ft_strncmp(*env, "PATH", 4) == 0 && (*env)[4] == '=')
+			return (*env + 5);
+		env++;
 	}
+	return (NULL);
 }
