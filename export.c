@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 19:58:29 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/16 14:22:11 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/18 22:38:56 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,15 +77,15 @@ void	export(t_cmd *cmd, t_input *input)
 	t_var	var;
 
 	var.i = -1;
-	if (!cmd && !cmd->cmd[1])
-	{
+	if (cmd && !cmd->cmd[1])
 		while (cmd && input->env[++var.i])
-			printf("declare -x %s\n", input->env[var.i]);
-		return ;
-	}
+			return ((void)printf("declare -x %s\n", input->env[var.i]));
 	while (cmd->cmd[++var.i])
 	{
 		var.j = 0;
+		if (cmd->cmd[var.i][0] == '=')
+			return ((void)printf("unset: '%s': not a valid identifier\n"
+					, cmd->cmd[var.i]), (void)(g_exit_num = 1));
 		if (ft_strchr(cmd->cmd[var.i], '='))
 		{
 			var.j = env_search(cmd->cmd[var.i], input->env);

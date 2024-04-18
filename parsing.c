@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:29:36 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/18 13:17:44 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/18 22:22:56 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	switch_tabs(t_input *input, t_var *var)
 	var->i = 0;
 	while (input->cmds[var->i])
 	{
-		if (input->cmds[var->i] == '\t')
+		if (input->cmds[var->i] >= 9 && input->cmds[var->i] <= 13)
 			input->cmds[var->i] = ' ';
 		var->i++;
 	}

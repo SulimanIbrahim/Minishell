@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 19:58:29 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/03/28 22:29:46 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/18 22:38:29 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	unset(t_cmd *cmd, t_input *input)
 		if (ft_strchr(cmd->cmd[var.i], '='))
 		{
 			printf("unset: '%s': not a valid identifier\n", cmd->cmd[var.i]);
+			g_exit_num = 1;
 			return ;
 		}
 		var.j = 0;
