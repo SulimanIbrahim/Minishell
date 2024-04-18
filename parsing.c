@@ -6,22 +6,11 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:29:36 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/16 16:38:39 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/18 13:17:44 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	skip(char *cmds, char c)
-{
-	int	i;
-
-	i = 0;
-	while (cmds[i] && (cmds[i] == c
-			|| cmds[i] == '\t' || cmds[i] == '\v'))
-		i++;
-	return (i);
-}
 
 void	skip_quotes(char *input, int *i, int q_type)
 {
@@ -66,15 +55,33 @@ bool	pipe_quote_pars(t_input *input, t_var *var)
 	return (true);
 }
 
+void	switch_tabs(t_input *input, t_var *var)
+{
+	var->i = 0;
+	while (input->cmds[var->i])
+	{
+		if (input->cmds[var->i] == '\t')
+			input->cmds[var->i] = ' ';
+		var->i++;
+	}
+}
+
 bool	parsing(t_input *input)
 {
 	t_var	var;
 
 	var.flag = 0;
+	switch_tabs(input, &var);
 	if (!pipe_quote_pars(input, &var))
+	{
+		g_exit_num = 2;
 		return (free_input(input), false);
+	}
 	if (ft_check_redirections(input->cmds, &var))
+	{
+		g_exit_num = 2;
 		return (free_input(input), false);
+	}
 	var.flag = 1;
 	ft_check_env(input, &var);
 	return (true);

@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_quotes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 05:24:21 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/03 05:25:28 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/18 13:17:52 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	skip(char *cmds, char c)
+{
+	int	i;
+
+	i = 0;
+	while (cmds[i] && (cmds[i] == c
+			|| cmds[i] == '\t' || cmds[i] == '\v'))
+		i++;
+	return (i);
+}
 
 static bool	check_double_quotes(char *line, t_var *var)
 {
@@ -56,20 +67,17 @@ bool	quote_parsing(char *line, t_var *var)
 	while (line[++var->i])
 	{
 		var->closed = 0;
-		if (line[var->i] == DOUBLE_QUOTE || line[var->i] == SINGLE_QUOTE)
+		if (line[var->i] == DOUBLE_QUOTE)
 		{
-			if (line[var->i] == DOUBLE_QUOTE)
-			{
-				var->i++;
-				if (!check_double_quotes(line, var))
-					return (false);
-			}
-			else if (line[var->i] == SINGLE_QUOTE)
-			{
-				var->i++;
-				if (!check_single_quotes(line, var))
-					return (false);
-			}
+			var->i++;
+			if (!check_double_quotes(line, var))
+				return (false);
+		}
+		else if (line[var->i] == SINGLE_QUOTE)
+		{
+			var->i++;
+			if (!check_single_quotes(line, var))
+				return (false);
 		}
 	}
 	return (true);

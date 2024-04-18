@@ -127,5 +127,8 @@ int main(int ac, char **av, char **env){
     input.cmds = ft_strdup("ls > c \'>\'<");
     test_add(&input, false, 36);
     ////////////////////////////////////////////////////
+    input.cmds = ft_strdup("\t ls \t\t\t\t\t\t\t\t\t");
+    test_add(&input, true, 37);
+
 }
 

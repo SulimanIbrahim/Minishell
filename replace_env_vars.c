@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 23:43:11 by aken              #+#    #+#             */
-/*   Updated: 2024/04/01 05:48:37 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/18 13:18:22 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ char	*env_srch(char *cmd)
 	{
 		if (cmd[i] == '\'')
 			skip_quotes(cmd, &i, cmd[i]);
-		if (cmd[i] && cmd[i] == '$' && cmd[i + 1] && cmd[i + 1] != ' ')
+		if (cmd[i] && cmd[i] == '$' && cmd[i + 1]
+			&& cmd[i + 1] != ' ' && cmd[i + 1] != '?')
 			return (cmd + i);
 		else if (!cmd[i])
 			return (NULL);
