@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/16 18:38:51 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/18 13:18:45 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main (int ac, char **av, char **env)
+int	main(int ac, char **av, char **env)
 {
 	t_input	input;
 	t_var	var;
