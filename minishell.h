@@ -53,6 +53,8 @@
 # define ANSI_COLOR_BG_CYAN       "\x1b[46m"
 # define ANSI_COLOR_BG_WHITE      "\x1b[47m"
 
+int g_exit_num;
+
 typedef enum
 {
 	INPUT,
@@ -144,8 +146,8 @@ char		**mini_split(char *s, char c);
 bool		execute(t_cmd **cmd, t_input *input, t_var *var);
 void		free_vars(t_var *var);
 void		free_splitted(t_var *var);
-void		wait_process(t_input *input, t_var *var);
-void		close_fd(t_var *var);
+bool		close_fd(t_var *var);
+bool		close_prev_fd(t_var *var);
 void		init_all(t_var *var);
 void		free_env(char **env);
 void		free_cmd(t_cmd *cmd);
@@ -166,12 +168,12 @@ void		free_vars(t_var *var);
 void		free_splitted(t_var *var);
 void		wait_process(t_input *input, t_var *var);
 void		execute_red(t_cmd *cmd, t_input *input, t_var *var);
-void		close_all(t_var *var);
 void		init_all(t_var *var);
 void		free_env(char **env);
 void		set_herdoc(t_red *p);
 bool		echo(char **cmd);
 void		close_herdoc_fd(t_red *p);
 char		*ft_get_env_path(char **env);
+bool		child_dupping_fds(t_input *input, t_var *var);
 
 #endif

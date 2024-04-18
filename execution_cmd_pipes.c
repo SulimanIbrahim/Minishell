@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static bool	get_path(t_cmd **cmd, t_input *input, t_var *var)
+static bool	get_path(t_cmd **cmd, t_var *var)
 {
 	var->j = -1;
 	if (!cmd[var->i]->cmd || !cmd[var->i]->cmd[0])
@@ -20,8 +20,6 @@ static bool	get_path(t_cmd **cmd, t_input *input, t_var *var)
 	if (ft_strchr(cmd[var->i]->cmd[0], '/') == NULL)
 	{
 		var->splitted = ft_split(ft_get_env_path(input->env), ':');
-		if (!var->splitted)
-			return (false);
 		while (var->splitted[++var->j])
 		{
 			var->temp = ft_strjoin(var->splitted[var->j], "/");
@@ -41,65 +39,66 @@ static bool	get_path(t_cmd **cmd, t_input *input, t_var *var)
 
 static void	execute_execve(t_cmd **cmd, t_input *input, t_var *var)
 {
-	if (!get_path(cmd, input, var))
-	{
-		printf("(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
-		if (var->cmd_path)
-			free(var->cmd_path);
-		if (input->env)
-			free_env(input->env);
-		free_all(cmd, input, var);
-		close_all(var);
-		exit(0);
-	}
+	get_path(cmd, var);
 	if (cmd[var->i]->redricts)
 		execute_red(cmd[var->i], input, var);
+	if (ft_check_builtins(cmd[var->i], input))
+	{
+		if (input->env)
+			free_env(input->env);
+		(free_all(cmd, input, var)), exit(EXIT_FAILURE);
+	}
 	else if (var->cmd_path
 		&& execve(var->cmd_path, cmd[var->i]->cmd, input->env) == -1)
 		printf("(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
-	if (var->cmd_path)
-		free(var->cmd_path);
 	if (input->env)
 		free_env(input->env);
-	free_all(cmd, input, var);
-	close_all(var);
-	exit(1);
+	(free_all(cmd, input, var)), exit(EXIT_FAILURE);
+}
+
+static bool	parent_dupping_fds(t_cmd **cmd, t_input *input, t_var *var)
+{
+	close_herdoc_fd(cmd[var->i]->redricts);
+	if (close_prev_fd(var) == false)
+		return (free_all(cmd, input, var), free(input->env), false);
+	var->prev_fd = dup(var->fd[0]);
+	if (var->prev_fd == -1)
+	{
+		if (input->env)
+			free_env(input->env);
+		(free_all(cmd, input, var));
+		return (false);
+	}
+	close_fd(var);
+	return (true);
 }
 
 static void	execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
 {
 	var->i = -1;
-	var->prev_fd = STDIN_FILENO;
-	var->flag = 0;
+	var->prev_fd = -1;
 	while (++var->i < input->num_of_cmd && cmd[var->i])
 	{
-		ft_check_exit(cmd, input, var, var->i);
 		if (cmd[var->i]->redricts)
 			set_herdoc(cmd[var->i]->redricts);
-		if (!ft_check_builtins(cmd[var->i], input))
+		if (pipe(var->fd) == -1)
+			return ;
+		if (fork() == 0)
 		{
-			if (pipe(var->fd) == -1)
-				return ;
-			if (fork() == 0)
+			if (!child_dupping_fds(input, var))
 			{
-				dup2(var->prev_fd, STDIN_FILENO);
-				close(var->prev_fd);
-				if ((var->i + 1) != input->num_of_cmd)
-					dup2(var->fd[1], STDOUT_FILENO);
-				close_fd(var);
-				execute_execve(cmd, input, var);
+				if (input->env)
+					free_env(input->env);
+				(free_all(cmd, input, var)), exit(EXIT_FAILURE);
 			}
-			else
-			{
-				close_herdoc_fd(cmd[var->i]->redricts);
-				var->prev_fd = dup(var->fd[0]);
-				close_fd(var);
-				var->flag++;
-			}
+			ft_check_exit(cmd, input, var, var->i);
+			execute_execve(cmd, input, var);
 		}
+		else
+			if (!parent_dupping_fds(cmd, input, var))
+				break ;
 	}
-	if (var->flag != 0)
-		close_all(var);
+	close_prev_fd(var);
 }
 
 bool	execute(t_cmd **cmd, t_input *input, t_var *var)
@@ -123,8 +122,6 @@ bool	execute(t_cmd **cmd, t_input *input, t_var *var)
 	}
 	else
 		execute_pipes(cmd, input, var);
-	var->c = -1;
-	while (++var->c < input->num_of_cmd)
-		wait(NULL);
+	wait_process(input, var);
 	return (true);
 }
