@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aken <aken@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/24 21:04:56 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/03/10 05:42:31 by aken             ###   ########.fr       */
+/*   Updated: 2024/04/18 14:08:42 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	**ft_split(char const *s, char c)
 	int		word_count;
 
 	if (s == NULL)
-		return (0);
+		return (NULL);
 	word_count = strings_count(s, c);
 	substr = (char **)malloc(sizeof(char *) * (word_count + 1));
 	if (substr == NULL)

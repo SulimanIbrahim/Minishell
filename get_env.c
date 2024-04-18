@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 05:45:43 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/18 06:49:14 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:10:12 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 char	*ft_get_env_path(char **env)
 {
+	if (!env)
+		return (NULL);
 	while (*env != NULL)
 	{
 		if (ft_strncmp(*env, "PATH", 4) == 0 && (*env)[4] == '=')

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   execution_cmd_pipes.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:55:33 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/18 05:56:13 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:15:23 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static bool	get_path(t_cmd **cmd, t_var *var)
+static bool	get_path(t_cmd **cmd, t_input *input, t_var *var)
 {
 	var->j = -1;
 	if (!cmd[var->i]->cmd || !cmd[var->i]->cmd[0])
@@ -20,6 +20,8 @@ static bool	get_path(t_cmd **cmd, t_var *var)
 	if (ft_strchr(cmd[var->i]->cmd[0], '/') == NULL)
 	{
 		var->splitted = ft_split(ft_get_env_path(input->env), ':');
+		if (!var->splitted || !var->splitted[0])
+			return ((var->cmd_path = ft_strdup(cmd[var->i]->cmd[0]), true));
 		while (var->splitted[++var->j])
 		{
 			var->temp = ft_strjoin(var->splitted[var->j], "/");
@@ -39,7 +41,7 @@ static bool	get_path(t_cmd **cmd, t_var *var)
 
 static void	execute_execve(t_cmd **cmd, t_input *input, t_var *var)
 {
-	get_path(cmd, var);
+	get_path(cmd, input, var);
 	if (cmd[var->i]->redricts)
 		execute_red(cmd[var->i], input, var);
 	if (ft_check_builtins(cmd[var->i], input))
@@ -114,9 +116,7 @@ bool	execute(t_cmd **cmd, t_input *input, t_var *var)
 		if (ft_check_builtins(cmd[0], input))
 			return (true);
 		else if (fork() == 0)
-		{
 			execute_execve(cmd, input, var);
-		}
 		else
 			close_herdoc_fd(cmd[0]->redricts);
 	}
