@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:26:13 by suibrahi          #+#    #+#             */
-/*   Updated: 2023/08/07 02:17:03 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/18 19:43:46 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,5 @@ int	ft_atoi(const char *str)
 			return (0);
 		str++;
 	}
-	return (res * sign); 
+	return (res * sign);
 }

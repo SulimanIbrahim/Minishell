@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   setting_redirections.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 00:07:34 by aken              #+#    #+#             */
-/*   Updated: 2024/04/16 14:29:33 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/18 19:42:55 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_enm	set_redirection_2(char *cmd)
+int	set_redirection_2(char *cmd)
 {
 	int	i;
 
