@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 23:25:22 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/17 12:32:16 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/18 13:09:30 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ static bool	inite_structs(t_input *input, t_var *var, t_cmd ***cmd, char **env)
 	ft_memset(cmd, 0, sizeof(t_cmd));
 	input->env = dup_shell(env);
 	add_shlvl(input->env);
-	input->num_of_cmd = 1;
 	return (true);
 }
 
 static bool	reading_line(t_input *input, t_var *var)
 {
+	input->num_of_cmd = 1;
 	input->cmds = readline("\x1b[94mMinishell >> \x1b[0m");
 	if (!input->cmds)
 		ft_exit(NULL, input, var);
