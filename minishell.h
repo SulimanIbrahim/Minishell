@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/18 05:46:40 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/18 18:12:54 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,10 +162,11 @@ char		**mini_split(char *s, char c);
 void		execute_red(t_cmd *cmd, t_input *input, t_var *var);
 void		init_all(t_var *var);
 void		free_env(char **env);
-void		set_herdoc(t_red *p);
+void		set_herdoc(t_red *p, t_input *input);
 bool		echo(char **cmd);
 void		close_herdoc_fd(t_red *p);
 char		*ft_get_env_path(char **env);
+void		wait_process(t_input *input, t_var *var);
 bool		child_dupping_fds(t_input *input, t_var *var);
 char		*expand_herdoc(char *line, t_input *input);
 char		*env_srch(char *cmd);

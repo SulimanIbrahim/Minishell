@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:55:33 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/18 14:15:23 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/18 18:33:23 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static void	execute_pipes(t_cmd **cmd, t_input *input, t_var *var)
 	while (++var->i < input->num_of_cmd && cmd[var->i])
 	{
 		if (cmd[var->i]->redricts)
-			set_herdoc(cmd[var->i]->redricts);
+			set_herdoc(cmd[var->i]->redricts, input);
 		if (pipe(var->fd) == -1)
 			return ;
 		if (fork() == 0)

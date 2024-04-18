@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 04:19:23 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/17 10:58:03 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/18 18:51:34 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,14 @@ static bool	check_n(char *line)
 		i++;
 	if (line[i] == '\0')
 		return (true);
-	return (true);
+	return (false);
 }
 
 static void	print_lines(char **lines, bool n_flag, int i, int j)
 {
+	int		flag;
+
+	flag = 0;
 	while (lines[i])
 	{
 		j = 0;
@@ -38,19 +41,20 @@ static void	print_lines(char **lines, bool n_flag, int i, int j)
 				lines[i][j] == '$' && lines[i][j + 1] == '?')
 			{
 				ft_putnbr_fd(g_exit_num, STDOUT_FILENO);
-				g_exit_num = 0;
-				j++;
+				j += 2;
+				flag = 1;
 			}
 			else
-				ft_putchar_fd(lines[i][j], STDOUT_FILENO);
-			j++;
+				printf("%c", lines[i][j++]);
 		}
 		if (lines[i + 1])
-			ft_putchar_fd(' ', STDOUT_FILENO);
+			printf(" ");
 		else if (!lines[i + 1] && !n_flag)
-			ft_putchar_fd('\n', STDOUT_FILENO);
+			printf("\n");
 		i++;
 	}
+	if (flag == 1)
+		g_exit_num = 0;
 }
 
 bool	echo(char **cmd)
