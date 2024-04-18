@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/04 02:26:13 by suibrahi          #+#    #+#             */
-/*   Updated: 2023/08/04 07:56:10 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/18 19:44:48 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	ft_memcmp(const void *str1, const void *str2, size_t n)
 {
 	size_t			len;
-	unsigned char	*str_1; 
+	unsigned char	*str_1;
 	unsigned char	*str_2;
 
 	str_1 = (unsigned char *)str1;

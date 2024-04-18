@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 04:19:23 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/18 18:51:34 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/18 19:36:27 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,6 @@ static bool	check_n(char *line)
 
 static void	print_lines(char **lines, bool n_flag, int i, int j)
 {
-	int		flag;
-
-	flag = 0;
 	while (lines[i])
 	{
 		j = 0;
@@ -42,7 +39,6 @@ static void	print_lines(char **lines, bool n_flag, int i, int j)
 			{
 				ft_putnbr_fd(g_exit_num, STDOUT_FILENO);
 				j += 2;
-				flag = 1;
 			}
 			else
 				printf("%c", lines[i][j++]);
@@ -53,8 +49,7 @@ static void	print_lines(char **lines, bool n_flag, int i, int j)
 			printf("\n");
 		i++;
 	}
-	if (flag == 1)
-		g_exit_num = 0;
+	g_exit_num = 0;
 }
 
 bool	echo(char **cmd)
