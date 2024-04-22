@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:55:33 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/19 03:47:58 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/22 23:49:16 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static bool	get_path(t_cmd **cmd, t_input *input, t_var *var)
 		return (true);
 	if (ft_strchr(cmd[var->i]->cmd[0], '/') == NULL)
 	{
-		var->splitted = ft_split(ft_get_env_path(input->env), ':');
+		var->splitted = ft_split(ft_get_env("PATH", input->env), ':');
 		if (!var->splitted || !var->splitted[0])
 			return ((var->cmd_path = ft_strdup(cmd[var->i]->cmd[0]), true));
 		while (var->splitted[++var->j])
@@ -52,7 +52,7 @@ static void	execute_execve(t_cmd **cmd, t_input *input, t_var *var)
 	}
 	else if (var->cmd_path
 		&& execve(var->cmd_path, cmd[var->i]->cmd, input->env) == -1)
-		printf("(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
+		ft_printf (2, "(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
 	if (input->env)
 		free_env(input->env);
 	(free_all(cmd, input, var)), exit(EXIT_FAILURE);

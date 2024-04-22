@@ -114,7 +114,8 @@ bool	ft_check_env2(t_input *input, t_var *var)
 
 void	ft_check_env(t_input *input, t_var *var)
 {
-	if (!input->cmds || !env_srch(input->cmds))
+	if (!input || !input->cmds || !input->env
+		|| !env_srch(input->cmds))
 		return ;
 	var->temp = env_srch(input->cmds) + 1;
 	if (!var->temp)

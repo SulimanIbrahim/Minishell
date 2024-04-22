@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 09:04:29 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/19 03:55:09 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/22 23:08:55 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ void	set_reds(t_cmd *cmd, t_red_vars *red_fd)
 		{
 			if (p->type == APPEND)
 				red_fd->output_fd = open(p->file_name, O_RDWR
-						| O_APPEND | O_CREAT, 0777);
+						| O_APPEND | O_CREAT, 457);
 			else
 				red_fd->output_fd = open(p->file_name, O_RDWR
-						| O_CREAT, 0777);
+						| O_CREAT, 457);
 			red_fd->output_type = p->type;
 		}
 		p = p->next_redricts;
@@ -99,7 +99,7 @@ void	execute_red(t_cmd *cmd, t_input *input, t_var *var)
 	}
 	else if (var->cmd_path && var->flag == 0
 		&& execve(var->cmd_path, cmd->cmd, input->env) == -1)
-		printf("(%s) command not found !!!\n", cmd->cmd[0]);
+		ft_printf (2, "(%s) command not found !!!\n", cmd->cmd[0]);
 	{
 		close_input_output(&red_fd);
 		close_herdoc_fd(cmd->redricts);

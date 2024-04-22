@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 05:24:21 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/18 13:17:52 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/22 22:07:08 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static bool	check_double_quotes(char *line, t_var *var)
 	}
 	if (var->closed == 0)
 	{
-		printf("Syntax error : unclosed double quotes\n");
+		ft_printf (2, "Syntax error : unclosed double quotes\n");
 		return (false);
 	}
 	return (true);
@@ -55,7 +55,7 @@ static bool	check_single_quotes(char *line, t_var *var)
 	}
 	if (var->closed == 0)
 	{
-		printf("Syntax error : unclosed single quotes\n");
+		ft_printf (2, "Syntax error : unclosed single quotes\n");
 		return (false);
 	}
 	return (true);

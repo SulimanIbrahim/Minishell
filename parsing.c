@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 20:29:36 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/18 22:22:56 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/22 22:11:13 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ bool	pipe_parsing(t_input *input, t_var *var)
 	while (input->cmds[var->i] == ' ')
 		var->i++;
 	if (input->cmds[var->i] == PIPE)
-		return (printf("Syntax error : unexpected pipe 1\n"), false);
+		return (ft_printf (2, "Syntax error : unexpected pipe 1\n"), false);
 	while (input->cmds[var->i])
 	{
 		if (input->cmds[var->i] == DOUBLE_QUOTE)
@@ -40,7 +40,8 @@ bool	pipe_parsing(t_input *input, t_var *var)
 				var->i++;
 			if (input->cmds[var->i] == '\0'
 				|| input->cmds[var->i] == PIPE)
-				return (printf("Syntax error : unexpected pipe \n"), false);
+				return (ft_printf (2, "Syntax error : unexpected pipe \n")
+					, false);
 		}
 	}
 	return (true);

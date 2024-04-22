@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 05:15:28 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/19 03:42:23 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/22 23:49:19 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include "Libft-42/libft.h"
+# include "ft_printf/ft_printf.h"
 # include "get_next_line/get_next_line.h"
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -120,56 +121,61 @@ typedef struct command
 	t_red_vars	red_vars;
 }		t_cmd;
 
-int			skip(char *cmds, char c);
-int			ft_check_redirections(char *cmd_name, t_var *vars);
-bool		ft_check_builtins(t_cmd *cmd, t_input *input);
-bool		parsing(t_input *input);
-void		tokenize_cmds(t_input *input, t_cmd **cmds, t_var *var);
-bool		clean_quotes(t_input *input, t_var *var);
-bool		quote_parsing(char *line, t_var *var);
-char		**dup_shell(char **env);
-char		*ft_check_red(char *cmd_name);
-char		**mini_split(char *s, char c);
-char		*readline(const char *line);
-void		rl_replace_line(const char *str, int line_num);
-void		skip_quotes(char *input, int *i, int q_type);
-void		ft_check_env(t_input *input, t_var *vars);
-void		set_redirection(t_cmd *cmd, t_var var);
-void		free_all(t_cmd **cmd, t_input *input, t_var *var);
-void		signal_handler(int signum);
-void		init_var(t_var *var);
-void		free_input(t_input *input);
-void		add_shlvl(char **env);
-bool		execute(t_cmd **cmd, t_input *input, t_var *var);
-void		free_vars(t_var *var);
-void		free_splitted(t_var *var);
-bool		close_fd(t_var *var);
-bool		close_prev_fd(t_var *var);
-void		init_all(t_var *var);
-void		free_env(char **env);
-void		free_cmd(t_cmd *cmd);
-int			env_len(char **env);
-void		export(t_cmd *cmd, t_input *input);
-void		unset(t_cmd *cmd, t_input *input);
-int			cd(t_cmd *cmd);
-int			pwd(void);
-int			ft_env(char **env);
-void		free_split(char **split);
-int			ft_exit(t_cmd **cmd, t_input *input, t_var *var);
-void		ft_check_exit(t_cmd **cmd, t_input *input, t_var *var, int n);
-int			str_is_digit(char *str);
-char		**mini_split(char *s, char c);
-void		execute_red(t_cmd *cmd, t_input *input, t_var *var);
-void		init_all(t_var *var);
-void		free_env(char **env);
-void		set_herdoc(t_red *p, t_input *input);
-bool		echo(char **cmd);
-void		close_herdoc_fd(t_red *p);
-char		*ft_get_env_path(char **env);
-void		wait_process(t_input *input, t_var *var);
-bool		child_dupping_fds(t_input *input, t_var *var);
-char		*expand_herdoc(char *line, t_input *input);
-char		*env_srch(char *cmd);
-void		ft_replace_num_error(t_input *input);
+int				skip(char *cmds, char c);
+int				ft_check_redirections(char *cmd_name, t_var *vars);
+bool			ft_check_builtins(t_cmd *cmd, t_input *input);
+bool			parsing(t_input *input);
+void			tokenize_cmds(t_input *input, t_cmd **cmds, t_var *var);
+bool			clean_quotes(t_input *input, t_var *var);
+bool			quote_parsing(char *line, t_var *var);
+char			**dup_shell(char **env);
+char			*ft_check_red(char *cmd_name);
+char			**mini_split(char *s, char c);
+char			*readline(const char *line);
+void			rl_replace_line(const char *str, int line_num);
+void			skip_quotes(char *input, int *i, int q_type);
+void			ft_check_env(t_input *input, t_var *vars);
+void			set_redirection(t_cmd *cmd, t_var var);
+void			free_all(t_cmd **cmd, t_input *input, t_var *var);
+void			signal_handler(int signum);
+void			init_var(t_var *var);
+void			free_input(t_input *input);
+void			add_shlvl(char **env);
+bool			execute(t_cmd **cmd, t_input *input, t_var *var);
+void			free_vars(t_var *var);
+void			free_splitted(t_var *var);
+bool			close_fd(t_var *var);
+bool			close_prev_fd(t_var *var);
+void			init_all(t_var *var);
+void			free_env(char **env);
+void			free_cmd(t_cmd *cmd);
+int				env_len(char **env);
+void			export(t_cmd *cmd, t_input *input);
+void			unset(t_cmd *cmd, t_input *input);
+int				cd(t_cmd *cmd, t_input *input);
+int				pwd(void);
+int				ft_env(char **env);
+void			free_split(char **split);
+int				ft_exit(t_cmd **cmd, t_input *input, t_var *var);
+void			ft_check_exit(t_cmd **cmd, t_input *input, t_var *var, int n);
+int				str_is_digit(char *str);
+char			**mini_split(char *s, char c);
+void			execute_red(t_cmd *cmd, t_input *input, t_var *var);
+void			init_all(t_var *var);
+void			free_env(char **env);
+void			set_herdoc(t_red *p, t_input *input);
+bool			echo(char **cmd);
+void			close_herdoc_fd(t_red *p);
+char			*ft_get_env(char *word, char **env);
+void			wait_process(t_input *input, t_var *var);
+bool			child_dupping_fds(t_input *input, t_var *var);
+char			*expand_herdoc(char *line, t_input *input);
+char			*env_srch(char *cmd);
+void			ft_replace_num_error(t_input *input);
+int				env_len(char **env);
+void			add_env(char *new, t_input *input);
+void			replace_env(char *new, t_input *input, int i);
+int				ft_get_env_index(char *word, char **env);
+unsigned char	exit_atoi(const char *str);
 
 #endif

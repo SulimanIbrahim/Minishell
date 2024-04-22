@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 19:58:29 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/18 22:38:29 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/22 22:11:51 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static	int	env_search(char *new, char **env)
 
 	i = 0;
 	j = 0;
-	if (!new || !new[0])
-		return (0);
+	if (!new || !new[0] || !env || !env[0])
+		return (-1);
 	while (env[i])
 	{
 		while (new[j] && env[i][j] && env[i][j] != '=' && new[j] == env[i][j])
@@ -30,7 +30,7 @@ static	int	env_search(char *new, char **env)
 		i++;
 		j = 0;
 	}
-	return (0);
+	return (-1);
 }
 
 void	free_split(char **split)
@@ -74,19 +74,20 @@ void	unset(t_cmd *cmd, t_input *input)
 	t_var	var;
 
 	var.i = 0;
-	if (!cmd)
+	if (!cmd || !cmd->cmd || !input || !input->env)
 		return ;
 	while (cmd->cmd[var.i])
 	{
 		if (ft_strchr(cmd->cmd[var.i], '='))
 		{
-			printf("unset: '%s': not a valid identifier\n", cmd->cmd[var.i]);
+			ft_printf (2, "unset: '%s': not a valid identifier\n",
+				cmd->cmd[var.i]);
 			g_exit_num = 1;
 			return ;
 		}
-		var.j = 0;
+		var.j = -1;
 		var.j = env_search(cmd->cmd[var.i], input->env);
-		if (var.j != 0)
+		if (var.j != -1)
 			remove_env(input, var.j);
 		var.i++;
 	}
