@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_cmd_pipes.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 22:55:33 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/19 03:47:58 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/22 22:05:17 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	execute_execve(t_cmd **cmd, t_input *input, t_var *var)
 	}
 	else if (var->cmd_path
 		&& execve(var->cmd_path, cmd[var->i]->cmd, input->env) == -1)
-		printf("(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
+		ft_printf (2, "(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
 	if (input->env)
 		free_env(input->env);
 	(free_all(cmd, input, var)), exit(EXIT_FAILURE);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 05:45:43 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/18 22:18:07 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/22 22:14:31 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ft_get_env_index(char *word, char **env)
 		return (0);
 	while (env[i] != NULL)
 	{
-		if (ft_strncmp(*env, word, ft_strlen(word)) == 0
+		if (ft_strncmp(*env, word, ft_strlen(word) - 1) == 0
 			&& (*env)[ft_strlen(word)] == '=')
 			return (i);
 		i++;

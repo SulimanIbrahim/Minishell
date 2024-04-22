@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 19:58:29 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/19 01:44:24 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/22 22:06:24 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	export(t_cmd *cmd, t_input *input)
 	{
 		var.j = 0;
 		if (cmd->cmd[var.i][0] == '=')
-			return ((void)printf("unset: '%s': not a valid identifier\n"
+			return ((void)ft_printf (2, "unset: '%s': not a valid identifier\n"
 					, cmd->cmd[var.i]), (void)(g_exit_num = 1));
 		if (ft_strchr(cmd->cmd[var.i], '='))
 		{

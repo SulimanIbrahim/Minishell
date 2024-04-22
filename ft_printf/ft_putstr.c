@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/18 20:58:27 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/22 22:00:25 by ahibrahi         ###   ########.fr       */
+/*   Created: 2023/08/18 18:48:15 by ahibrahi          #+#    #+#             */
+/*   Updated: 2024/01/25 16:40:46 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "ft_printf.h"
 
-# include <fcntl.h>
-# include <unistd.h>
-# include <stdlib.h>
-# include "../Libft-42/libft.h"
+int	ft_putstr(int fd, char *s)
+{
+	int	i;
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 7024
-# endif
-
-char	*get_next_line(int fd);
-char	*ft_g_strdup(char *s, int k);
-char	*ft_g_strjoin(char *s1, char *s2);
-
-#endif
+	i = 0;
+	if (s == NULL)
+	{
+		write(fd, "(null)", 6);
+		return (6);
+	}
+	while (s != 0 && s[i] != 0)
+	{
+		write(fd, &s[i], 1);
+		i++;
+	}
+	return (i);
+}

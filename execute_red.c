@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_red.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 09:04:29 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/19 03:55:09 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/22 22:05:01 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	execute_red(t_cmd *cmd, t_input *input, t_var *var)
 	}
 	else if (var->cmd_path && var->flag == 0
 		&& execve(var->cmd_path, cmd->cmd, input->env) == -1)
-		printf("(%s) command not found !!!\n", cmd->cmd[0]);
+		ft_printf (2, "(%s) command not found !!!\n", cmd->cmd[0]);
 	{
 		close_input_output(&red_fd);
 		close_herdoc_fd(cmd->redricts);

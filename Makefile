@@ -2,6 +2,7 @@ NAME = minishell
 CFLAGS = -Wall -Wextra -Werror -g3
 READLINE = -I/Users/$(USER)/homebrew/opt/readline/include -L/Users/$(USER)/homebrew/opt/readline/lib
 LIBFT = ./Libft-42/libft.a
+PRINTF = ./ft_printf/printf.a
 
 SRC =	main.c\
 		parsing.c\
@@ -27,7 +28,8 @@ SRC =	main.c\
 		get_next_line/get_next_line_utils.c\
 		execute_herdoc.c\
 		expand_herdoc.c\
-		get_env.c
+		get_env.c\
+		utils.c
  
 OBJ = $(SRC:%.c=%.o)
 
@@ -35,16 +37,23 @@ OBJ_TEST = $(SRC_TEST:%.c=%.o)
 
 all : $(NAME)
 
-$(NAME) : $(OBJ)
+$(NAME) : $(OBJ) $(PRINTF) $(LIBFT)
+	$(CC) $(CFLAGS) $(PRINTF) $(LIBFT) $(READLINE) $(OBJ) -l readline -o $(NAME)
+
+$(PRINTF):
+	@make all -C ./ft_printf
+
+$(LIBFT):
 	@make all -C ./Libft-42
-	$(CC) $(CFLAGS) $(READLINE) $(OBJ) $(LIBFT) -l readline -o $(NAME)
 
 clean :
 	@make clean -C ./Libft-42
+	@make clean -C ./ft_printf
 	rm -rf $(OBJ)
 
 fclean : clean
 	rm -rf $(NAME)
+	@make fclean -C ./ft_printf
 	@make fclean -C ./Libft-42
 
 re : fclean all

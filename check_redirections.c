@@ -6,7 +6,7 @@
 /*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 23:42:46 by aken              #+#    #+#             */
-/*   Updated: 2024/04/17 08:47:41 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/22 22:04:20 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static	int	ft_s7lb(char *cmd_name, t_var *var, char c)
 	{
 		if (var->flag == 0)
 			return (
-				printf("bash:syntax error near unexpected token\n"));
+				ft_printf (2, "bash:syntax error near unexpected token\n"));
 		return (1);
 	}
 	return (0);

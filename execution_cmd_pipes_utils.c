@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_cmd_pipes_utils.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 03:40:08 by suibrahi          #+#    #+#             */
-/*   Updated: 2024/04/17 22:03:08 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/22 21:54:57 by ahibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ bool	child_dupping_fds(t_input *input, t_var *var)
 	if (var->prev_fd != -1)
 	{
 		if (dup2(var->prev_fd, STDIN_FILENO) == -1)
-			return (ft_putstr_fd("Dup2 Error", STDERR_FILENO), false);
+			return (ft_printf(STDERR_FILENO, "Dup2 Error"), false);
 		close(var->prev_fd);
 	}
 	if ((var->i + 1) != input->num_of_cmd)
 		if (dup2(var->fd[1], STDOUT_FILENO) == -1)
-			return (ft_putstr_fd("Dup2 Error", STDERR_FILENO), false);
+			return (ft_printf(STDERR_FILENO, "Dup2 Error"), false);
 	close_fd(var);
 	return (true);
 }
@@ -51,9 +51,9 @@ void	wait_process(t_input *input, t_var *var)
 bool	close_fd(t_var *var)
 {
 	if (close(var->fd[0]) == -1)
-		return (ft_putstr_fd("closing fd Error\n", STDERR_FILENO), false);
+		return (ft_printf(STDERR_FILENO, "closing fd Error\n"), false);
 	if (close(var->fd[1]) == -1)
-		return (ft_putstr_fd("closing fd Error\n", STDERR_FILENO), false);
+		return (ft_printf(STDERR_FILENO, "closing fd Error\n"), false);
 	return (true);
 }
 
@@ -63,7 +63,7 @@ bool	close_prev_fd(t_var *var)
 	{
 		if (close(var->prev_fd) == -1)
 		{
-			ft_putstr_fd("error closing p_fd\n", STDERR_FILENO);
+			ft_printf(STDERR_FILENO, "error closing p_fd\n");
 			return (false);
 		}
 		else
