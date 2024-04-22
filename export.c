@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 19:58:29 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/22 22:06:24 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/22 23:46:26 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static	int	env_search(char *new, char **env)
 	i = 0;
 	j = 0;
 	if (!new || !new[0])
-		return (0);
+		return (-1);
 	while (env[i])
 	{
 		while (new[j] && env[i][j] && env[i][j] != '=' && new[j] == env[i][j])
@@ -30,7 +30,7 @@ static	int	env_search(char *new, char **env)
 		i++;
 		j = 0;
 	}
-	return (0);
+	return (-1);
 }
 
 void	add_env(char *new, t_input *input)
@@ -92,14 +92,14 @@ void	export(t_cmd *cmd, t_input *input)
 		return (print_export(input));
 	while (cmd->cmd[++var.i])
 	{
-		var.j = 0;
 		if (cmd->cmd[var.i][0] == '=')
 			return ((void)ft_printf (2, "unset: '%s': not a valid identifier\n"
 					, cmd->cmd[var.i]), (void)(g_exit_num = 1));
 		if (ft_strchr(cmd->cmd[var.i], '='))
 		{
+			var.j = -1;
 			var.j = env_search(cmd->cmd[var.i], input->env);
-			if (var.j != 0)
+			if (var.j != -1)
 				replace_env(cmd->cmd[var.i], input, var.j);
 			else
 				add_env(cmd->cmd[var.i], input);

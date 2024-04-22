@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_red.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahibrahi <ahibrahi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 09:04:29 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/22 22:05:01 by ahibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/22 23:08:55 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ void	set_reds(t_cmd *cmd, t_red_vars *red_fd)
 		{
 			if (p->type == APPEND)
 				red_fd->output_fd = open(p->file_name, O_RDWR
-						| O_APPEND | O_CREAT, 0777);
+						| O_APPEND | O_CREAT, 457);
 			else
 				red_fd->output_fd = open(p->file_name, O_RDWR
-						| O_CREAT, 0777);
+						| O_CREAT, 457);
 			red_fd->output_type = p->type;
 		}
 		p = p->next_redricts;
