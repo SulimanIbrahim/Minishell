@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 00:07:34 by aken              #+#    #+#             */
-/*   Updated: 2024/04/18 19:42:55 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/22 12:18:08 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	extracting_file_name(char *cmd, t_var *var)
 {
 	var->n = 0;
 	var->j = 0;
-	while (cmd[var->n] && cmd[var->n] != ' ')
+	while (cmd[var->n] && cmd[var->n] != ' '
+			&& cmd[var->n] != '<' && cmd[var->n] != '>')
 	{
 		if (cmd[var->n] && cmd[var->n] != '\'' && cmd[var->n] != '"')
 			var->j++;
@@ -45,7 +46,8 @@ void	extracting_file_name(char *cmd, t_var *var)
 	var->red->file_name = malloc(var->j + 1);
 	var->n = 0;
 	var->j = 0;
-	while (cmd[var->n] && cmd[var->n] != ' ')
+	while (cmd[var->n] && cmd[var->n] != ' '
+			&& cmd[var->n] != '<' && cmd[var->n] != '>')
 	{
 		if (cmd[var->n] && cmd[var->n] != '\'' && cmd[var->n] != '"')
 			var->red->file_name[var->j++] = cmd[var->n];

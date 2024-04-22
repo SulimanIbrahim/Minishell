@@ -6,7 +6,7 @@
 /*   By: suibrahi <suibrahi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 20:42:00 by ahibrahi          #+#    #+#             */
-/*   Updated: 2024/04/18 20:51:29 by suibrahi         ###   ########.fr       */
+/*   Updated: 2024/04/22 12:13:03 by suibrahi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ void	update_pwd(char *pwd, t_input *input)
 
 	if (!pwd)
 		return ;
-	if (!ft_get_env(pwd, input->env) || !ft_get_env(pwd, input->env))
+	if (!ft_get_env(pwd, input->env))
 	{
 		temp = getcwd(NULL, 0);
 		temp2 = ft_strjoin(pwd, temp);
 		add_env(temp2, input);
 		(free(temp), free(temp2));
 	}
-	else if (ft_get_env(pwd, input->env))
+	else
 	{
 		temp = getcwd(NULL, 0);
 		temp2 = ft_strjoin(pwd, temp);
