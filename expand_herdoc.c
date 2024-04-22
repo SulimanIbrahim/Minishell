@@ -114,7 +114,7 @@ char	*expand_herdoc(char *line, t_input *input)
 	t_var	var;
 
 	var.i = 0;
-	if (!line)
+	if (!line || !input || !input->env)
 		return (NULL);
 	if (!input || !env_srch_herdoc(line))
 		return (line);

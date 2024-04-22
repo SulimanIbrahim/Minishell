@@ -19,7 +19,7 @@ static bool	get_path(t_cmd **cmd, t_input *input, t_var *var)
 		return (true);
 	if (ft_strchr(cmd[var->i]->cmd[0], '/') == NULL)
 	{
-		var->splitted = ft_split(ft_get_env_path(input->env), ':');
+		var->splitted = ft_split(ft_get_env("PATH", input->env), ':');
 		if (!var->splitted || !var->splitted[0])
 			return ((var->cmd_path = ft_strdup(cmd[var->i]->cmd[0]), true));
 		while (var->splitted[++var->j])

@@ -1,6 +1,6 @@
 NAME = minishell
 CFLAGS = -Wall -Wextra -Werror -g3
-READLINE = -I/Users/suibrahi/homebrew/opt/readline/include -L/Users/suibrahi/homebrew/opt/readline/lib
+READLINE = -I/Users/$(USER)/homebrew/opt/readline/include -L/Users/$(USER)/homebrew/opt/readline/lib
 LIBFT = ./Libft-42/libft.a
 
 SRC =	main.c\

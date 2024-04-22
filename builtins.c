@@ -67,7 +67,7 @@ static	char	**init_bulitins(void)
 bool	ft_exec_builtin(t_cmd *cmd, int i, t_input *input)
 {
 	if (i == 0)
-		cd(cmd);
+		cd(cmd, input);
 	else if (i == 1)
 		pwd();
 	else if (i == 2)

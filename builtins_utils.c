@@ -12,12 +12,41 @@
 
 #include "minishell.h"
 
-int	cd(t_cmd *cmd)
+void	update_pwd(char *pwd, t_input *input)
 {
+	char	*temp;
+	char	*temp2;
+
+	if (!pwd)
+		return ;
+	if (!ft_get_env(pwd, input->env) || !ft_get_env(pwd, input->env))
+	{
+		temp = getcwd(NULL, 0);
+		temp2 = ft_strjoin(pwd, temp);
+		add_env(temp2, input);
+		(free(temp), free(temp2));
+	}
+	else if (ft_get_env(pwd, input->env))
+	{
+		temp = getcwd(NULL, 0);
+		temp2 = ft_strjoin(pwd, temp);
+		replace_env(temp2, input, ft_get_env_index(pwd, input->env));
+		(free(temp), free(temp2));
+	}
+	return ;
+}
+
+int	cd(t_cmd *cmd, t_input *input)
+{
+	update_pwd("OLDPWD=", input);
 	if (!cmd || !cmd->cmd[1])
-		return (chdir(getenv("HOME")));
-	if (chdir(cmd->cmd[1]) == -1)
+	{
+		if (chdir(ft_get_env("HOME", input->env)) == -1)
+			printf("cd: HOME not set\n");
+	}
+	else if (chdir(cmd->cmd[1]) == -1)
 		printf("cd: no such file or directory: %s\n", cmd->cmd[1]);
+	update_pwd("PWD=", input);
 	return (1);
 }
 
@@ -29,10 +58,7 @@ int	pwd(void)
 	str = getcwd(NULL, 0);
 	printf("%s\n", str);
 	if (str)
-	{
 		free(str);
-		str = NULL;
-	}
 	return (1);
 }
 
@@ -41,6 +67,8 @@ int	ft_env(char **env)
 	int	i;
 
 	i = 0;
+	if (!env || !env[0])
+		return (1);
 	while (env[i])
 		printf("%s\n", env[i++]);
 	return (1);

@@ -33,22 +33,16 @@ static	int	env_search(char *new, char **env)
 	return (0);
 }
 
-int	env_len(char **env)
-{
-	int	i;
-
-	i = 0;
-	while (env[i])
-		i++;
-	return (i);
-}
-
-static	void	add_env(char *new, int len, t_input *input)
+void	add_env(char *new, t_input *input)
 {
 	int		i;
+	int		len;
 	char	**tmp;
 
 	i = 0;
+	if (!new || !input)
+		return ;
+	len = env_len(input->env);
 	tmp = malloc(sizeof(char *) * (len + 2));
 	if (!tmp)
 		return ;
@@ -57,19 +51,34 @@ static	void	add_env(char *new, int len, t_input *input)
 		tmp[i] = ft_strdup(input->env[i]);
 		free(input->env[i++]);
 	}
-	free(input->env);
+	if (input->env)
+		free(input->env);
 	tmp[i++] = ft_strdup(new);
 	tmp[i] = NULL;
 	input->env = tmp;
 }
 
-static	void	replace_env(char *new, t_input *input, int i)
+void	replace_env(char *new, t_input *input, int i)
 {
 	char	*tmp;
 
+	if (!new || !input || !input->env || !input->env[i])
+		return ;
 	tmp = input->env[i];
 	free(tmp);
 	input->env[i] = ft_strdup(new);
+}
+
+static void	print_export(t_input *input)
+{
+	int	i;
+
+	i = 0;
+	while (input->env[i])
+	{
+		printf("declare -x %s\n", input->env[i]);
+		i++;
+	}
 }
 
 void	export(t_cmd *cmd, t_input *input)
@@ -77,9 +86,10 @@ void	export(t_cmd *cmd, t_input *input)
 	t_var	var;
 
 	var.i = -1;
+	if (!cmd || !cmd->cmd || !input || !input->env)
+		return ;
 	if (cmd && !cmd->cmd[1])
-		while (cmd && input->env[++var.i])
-			printf("declare -x %s\n", input->env[var.i]);
+		return (print_export(input));
 	while (cmd->cmd[++var.i])
 	{
 		var.j = 0;
@@ -92,10 +102,7 @@ void	export(t_cmd *cmd, t_input *input)
 			if (var.j != 0)
 				replace_env(cmd->cmd[var.i], input, var.j);
 			else
-			{
-				var.len = env_len(input->env);
-				add_env(cmd->cmd[var.i], var.len, input);
-			}
+				add_env(cmd->cmd[var.i], input);
 		}
 	}
 }

@@ -41,14 +41,44 @@ void	ft_replace_num_error(t_input *input)
 	input->cmds = new_cmd;
 }
 
-char	*ft_get_env_path(char **env)
+int	env_len(char **env)
 {
+	int	i;
+
+	i = 0;
 	if (!env)
+		return (0);
+	while (env[i])
+		i++;
+	return (i);
+}
+
+int	ft_get_env_index(char *word, char **env)
+{
+	int	i;
+
+	i = 0;
+	if (!env || !word)
+		return (0);
+	while (env[i] != NULL)
+	{
+		if (ft_strncmp(*env, word, ft_strlen(word)) == 0
+			&& (*env)[ft_strlen(word)] == '=')
+			return (i);
+		i++;
+	}
+	return (0);
+}
+
+char	*ft_get_env(char *word, char **env)
+{
+	if (!env || !word)
 		return (NULL);
 	while (*env != NULL)
 	{
-		if (ft_strncmp(*env, "PATH", 4) == 0 && (*env)[4] == '=')
-			return (*env + 5);
+		if (ft_strncmp(*env, word, ft_strlen(word)) == 0
+			&& (*env)[ft_strlen(word)] == '=')
+			return (ft_strchr(*env, '=') + 1);
 		env++;
 	}
 	return (NULL);

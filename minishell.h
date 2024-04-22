@@ -151,7 +151,7 @@ void		free_cmd(t_cmd *cmd);
 int			env_len(char **env);
 void		export(t_cmd *cmd, t_input *input);
 void		unset(t_cmd *cmd, t_input *input);
-int			cd(t_cmd *cmd);
+int			cd(t_cmd *cmd, t_input *input);
 int			pwd(void);
 int			ft_env(char **env);
 void		free_split(char **split);
@@ -165,11 +165,15 @@ void		free_env(char **env);
 void		set_herdoc(t_red *p, t_input *input);
 bool		echo(char **cmd);
 void		close_herdoc_fd(t_red *p);
-char		*ft_get_env_path(char **env);
+char		*ft_get_env(char *word, char **env);
 void		wait_process(t_input *input, t_var *var);
 bool		child_dupping_fds(t_input *input, t_var *var);
 char		*expand_herdoc(char *line, t_input *input);
 char		*env_srch(char *cmd);
 void		ft_replace_num_error(t_input *input);
+int			env_len(char **env);
+void		add_env(char *new, t_input *input);
+void		replace_env(char *new, t_input *input, int i);
+int			ft_get_env_index(char *word, char **env);
 
 #endif

@@ -19,7 +19,7 @@ static	int	env_search(char *new, char **env)
 
 	i = 0;
 	j = 0;
-	if (!new || !new[0])
+	if (!new || !new[0] || !env || !env[0])
 		return (0);
 	while (env[i])
 	{
@@ -74,7 +74,7 @@ void	unset(t_cmd *cmd, t_input *input)
 	t_var	var;
 
 	var.i = 0;
-	if (!cmd)
+	if (!cmd || !cmd->cmd || !input || !input->env)
 		return ;
 	while (cmd->cmd[var.i])
 	{
