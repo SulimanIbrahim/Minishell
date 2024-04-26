@@ -40,9 +40,11 @@ void	ft_remove_wrong_var(t_input *input)
 
 	init_var(&var);
 	var.i = env_srch(input->cmds) - input->cmds;
-	var.c = var.i;
+	var.c = var.i++;
 	while (input->cmds[var.i] && input->cmds[var.i] != ' '
-		&& input->cmds[var.i] != '\'' && input->cmds[var.i] != '"')
+		&& input->cmds[var.i] != '$' && input->cmds[var.i] != '|'
+		&& input->cmds[var.i] != '>' && input->cmds[var.i] != '<'
+		&& input->cmds[var.i] != '"')
 		var.i++;
 	var.n = var.i;
 	while (input->cmds[var.i++])
@@ -66,9 +68,11 @@ void	ft_replace_env(t_input *input, char *env)
 	init_var(&var);
 	var.len = ft_strlen(ft_strchr(env, '=') + 1);
 	var.c = env_srch(input->cmds) - input->cmds;
-	var.i = var.c;
+	var.i = var.c++;
 	while (input->cmds[var.c] && input->cmds[var.c] != ' '
-		&& input->cmds[var.c] != '\'' && input->cmds[var.c] != '"')
+		&& input->cmds[var.c] != '$' && input->cmds[var.c] != '|'
+		&& input->cmds[var.c] != '>' && input->cmds[var.c] != '<'
+		&& input->cmds[var.c] != '"')
 		var.c++;
 	var.n = var.c;
 	while (input->cmds[var.c++])
@@ -100,7 +104,8 @@ bool	ft_check_env2(t_input *input, t_var *var)
 				var->j++;
 			if (input->env[var->i][var->j] == '=' && (!var->temp[var->j]
 				|| var->temp[var->j] == ' ' || var->temp[var->j] == '"'
-				|| var->temp[var->j] == '\''))
+				|| var->temp[var->j] == '$' || var->temp[var->j] == '|'
+				|| var->temp[var->j] == '>' || var->temp[var->j] == '<'))
 			{
 				ft_replace_env(input, input->env[var->i]);
 				return (true);

@@ -19,13 +19,15 @@ void	ft_replace_num_error(t_input *input)
 	char	*new_cmd;
 
 	init_var(&var);
-	num = ft_itoa(g_exit_num);
-	var.len = ft_strlen(num);
 	var.c = env_srch(input->cmds) - input->cmds;
 	var.i = var.c;
-	while (input->cmds[var.c] && input->cmds[var.c] != ' '
-		&& input->cmds[var.c] != '\'' && input->cmds[var.c] != '"')
+	if (input->cmds[var.c] && input->cmds[var.c++]
+		&& input->cmds[var.c] == '?')
 		var.c++;
+	else
+		return ;
+	num = ft_itoa(g_exit_num);
+	var.len = ft_strlen(num);
 	var.n = var.c;
 	while (input->cmds[var.c++])
 		var.j++;

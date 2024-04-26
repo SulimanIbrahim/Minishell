@@ -38,7 +38,7 @@ OBJ_TEST = $(SRC_TEST:%.c=%.o)
 all : $(NAME)
 
 $(NAME) : $(OBJ) $(PRINTF) $(LIBFT)
-	$(CC) $(CFLAGS) $(PRINTF) $(LIBFT) $(READLINE) $(OBJ) -l readline -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJ) $(PRINTF) $(LIBFT) $(READLINE) -o $(NAME) -l readline
 
 $(PRINTF):
 	@make all -C ./ft_printf

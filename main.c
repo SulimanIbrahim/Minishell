@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+int	g_exit_num;
+
 static bool	inite_structs(t_input *input, t_var *var, t_cmd ***cmd, char **env)
 {
 	signal(SIGINT, signal_handler);

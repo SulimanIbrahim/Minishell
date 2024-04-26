@@ -54,7 +54,7 @@
 # define ANSI_COLOR_BG_CYAN       "\x1b[46m"
 # define ANSI_COLOR_BG_WHITE      "\x1b[47m"
 
-int	g_exit_num;
+extern int	g_exit_num;
 
 enum	e_enm
 {
@@ -121,6 +121,7 @@ typedef struct command
 	t_red_vars	red_vars;
 }		t_cmd;
 
+void			init_red_fd(t_red_vars *red_fd);
 int				skip(char *cmds, char c);
 int				ft_check_redirections(char *cmd_name, t_var *vars);
 bool			ft_check_builtins(t_cmd *cmd, t_input *input);
