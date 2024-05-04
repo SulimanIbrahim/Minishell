@@ -81,6 +81,20 @@ static void	print_export(t_input *input)
 	}
 }
 
+int	check_identifier(char *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i] && cmd[i] != '=')
+	{
+		if (cmd[i] == '-' || ft_isdigit(cmd[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 void	export(t_cmd *cmd, t_input *input)
 {
 	t_var	var;
@@ -92,7 +106,7 @@ void	export(t_cmd *cmd, t_input *input)
 		return (print_export(input));
 	while (cmd->cmd[++var.i])
 	{
-		if (cmd->cmd[var.i][0] == '=')
+		if (cmd->cmd[var.i][0] == '=' || check_identifier(cmd->cmd[var.i]) == 0)
 			return ((void)ft_printf (2, "unset: '%s': not a valid identifier\n"
 					, cmd->cmd[var.i]), (void)(g_exit_num = 1));
 		if (ft_strchr(cmd->cmd[var.i], '='))

@@ -52,7 +52,10 @@ static void	execute_execve(t_cmd **cmd, t_input *input, t_var *var)
 	}
 	else if (var->cmd_path
 		&& execve(var->cmd_path, cmd[var->i]->cmd, input->env) == -1)
+	{
+		g_exit_num = 126;
 		ft_printf (2, "(%s) command not found !!!\n", cmd[var->i]->cmd[0]);
+	}
 	if (input->env)
 		free_env(input->env);
 	(free_all(cmd, input, var)), exit(EXIT_FAILURE);
@@ -118,6 +121,8 @@ bool	execute(t_cmd **cmd, t_input *input, t_var *var)
 			set_herdoc(cmd[0]->redricts, input);
 		if (cmd[0]->redricts)
 			execute_red(cmd[0], input, var);
+		if (var->flag == 0)
+			return (true);
 		else if (ft_check_builtins(cmd[0], input))
 			return (true);
 		if (fork() == 0)

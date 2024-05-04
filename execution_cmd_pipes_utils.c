@@ -36,8 +36,7 @@ void	wait_process(t_input *input, t_var *var)
 		{
 			if (WIFEXITED(var->status))
 			{
-				if (WEXITSTATUS(var->status) == EXIT_FAILURE)
-					g_exit_num = 127;
+				g_exit_num = WEXITSTATUS(var->status);
 			}
 			else if (WIFSIGNALED(var->status))
 			{

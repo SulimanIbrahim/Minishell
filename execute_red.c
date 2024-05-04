@@ -93,6 +93,7 @@ void	execute_red(t_cmd *cmd, t_input *input, t_var *var)
 	set_input_output(&red_fd);
 	if (ft_check_builtins(cmd, input))
 	{
+		var->flag = 0;
 		close_input_output(&red_fd);
 		close_herdoc_fd(cmd->redricts);
 		unlink("tmp");

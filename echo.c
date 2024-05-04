@@ -33,16 +33,7 @@ static void	print_lines(char **lines, bool n_flag, int i, int j)
 	{
 		j = 0;
 		while (lines[i][j])
-		{
-			if (lines[i][j] && lines[i][j + 1] &&
-				lines[i][j] == '$' && lines[i][j + 1] == '?')
-			{
-				ft_putnbr_fd(g_exit_num, STDOUT_FILENO);
-				j += 2;
-			}
-			else
-				printf("%c", lines[i][j++]);
-		}
+			printf("%c", lines[i][j++]);
 		if (lines[i + 1])
 			printf(" ");
 		else if (!lines[i + 1] && !n_flag)

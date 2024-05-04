@@ -38,6 +38,11 @@ void	update_pwd(char *pwd, t_input *input)
 
 int	cd(t_cmd *cmd, t_input *input)
 {
+	if (cmd->cmd[2])
+	{
+		g_exit_num = 1;
+		return (ft_printf (2, "cd: too many arguments\n"), 1);
+	}
 	update_pwd("OLDPWD=", input);
 	if (!cmd || !cmd->cmd[1])
 	{
@@ -45,7 +50,10 @@ int	cd(t_cmd *cmd, t_input *input)
 			ft_printf (2, "cd: HOME not set\n");
 	}
 	else if (chdir(cmd->cmd[1]) == -1)
-		ft_printf (2, "cd: no such file or directory: %s\n", cmd->cmd[1]);
+	{
+		g_exit_num = 1;
+		ft_printf (2, "cd: %s: no such file or directory\n", cmd->cmd[1]);
+	}
 	update_pwd("PWD=", input);
 	return (1);
 }
@@ -56,9 +64,12 @@ int	pwd(void)
 
 	str = NULL;
 	str = getcwd(NULL, 0);
-	printf("%s\n", str);
 	if (str)
+	{
+		printf("%s\n", str);
 		free(str);
+	}
+	g_exit_num = 0;
 	return (1);
 }
 
@@ -71,28 +82,28 @@ int	ft_env(char **env)
 		return (1);
 	while (env[i])
 		printf("%s\n", env[i++]);
+	g_exit_num = 0;
 	return (1);
 }
 
 int	ft_exit(t_cmd **cmd, t_input *input, t_var *var)
 {
-	int	len;
-
-	if (cmd && cmd[0])
+	if (cmd && cmd[0] && cmd[0]->cmd[2])
 	{
-		len = env_len(cmd[0]->cmd);
-		if (len > 2)
-			return (ft_printf (2, "bash: exit: too many arguments\n"));
-		else if (str_is_digit(cmd[0]->cmd[1]) == 1)
+		g_exit_num = 1;
+		ft_printf (2, "bash: exit: too many arguments\n");
+	}
+	else if (cmd && cmd[0])
+	{
+		if (str_is_digit(cmd[0]->cmd[1]) == 1)
+		{
+			g_exit_num = 2;
 			ft_printf (2, "bash: exit: %s: numeric argument required\n",
 				cmd[0]->cmd[1]);
-		else
-			ft_printf(2, "exit\n");
-		if (cmd[0]->cmd[1])
+		}
+		else if (cmd[0]->cmd[1])
 			g_exit_num = exit_atoi(cmd[0]->cmd[1]);
 	}
-	else
-		ft_printf(2, "exit\n");
 	free_env(input->env);
 	free_all(cmd, input, var);
 	clear_history();

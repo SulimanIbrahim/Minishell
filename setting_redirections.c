@@ -39,19 +39,27 @@ void	extracting_file_name(char *cmd, t_var *var)
 	while (cmd[var->n] && cmd[var->n] != ' '
 		&& cmd[var->n] != '<' && cmd[var->n] != '>')
 	{
-		if (cmd[var->n] && cmd[var->n] != '\'' && cmd[var->n] != '"')
-			var->j++;
-		var->n++;
+		if (cmd[var->n] && (cmd[var->n] == '\'' || cmd[var->n] == '"'))
+			while (cmd[++var->n] && cmd[var->n] != '\'' && cmd[var->n] != '"')
+				;
+		else
+			var->n++;
 	}
-	var->red->file_name = malloc(var->j + 1);
+	var->red->file_name = malloc(var->n + 1);
 	var->n = 0;
-	var->j = 0;
 	while (cmd[var->n] && cmd[var->n] != ' '
 		&& cmd[var->n] != '<' && cmd[var->n] != '>')
 	{
 		if (cmd[var->n] && cmd[var->n] != '\'' && cmd[var->n] != '"')
-			var->red->file_name[var->j++] = cmd[var->n];
-		var->n++;
+			var->red->file_name[var->j++] = cmd[var->n++];
+		else
+		{
+			var->k = cmd[var->n++];
+			while (cmd[var->n] && cmd[var->n] != var->k)
+				var->red->file_name[var->j++] = cmd[var->n++];
+			if (cmd[var->n])
+				var->n++;
+		}
 	}
 	var->red->file_name[var->j] = '\0';
 	var->i += var->n;
